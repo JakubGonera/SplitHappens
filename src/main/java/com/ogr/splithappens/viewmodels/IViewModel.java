@@ -9,4 +9,11 @@ import java.util.List;
 public interface IViewModel {
     ReadOnlyProperty<List<IPerson>> getPersonsList();
     ReadOnlyProperty<List<IExpense>> getExpensesList();
+
+    /**
+     * Attempts to add a person
+     * @param name name of the person
+     * @return if successful returns the sreated person
+     */
+    IPerson addPerson(String name);
 }

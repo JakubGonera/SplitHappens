@@ -41,8 +41,8 @@ public class ViewModel implements IViewModel {
     }
 
 
-    public void AddPerson(String name){
-        personsManager.addPerson(name);
+    public IPerson addPerson(String name){
+        return personsManager.addPerson(name);
     }
 
 }

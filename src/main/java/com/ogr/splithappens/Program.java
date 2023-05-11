@@ -1,7 +1,10 @@
 package com.ogr.splithappens;
 
 import com.ogr.splithappens.models.ExpenseManager;
+import com.ogr.splithappens.models.IExpenseManager;
+import com.ogr.splithappens.models.IPersonsManager;
 import com.ogr.splithappens.models.PersonsManager;
+import com.ogr.splithappens.viewmodels.IViewModel;
 import com.ogr.splithappens.viewmodels.ViewModel;
 import com.ogr.splithappens.views.View;
 import javafx.application.Application;
@@ -17,20 +20,22 @@ public class Program extends Application {
     public void start(Stage stage) throws IOException {
 
 
-        PersonsManager pm = new PersonsManager();
-        ExpenseManager em = new ExpenseManager();
-        ViewModel vm = new ViewModel(pm, em);
 
-        View c = new View(vm);
+        IExpenseManager expenseManager = new ExpenseManager();
+        IPersonsManager personsManager = new PersonsManager();
+        IViewModel viewModel = new ViewModel(personsManager, expenseManager);
+
+        View view = new View(viewModel, stage);
 
         FXMLLoader fxmlLoader = new FXMLLoader(Program.class.getResource("view.fxml"));
-        fxmlLoader.setController(c);
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 320, 240);
+        fxmlLoader.setController(view);
 
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+
+        stage.setTitle("SplitHappens");
         stage.setScene(scene);
         stage.show();
+
     }
 
     public static void main(String[] args) {

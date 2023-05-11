@@ -16,23 +16,27 @@
           <children>
             <Button layoutX="161.0" layoutY="13.0" mnemonicParsing="false" text="Add person" fx:id="add"  onAction="#onAddPerson" />
             <Accordion fx:id="accordion" layoutY="51.0" prefHeight="344.0" prefWidth="214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-              <panes>
-                <TitledPane animated="false" text="untitled 1">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </TitledPane>
-                <TitledPane animated="false" text="untitled 2">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </TitledPane>
-                <TitledPane animated="false" text="untitled 3">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </TitledPane>
-              </panes>
+<!--              <panes>-->
+<!--                <TitledPane animated="false" text="untitled 1" >-->
+<!--                  <content>-->
+<!--                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">-->
+<!--                      <TextField prefHeight="76.0" prefWidth="55.0"/>-->
+<!--                      <TextField prefHeight="56.0" prefWidth="100.0"/>-->
+<!--                    </AnchorPane>-->
+<!--                  </content>-->
+<!--                </TitledPane>-->
+<!--                <TitledPane animated="false" text="untitled 2">-->
+<!--                  <content>-->
+<!--                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />-->
+<!--                    <TextField  prefHeight="26.0" prefWidth="134.0"/>-->
+<!--                  </content>-->
+<!--                </TitledPane>-->
+<!--                <TitledPane animated="false" text="untitled 3">-->
+<!--                  <content>-->
+<!--                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />-->
+<!--                  </content>-->
+<!--                </TitledPane>-->
+<!--              </panes>-->
             </Accordion>
             <TextField layoutX="14.0" layoutY="13.0" prefHeight="26.0" prefWidth="134.0" fx:id="inputName"/>
           </children>
