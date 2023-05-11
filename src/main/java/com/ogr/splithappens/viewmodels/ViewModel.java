@@ -33,4 +33,9 @@ public class ViewModel implements IViewModel {
     public ReadOnlyProperty<List<IExpense>> getExpensesList() {
         return expensesList;
     }
+
+    @Override
+    public void addExpense(IExpense expense) {
+        expensesManager.addExpense(expense);
+    }
 }

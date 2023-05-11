@@ -23,7 +23,7 @@ public class Program extends Application {
         IPersonsManager personsManager = new PersonsManager();
 
         IViewModel viewModel = new ViewModel(personsManager, expenseManager);
-        View view = new View(viewModel);
+        View view = new View(viewModel, stage);
         fxmlLoader.setController(view);
 
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
