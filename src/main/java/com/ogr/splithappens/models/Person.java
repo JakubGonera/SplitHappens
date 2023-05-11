@@ -4,14 +4,23 @@ import java.util.List;
 
 public class Person implements IPerson {
     // TODO: implement person interface
+
+    private final String name;
+    private final int id;
+
+    public Person(String name, int id){
+        this.name = name;
+        this.id = id;
+        System.out.println("creatad person: "+id+" "+name);
+    }
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public int getID() {
-        return 0;
+        return id;
     }
 
     @Override
