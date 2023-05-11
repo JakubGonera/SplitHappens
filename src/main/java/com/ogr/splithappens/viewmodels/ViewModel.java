@@ -17,7 +17,7 @@ public class ViewModel implements IViewModel {
     private final SimpleObjectProperty<List<IPerson>> personsList;
 
     private final SimpleObjectProperty<List<IExpense>> expensesList;
-    ViewModel(IPersonsManager personsManager, IExpenseManager expensesManager){
+    public ViewModel(IPersonsManager personsManager, IExpenseManager expensesManager){
         this.personsManager = personsManager;
         this.personsList = new SimpleObjectProperty<>(this, "personsList", personsManager.getPersons());
         this.expensesManager = expensesManager;
