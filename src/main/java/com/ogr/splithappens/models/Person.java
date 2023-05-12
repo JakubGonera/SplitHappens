@@ -36,6 +36,8 @@ public class Person implements IPerson {
     @Override
     public List<detailedBalance> getDetailedBalances() {
         List<detailedBalance>result = new ArrayList<>();
+        if(!personsManager.expenseManager.getDetailedBalances().containsKey(id))
+            return new ArrayList<>();
         for(var x: personsManager.expenseManager.getDetailedBalances().get(id)){
             int amount = x.second;
             int receivingIndex = x.first;
@@ -49,5 +51,10 @@ public class Person implements IPerson {
             result.add(new detailedBalance(receivingName, receivingIndex, amount));
         }
         return result;
+    }
+
+    @Override
+    public String toString(){
+        return getName();
     }
 }

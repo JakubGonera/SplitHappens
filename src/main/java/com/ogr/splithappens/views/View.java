@@ -4,6 +4,8 @@ import com.ogr.splithappens.models.IExpense;
 import com.ogr.splithappens.models.IPerson;
 import com.ogr.splithappens.models.Pair;
 import com.ogr.splithappens.viewmodels.IViewModel;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -26,6 +28,7 @@ import javafx.util.converter.NumberStringConverter;
 
 import static com.ogr.splithappens.views.PersonBlockFactory.createPersonBlock;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -92,10 +95,12 @@ public class View {
         String title;
         int value;
         int payerID;
-        public ExpensePayload(String title, int value, int payerID){
+        List<Pair<Integer, Integer>> borrowers;
+        public ExpensePayload(String title, int value, int payerID, List<Pair<Integer, Integer>> borrowers){
             this.title = title;
             this.value = value;
             this.payerID = payerID;
+            this.borrowers = borrowers;
         }
         @Override
         public String getTitle() {
@@ -120,7 +125,7 @@ public class View {
 
         @Override
         public List<Pair<Integer, Integer>> getBorrowers() {
-            return null;
+            return borrowers;
         }
     }
     private final IViewModel viewModel;
@@ -151,9 +156,10 @@ public class View {
             }
         });
 
-        List<IExpense> dummyExpenseList = Stream.generate(DummyExpense::new).limit(3).collect(Collectors.toList());
+        //List<IExpense> dummyExpenseList = Stream.generate(DummyExpense::new).limit(3).collect(Collectors.toList());
 
-        recalculateExpensesTable(dummyExpenseList);
+        // recalculateExpensesTable(dummyExpenseList);
+        recalculateExpensesTable(viewModel.getExpensesList().getValue());
     }
 
     private void openNewExpense(){
@@ -190,13 +196,13 @@ public class View {
         form.add(payer, 0, 3);
 
         ChoiceBox<IPerson> payerPicker = new ChoiceBox<>();
-//        for(IPerson person : viewModel.getPersonsList().getValue()){
-//            payerPicker.getItems().add(person);
-//        }
-
-        for(IPerson person : dummyPersonList){
+        for(IPerson person : viewModel.getPersonsList().getValue()){
             payerPicker.getItems().add(person);
         }
+
+//        for(IPerson person : dummyPersonList){
+//            payerPicker.getItems().add(person);
+//        }
         form.add(payerPicker, 1, 3);
 
         Button btn = new Button("Add");
@@ -220,9 +226,19 @@ public class View {
                     return;
                 }
 
+                float value = Float.parseFloat(valueTextField.getText());
+
+                List<Pair<Integer, Integer>> borrowers = new ArrayList<>();
+                List<IPerson> personList = viewModel.getPersonsList().getValue();
+                for(IPerson person : personList){
+                    borrowers.add(new Pair<>(person.getID(), (int)(value/personList.size() * 100)));
+                }
+
                 // Construct payload and send it to the viewmodel and close window
-                ExpensePayload expensePayload = new ExpensePayload(expenseTextField.getText(), Integer.parseInt(valueTextField.getText()), payerPicker.getSelectionModel().getSelectedItem().getID());
+                ExpensePayload expensePayload = new ExpensePayload(expenseTextField.getText(), (int)value, payerPicker.getSelectionModel().getSelectedItem().getID(), borrowers);
                 viewModel.addExpense(expensePayload);
+
+                recalculateExpensesTable(viewModel.getExpensesList().getValue());
                 expenseWindow.close();
             }
         });
@@ -248,8 +264,8 @@ public class View {
 
     private void recalculateExpensesTable(List<IExpense> iExpenses){
         expensesTable.getChildren().clear();
-        //List<IPerson> personList = viewModel.getPersonsList().getValue();
-        List<IPerson> personList = dummyPersonList;
+        List<IPerson> personList = viewModel.getPersonsList().getValue();
+        //List<IPerson> personList = dummyPersonList;
         for (IExpense expense : iExpenses) {
             VBox child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()));
             expensesTable.getChildren().add(child);
