@@ -35,6 +35,8 @@ public class Program extends Application {
         stage.setTitle("SplitHappens");
         stage.setScene(scene);
         stage.show();
+
+        view.setBindings();
     }
 
     public static void main(String[] args) {

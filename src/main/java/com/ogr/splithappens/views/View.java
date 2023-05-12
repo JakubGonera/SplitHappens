@@ -248,7 +248,7 @@ public class View {
 
     private void recalculateExpensesTable(List<IExpense> iExpenses){
         expensesTable.getChildren().clear();
-        //Stream<IPerson> personStream = viewModel.getPersonsList().getValue().stream();
+        //List<IPerson> personList = viewModel.getPersonsList().getValue();
         List<IPerson> personList = dummyPersonList;
         for (IExpense expense : iExpenses) {
             VBox child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()));
