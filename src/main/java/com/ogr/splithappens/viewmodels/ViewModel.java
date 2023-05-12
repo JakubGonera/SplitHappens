@@ -17,7 +17,7 @@ public class ViewModel implements IViewModel {
     private final SimpleObjectProperty<List<IPerson>> personsList;
 
     private final SimpleObjectProperty<List<IExpense>> expensesList;
-    ViewModel(IPersonsManager personsManager, IExpenseManager expensesManager){
+    public ViewModel(IPersonsManager personsManager, IExpenseManager expensesManager){
         this.personsManager = personsManager;
         this.personsList = new SimpleObjectProperty<>(this, "personsList", personsManager.getPersons());
         this.expensesManager = expensesManager;
@@ -32,5 +32,11 @@ public class ViewModel implements IViewModel {
     @Override
     public ReadOnlyProperty<List<IExpense>> getExpensesList() {
         return expensesList;
+    }
+
+    @Override
+    public void addExpense(IExpense expense) {
+        expensesManager.addExpense(expense);
+        expensesList.setValue(expensesManager.getExpenses());
     }
 }

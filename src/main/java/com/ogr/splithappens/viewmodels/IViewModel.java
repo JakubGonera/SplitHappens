@@ -9,4 +9,5 @@ import java.util.List;
 public interface IViewModel {
     ReadOnlyProperty<List<IPerson>> getPersonsList();
     ReadOnlyProperty<List<IExpense>> getExpensesList();
+    void addExpense(IExpense expense);
 }
