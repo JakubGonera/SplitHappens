@@ -22,6 +22,22 @@ import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.util.converter.NumberStringConverter;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
+
+import static com.ogr.splithappens.views.PersonBlockFactory.createPersonBlock;
 
 import java.util.List;
 import java.util.Objects;
@@ -243,4 +259,42 @@ public class View {
             child.prefWidthProperty().bind(expensesTable.prefWidthProperty());
         }
     }
+    @FXML
+    TextField inputName;
+
+    @FXML
+    Accordion accordion;
+    @FXML
+    public void onAddPerson(ActionEvent e) {
+        String name = inputName.getText();
+        inputName.setText("");
+
+        System.out.println(name);
+        IPerson p = viewModel.addPerson(name);
+
+        if(p!=null){
+            addPersonBlock(p);
+            return;
+        }
+
+        final Stage errorPopup = new Stage();
+        errorPopup.initModality(Modality.APPLICATION_MODAL);
+        errorPopup.initOwner(primaryStage);
+
+
+        VBox dialogVbox = new VBox(20);
+        Text form = new Text("Invalid name.");
+        dialogVbox.getChildren().add(form);
+
+
+        Scene dialogScene = new Scene(dialogVbox, 300, 200);
+        errorPopup.setScene(dialogScene);
+        errorPopup.show();
+    }
+
+    public void addPersonBlock(IPerson p){
+        TitledPane tp = createPersonBlock(p);
+        accordion.getPanes().add(tp);
+    }
+
 }

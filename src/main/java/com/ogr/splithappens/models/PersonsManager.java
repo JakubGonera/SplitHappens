@@ -19,4 +19,7 @@ public class PersonsManager implements IPersonsManager {
     public void addPerson(String name) {
         persons.add(new Person(name, this));
     }
+
+
+
 }
