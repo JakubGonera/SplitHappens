@@ -37,5 +37,6 @@ public class ViewModel implements IViewModel {
     @Override
     public void addExpense(IExpense expense) {
         expensesManager.addExpense(expense);
+        expensesList.setValue(expensesManager.getExpenses());
     }
 }

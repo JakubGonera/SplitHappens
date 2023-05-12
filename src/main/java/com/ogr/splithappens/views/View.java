@@ -1,6 +1,7 @@
 package com.ogr.splithappens.views;
 
 import com.ogr.splithappens.models.IExpense;
+import com.ogr.splithappens.models.IPerson;
 import com.ogr.splithappens.viewmodels.IViewModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -10,22 +11,21 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.util.converter.NumberStringConverter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -53,6 +53,33 @@ public class View {
         @Override
         public int getPayerID() {
             return 0;
+        }
+    }
+    static class DummyPerson implements IPerson{
+
+        @Override
+        public String getName() {
+            return "Test";
+        }
+
+        @Override
+        public int getID() {
+            return 0;
+        }
+
+        @Override
+        public int getBalance() {
+            return 0;
+        }
+
+        @Override
+        public List<detailedBalance> getDetailedBalances() {
+            return null;
+        }
+
+        @Override
+        public String toString(){
+            return getName();
         }
     }
     static class ExpensePayload implements IExpense{
@@ -124,7 +151,6 @@ public class View {
         expenseWindow.initModality(Modality.APPLICATION_MODAL);
         expenseWindow.initOwner(primaryStage);
 
-
         VBox dialogVbox = new VBox(20);
         GridPane form = new GridPane();
         dialogVbox.getChildren().add(form);
@@ -149,16 +175,42 @@ public class View {
         valueTextField.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
         form.add(valueTextField, 1, 2);
 
+        Label payer = new Label("Payer:");
+        form.add(payer, 0, 3);
+
+        ChoiceBox<IPerson> payerPicker = new ChoiceBox<>();
+//        for(IPerson person : viewModel.getPersonsList().getValue()){
+//            payerPicker.getItems().add(person);
+//        }
+        List<IPerson> dummyPersonList = Stream.generate(DummyPerson::new).limit(3).collect(Collectors.toList());
+        for(IPerson person : dummyPersonList){
+            payerPicker.getItems().add(person);
+        }
+        form.add(payerPicker, 1, 3);
+
         Button btn = new Button("Add");
+        final Text errorText = new Text();
+        errorText.setFill(Color.FIREBRICK);
+
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 // Validation of the data
-
-                // If not valid show error
+                if(Objects.equals(expenseTextField.getText(), "")){
+                    errorText.setText("Empty title!");
+                    return;
+                }
+                if(Objects.equals(valueTextField.getText(), "")){
+                    errorText.setText("Empty value!");
+                    return;
+                }
+                if(payerPicker.getSelectionModel().isEmpty()){
+                    errorText.setText("Payer not selected!");
+                    return;
+                }
 
                 // Construct payload and send it to the viewmodel and close window
-                ExpensePayload expensePayload = new ExpensePayload(expenseTextField.getText(), Integer.parseInt(valueTextField.getText()), 0);
+                ExpensePayload expensePayload = new ExpensePayload(expenseTextField.getText(), Integer.parseInt(valueTextField.getText()), payerPicker.getSelectionModel().getSelectedItem().getID());
                 viewModel.addExpense(expensePayload);
                 expenseWindow.close();
             }
@@ -166,12 +218,11 @@ public class View {
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
-        form.add(hbBtn, 1, 4);
+        form.add(hbBtn, 1, 5);
 
-        final Text errorText = new Text();
         form.add(errorText, 1, 6);
 
-        Scene dialogScene = new Scene(dialogVbox, 300, 200);
+        Scene dialogScene = new Scene(dialogVbox, 300, 250);
         expenseWindow.setScene(dialogScene);
         expenseWindow.show();
     }
