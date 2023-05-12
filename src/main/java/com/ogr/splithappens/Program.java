@@ -22,7 +22,7 @@ public class Program extends Application {
 
 
         IExpenseManager expenseManager = new ExpenseManager();
-        IPersonsManager personsManager = new PersonsManager();
+        IPersonsManager personsManager = new PersonsManager(expenseManager);
         IViewModel viewModel = new ViewModel(personsManager, expenseManager);
 
         View view = new View(viewModel, stage);

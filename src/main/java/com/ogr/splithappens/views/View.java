@@ -2,6 +2,7 @@ package com.ogr.splithappens.views;
 
 import com.ogr.splithappens.models.IExpense;
 import com.ogr.splithappens.models.IPerson;
+import com.ogr.splithappens.models.Pair;
 import com.ogr.splithappens.viewmodels.IViewModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,20 +22,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
-import javafx.util.converter.NumberStringConverter;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 
 import static com.ogr.splithappens.views.PersonBlockFactory.createPersonBlock;
@@ -66,6 +53,11 @@ public class View {
         @Override
         public int getPayerID() {
             return payerID;
+        }
+
+        @Override
+        public List<Pair<Integer, Integer>> getBorrowers() {
+            return null;
         }
     }
     static class DummyPerson implements IPerson{
@@ -124,6 +116,11 @@ public class View {
         @Override
         public int getPayerID() {
             return payerID;
+        }
+
+        @Override
+        public List<Pair<Integer, Integer>> getBorrowers() {
+            return null;
         }
     }
     private final IViewModel viewModel;

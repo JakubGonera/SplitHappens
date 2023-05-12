@@ -5,9 +5,9 @@ import java.util.List;
 
 public class PersonsManager implements IPersonsManager {
     // TODO: implement PersonsManager
-    ExpenseManager expenseManager;
+    IExpenseManager expenseManager;
     List<IPerson>persons;
-    PersonsManager(ExpenseManager expenseManager){
+    public PersonsManager(IExpenseManager expenseManager){
         this.expenseManager = expenseManager;
         persons = new ArrayList<>();
     }
@@ -16,8 +16,10 @@ public class PersonsManager implements IPersonsManager {
         return persons;
     }
     @Override
-    public void addPerson(String name) {
-        persons.add(new Person(name, this));
+    public IPerson addPerson(String name) {
+        IPerson temp = new Person(name, this);
+        persons.add(temp);
+        return temp;
     }
 
 
