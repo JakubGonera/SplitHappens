@@ -23,21 +23,18 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.util.converter.NumberStringConverter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
-
-
 public class View {
     static class DummyExpense implements IExpense{
-
+        static int counter = 0;
+        int payerID = counter++;
         @Override
         public String getTitle() {
-            return "Test";
+            return "Expense" + Integer.toString(payerID);
         }
 
         @Override
@@ -52,19 +49,20 @@ public class View {
 
         @Override
         public int getPayerID() {
-            return 0;
+            return payerID;
         }
     }
     static class DummyPerson implements IPerson{
-
+        static int globalCounter = 0;
+        int id = globalCounter++;
         @Override
         public String getName() {
-            return "Test";
+            return "Person" + Integer.toString(id);
         }
 
         @Override
         public int getID() {
-            return 0;
+            return id;
         }
 
         @Override
@@ -119,6 +117,7 @@ public class View {
     @FXML
     VBox expensesTable;
 
+    List<IPerson> dummyPersonList = Stream.generate(DummyPerson::new).limit(3).collect(Collectors.toList());
     public View(IViewModel viewModel, Stage primaryStage){
         this.viewModel = viewModel;
         this.primaryStage = primaryStage;
@@ -138,7 +137,6 @@ public class View {
                 openNewExpense();
             }
         });
-
 
         List<IExpense> dummyExpenseList = Stream.generate(DummyExpense::new).limit(3).collect(Collectors.toList());
 
@@ -182,7 +180,7 @@ public class View {
 //        for(IPerson person : viewModel.getPersonsList().getValue()){
 //            payerPicker.getItems().add(person);
 //        }
-        List<IPerson> dummyPersonList = Stream.generate(DummyPerson::new).limit(3).collect(Collectors.toList());
+
         for(IPerson person : dummyPersonList){
             payerPicker.getItems().add(person);
         }
@@ -226,10 +224,23 @@ public class View {
         expenseWindow.setScene(dialogScene);
         expenseWindow.show();
     }
+
+    private static IPerson getUniquePerson(Stream<IPerson> persons, int personID) {
+        return persons.filter(p -> p.getID() == personID)
+                .reduce((a, b) -> {
+                    throw new IllegalStateException("Multiple persons with same ID");
+                })
+                .orElseThrow(() -> new IllegalStateException("No person matches ID"));
+    }
+
     private void recalculateExpensesTable(List<IExpense> iExpenses){
         expensesTable.getChildren().clear();
+        //Stream<IPerson> personStream = viewModel.getPersonsList().getValue().stream();
+        List<IPerson> personList = dummyPersonList;
         for (IExpense expense : iExpenses) {
-            expensesTable.getChildren().add(ExpenseBlockFactory.createExpenseBlock(expense));
+            VBox child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()));
+            expensesTable.getChildren().add(child);
+            child.prefWidthProperty().bind(expensesTable.prefWidthProperty());
         }
     }
 }
