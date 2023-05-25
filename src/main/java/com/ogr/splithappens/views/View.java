@@ -232,10 +232,11 @@ public class View {
                 List<IPerson> personList = viewModel.getPersonsList().getValue();
                 for(IPerson person : personList){
                     borrowers.add(new Pair<>(person.getID(), (int)(value/personList.size() * 100)));
+
                 }
 
                 // Construct payload and send it to the viewmodel and close window
-                ExpensePayload expensePayload = new ExpensePayload(expenseTextField.getText(), (int)value, payerPicker.getSelectionModel().getSelectedItem().getID(), borrowers);
+                ExpensePayload expensePayload = new ExpensePayload(expenseTextField.getText(), 100*(int)value, payerPicker.getSelectionModel().getSelectedItem().getID(), borrowers);
                 viewModel.addExpense(expensePayload);
 
                 recalculateExpensesTable(viewModel.getExpensesList().getValue());
