@@ -6,21 +6,37 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class PersonBlockFactory {
 
+    private static final String currency = "gr";
+        
     static TitledPane createPersonBlock(IPerson p){
 
-        int b = p.getBalance();
+        AnchorPane ap = new AnchorPane();
 
-        Label l = new Label();
-        if(b == 0) l.setText("Settled ;)");
-        else l.setText(Integer.valueOf(b).toString());
+        for(var exp: p.getDetailedBalances()){
 
-        AnchorPane ap = new AnchorPane(l);
+            String text;
+            if(exp.balance()==0) continue;
+            if(exp.balance()>0)
+                text = "<- " + Integer.valueOf(exp.balance()).toString() + " " + currency + " from " + exp.name();
+            else
+                text = "-> " + Integer.valueOf(-exp.balance()).toString() + " " + currency + " to " + exp.name();
+
+            Label l = new Label(text);
+            ap.getChildren().add(l);
+        }
 
         TitledPane tp = new TitledPane();
         tp.setContent(ap);
-        tp.setText(p.getName());
+
+        String balanceText;
+        if(p.getBalance()==0) balanceText = "(Settled up)";
+        else balanceText = "(" + Integer.valueOf(p.getBalance()).toString() + " " + currency + ")";
+        tp.setText(p.getName() + " " + balanceText );
 
         return tp;
 

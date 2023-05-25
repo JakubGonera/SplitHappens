@@ -41,6 +41,7 @@ public class ExpenseManager implements IExpenseManager {
             else{
                 negative.add(new Pair<>(balance.getKey(), balance.getValue()));
             }
+
             result.put(balance.getKey(), new ArrayList<>());
         }
         //sort positive in descending and negative in ascending order by .second
