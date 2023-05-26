@@ -122,9 +122,6 @@ public class View {
             }
         });
 
-        //List<IExpense> dummyExpenseList = Stream.generate(DummyExpense::new).limit(3).collect(Collectors.toList());
-
-        // recalculateExpensesTable(dummyExpenseList);
         recalculateExpensesTable(viewModel.getExpensesList().getValue());
     }
 
@@ -149,97 +146,6 @@ public class View {
         catch(IOException ignored){
 
         }
-
-        //----------------------------------------------
-
-//        final Stage expenseWindow = new Stage();
-//        expenseWindow.initModality(Modality.APPLICATION_MODAL);
-//        expenseWindow.initOwner(primaryStage);
-//
-//        VBox dialogVbox = new VBox(20);
-//        GridPane form = new GridPane();
-//        dialogVbox.getChildren().add(form);
-//        form.setHgap(10);
-//        form.setVgap(10);
-//        form.setPadding(new Insets(25, 25, 25, 25));
-//
-//        Text title = new Text("Add a new expense");
-//        title.setFont(Font.font("Montserrat", FontWeight.NORMAL, 20));
-//        form.add(title, 0, 0, 2, 1);
-//
-//        Label expenseTitle = new Label("Expense title:");
-//        form.add(expenseTitle, 0, 1);
-//
-//        TextField expenseTextField = new TextField();
-//        form.add(expenseTextField, 1, 1);
-//
-//        Label value = new Label("Value:");
-//        form.add(value, 0, 2);
-//
-//        TextField valueTextField = new TextField();
-//        valueTextField.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
-//        form.add(valueTextField, 1, 2);
-//
-//        Label payer = new Label("Payer:");
-//        form.add(payer, 0, 3);
-//
-//        ChoiceBox<IPerson> payerPicker = new ChoiceBox<>();
-//        for(IPerson person : viewModel.getPersonsList().getValue()){
-//            payerPicker.getItems().add(person);
-//        }
-//
-////        for(IPerson person : dummyPersonList){
-////            payerPicker.getItems().add(person);
-////        }
-//        form.add(payerPicker, 1, 3);
-//
-//        Button btn = new Button("Add");
-//        final Text errorText = new Text();
-//        errorText.setFill(Color.FIREBRICK);
-//
-//        btn.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent actionEvent) {
-//                // Validation of the data
-//                if(Objects.equals(expenseTextField.getText(), "")){
-//                    errorText.setText("Empty title!");
-//                    return;
-//                }
-//                if(Objects.equals(valueTextField.getText(), "")){
-//                    errorText.setText("Empty value!");
-//                    return;
-//                }
-//                if(payerPicker.getSelectionModel().isEmpty()){
-//                    errorText.setText("Payer not selected!");
-//                    return;
-//                }
-//
-//                float value = Float.parseFloat(valueTextField.getText());
-//
-//                List<Pair<Integer, Integer>> borrowers = new ArrayList<>();
-//                List<IPerson> personList = viewModel.getPersonsList().getValue();
-//                for(IPerson person : personList){
-//                    borrowers.add(new Pair<>(person.getID(), (int)(value/personList.size() * 100)));
-//                }
-//
-//                // Construct payload and send it to the viewmodel and close window
-//                ExpensePayload expensePayload = new ExpensePayload(expenseTextField.getText(), (int)value, payerPicker.getSelectionModel().getSelectedItem().getID(), borrowers);
-//                viewModel.addExpense(expensePayload);
-//
-//                recalculateExpensesTable(viewModel.getExpensesList().getValue());
-//                expenseWindow.close();
-//            }
-//        });
-//        HBox hbBtn = new HBox(10);
-//        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-//        hbBtn.getChildren().add(btn);
-//        form.add(hbBtn, 1, 5);
-//
-//        form.add(errorText, 1, 6);
-//
-//        Scene dialogScene = new Scene(dialogVbox, 300, 250);
-//        expenseWindow.setScene(dialogScene);
-//        expenseWindow.show();
     }
 
     private static IPerson getUniquePerson(Stream<IPerson> persons, int personID) {
