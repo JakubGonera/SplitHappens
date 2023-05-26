@@ -138,7 +138,7 @@ public class View {
         expenseWindow.setResizable(false);
 
         try {
-            Scene dialogScene = new Scene(fxmlLoader.load(), 350, 350);
+            Scene dialogScene = new Scene(fxmlLoader.load(), 400, 450);
             expenseWindow.setScene(dialogScene);
             expenseWindow.show();
             controller.setBindings();

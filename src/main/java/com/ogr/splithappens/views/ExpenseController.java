@@ -4,13 +4,16 @@ import com.ogr.splithappens.models.IExpense;
 import com.ogr.splithappens.models.IPerson;
 import com.ogr.splithappens.models.Pair;
 import com.ogr.splithappens.viewmodels.IViewModel;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
+import javafx.scene.control.skin.TextAreaSkin;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
@@ -70,16 +73,46 @@ public class ExpenseController {
     Text errorText;
     @FXML
     Button addButton;
+    @FXML
+    CheckBox detailedCheck;
+    @FXML
+    ScrollPane splitPane;
     public ExpenseController(IViewModel viewModel, Stage window){
         this.viewModel = viewModel;
         this.window = window;
     }
 
     public void setBindings(){
+        ObservableList<IPerson> personsList = viewModel.getPersonsList().getValue();
         valueField.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
-        payerField.getItems().addAll(viewModel.getPersonsList().getValue());
+        payerField.getItems().addAll(personsList);
 
+        GridPane splitGrid = new GridPane();
+        splitGrid.prefWidthProperty().bind(splitPane.widthProperty());
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setMaxWidth(150);
+        col1.setPrefWidth(150);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setMaxWidth(150);
+        col2.setPrefWidth(150);
+        splitGrid.getColumnConstraints().addAll(col1, col2);
 
+        splitGrid.setVgap(7);
+
+        int row = 0;
+
+        for(IPerson person : personsList){
+            Text name = new Text(person.getName());
+            name.setFont(Font.font("System", 14));
+            splitGrid.add(name, 0, row);
+
+            TextField value = new TextField();
+            value.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
+            splitGrid.add(value, 1, row);
+            row++;
+        }
+
+        splitPane.setContent(splitGrid);
 
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -110,10 +143,10 @@ public class ExpenseController {
                 ExpensePayload expensePayload = new ExpensePayload(titleField.getText(), 100 * (int)value, payerField.getSelectionModel().getSelectedItem().getID(), borrowers);
                 viewModel.addExpense(expensePayload);
 
-                // TODO: fix this
-                //recalculateExpensesTable(viewModel.getExpensesList().getValue());
                 window.close();
             }
         });
+
+        splitPane.disableProperty().bind(detailedCheck.selectedProperty().not());
     }
 }
