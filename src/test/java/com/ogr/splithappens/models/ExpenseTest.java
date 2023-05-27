@@ -8,18 +8,19 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 class ExpenseTest {
-    @Test
+    /*@Test
     public void staticTest(){
         List<Pair<Integer,Integer>> ex = new ArrayList<>();
         Expense e0 = new Expense("a", 0, 0, ex );
         Expense e1 = new Expense("a", 0, 0, ex );
         assertEquals(e0.getID()+1, e1.getID());
-    }
+    }*/
+    // id is assigned in expense manager
     @Test
     public void simpleTest(){
         List<Pair<Integer,Integer>> l0 = new ArrayList<>(Arrays.asList(new Pair<>(1, 15), new Pair<>(2,15)));
         List<Pair<Integer,Integer>> l1 = new ArrayList<>(Arrays.asList(new Pair<>(1, 30), new Pair<>(2,0)));
-        Expense e0 = new Expense("0",0, 30, l0);
+        Expense e0 = new Expense("0",0, 30, l0) ;
         Expense e1 = new Expense("1", 0, 30, l1);
         ExpenseManager em = new ExpenseManager();
         em.addExpense(e0);

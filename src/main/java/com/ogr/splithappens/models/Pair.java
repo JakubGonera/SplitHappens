@@ -1,6 +1,8 @@
 package com.ogr.splithappens.models;
 
-public class Pair <T,U> {
+import java.io.Serializable;
+
+public class Pair <T,U> implements Serializable {
     T first;
     U second;
     Pair(){

@@ -1,11 +1,21 @@
 package com.ogr.splithappens.models;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ExpenseManager implements IExpenseManager {
+public class ExpenseManager implements IExpenseManager, Serializable {
 
     List<IExpense> expenses = new ArrayList<>();
+    int globalID = 0;
+    @Override
+    public int getGlobalID(){
+        return globalID;
+    }
+    @Override
+    public void incrementGlobalID(){
+        globalID++;
+    }
     @Override
     public List<IExpense> getExpenses() {
         return expenses;
@@ -13,7 +23,8 @@ public class ExpenseManager implements IExpenseManager {
 
     @Override
     public void addExpense(IExpense expense) {
-        expenses.add(expense);
+        expenses.add(new Expense(expense.getTitle(), expense.getPayerID(), expense.getAmount(), expense.getBorrowers(), getGlobalID()));
+        incrementGlobalID();
     }
 
     public Map<Integer, Integer> getBalances(){
