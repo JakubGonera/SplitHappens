@@ -13,10 +13,5 @@ public interface IPersonsManager {
      */
     void addPerson(String name);
 
-//    public class InvalidInputException extends RuntimeException{
-//        public InvalidInputException(String errorMessage) {
-//            super(errorMessage);
-//        }
-//    }
-
+    IPerson getPersonByName(String name);
 }

@@ -49,4 +49,8 @@ public class ViewModel implements IViewModel {
          personsManager.addPerson(name);
     }
 
+
+    public IPerson getPersonByName(String name){
+        return personsManager.getPersonByName(name);
+    }
 }

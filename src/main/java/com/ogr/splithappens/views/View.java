@@ -5,6 +5,7 @@ import com.ogr.splithappens.models.IExpense;
 import com.ogr.splithappens.models.IPerson;
 import com.ogr.splithappens.models.Pair;
 import com.ogr.splithappens.viewmodels.IViewModel;
+import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -112,6 +113,8 @@ public class View {
             @Override
             public void changed(ObservableValue<? extends List<IExpense>> observableValue, List<IExpense> iExpenses, List<IExpense> t1) {
                 recalculateExpensesTable(iExpenses);
+                System.out.println("BINDING!");
+                updatePeople();
 
             }
         });
@@ -120,7 +123,7 @@ public class View {
             @Override
             public void handle(ActionEvent event) {
                 openNewExpense();
-                updatePeople();
+
             }
 
         });
@@ -194,7 +197,7 @@ public class View {
         System.out.println("Updating people");
         System.out.println("Number of expenses: " + viewModel.getExpensesList().getValue().size());
 
-        ReadOnlyProperty<List<IPerson>> people = viewModel.getPersonsList();
+        ReadOnlyListProperty<IPerson> people = viewModel.getPersonsList();
         accordion.getPanes().remove(0, accordion.getPanes().size());
         for(IPerson ip: people.getValue()){
             TitledPane tp = createPersonBlock(ip);
@@ -210,25 +213,13 @@ public class View {
         updatePeople();
 
 
+    }
 
-
-//        if(!name.equals("")) {
-//            System.out.println(name);
-//            IPerson p = viewModel.addPerson(name);
-//
-//            if (p != null) {
-//               updatePeople();
-//                return;
-//            }
-//        }
-//
-//        InvalidNamePopup_pop();
+//    @FXML
+    public void onPersonOptionesSchema(int idx, ActionEvent e) {
+        System.out.println("pressed button: "+ Integer.valueOf(idx).toString());
 
     }
 
-//    public void addPersonBlock(IPerson p){
-//        TitledPane tp = createPersonBlock(p);
-//        accordion.getPanes().add(tp);
-//    }
 
 }

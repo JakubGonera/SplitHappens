@@ -18,4 +18,6 @@ public interface IViewModel {
      * @return if successful returns the created person
      */
     void addPerson(String name);
+
+    IPerson getPersonByName(String name);
 }

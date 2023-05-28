@@ -1,44 +1,80 @@
 package com.ogr.splithappens.views;
 
 import com.ogr.splithappens.models.IPerson;
-import javafx.scene.Node;
+import com.ogr.splithappens.viewmodels.IViewModel;
+import com.ogr.splithappens.viewmodels.ViewModel;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class PersonBlockFactory {
 
-    private static final String currency = "gr";
+    private static final String currency = "zł";
+    public static IViewModel viewModel;
         
     static TitledPane createPersonBlock(IPerson p){
 
-        AnchorPane ap = new AnchorPane();
+
+        VBox vb = new VBox();
+
+
+        HBox head = new HBox();
+
+        Button settings = new Button("Settings");
+        Button remove = new Button("Remove");
+//        Separator separator = new Separator();
+
+        head.getChildren().add(settings);
+//        head.getChildren().add(separator);
+        head.getChildren().add(remove);
+        vb.getChildren().add(head);
+
 
         for(var exp: p.getDetailedBalances()){
 
             String text;
             if(exp.balance()==0) continue;
             if(exp.balance()>0)
-                text = "<- " + Integer.valueOf(exp.balance()).toString() + " " + currency + " from " + exp.name();
+                text = " <- " + Double.valueOf(exp.balance()*0.01).toString() + " " + currency + " from " + exp.name();
             else
-                text = "-> " + Integer.valueOf(-exp.balance()).toString() + " " + currency + " to " + exp.name();
+                text = " -> " + Double.valueOf(-exp.balance()*0.01).toString() + " " + currency + " to " + exp.name();
 
-            Label l = new Label(text);
-            ap.getChildren().add(l);
+            Label l = new Label(text+" ");
+
+            Button b = new Button("...");
+            b.setScaleY(0.7);
+            b.setOnAction(x -> onPersonOptionsSchema(p, viewModel.getPersonByName(exp.name()), exp.balance(), x));
+
+            HBox hb = new HBox();
+            hb.getChildren().add(l);
+            hb.getChildren().add(b);
+
+            vb.getChildren().add(hb);
         }
-
+        AnchorPane ap = new AnchorPane();
+        ap.getChildren().add(vb);
         TitledPane tp = new TitledPane();
+
         tp.setContent(ap);
+
 
         String balanceText;
         if(p.getBalance()==0) balanceText = "(Settled up)";
-        else balanceText = "(" + Integer.valueOf(p.getBalance()).toString() + " " + currency + ")";
+        else balanceText = "(" +Double.valueOf(p.getBalance()*0.01).toString() + " " + currency + ")";
         tp.setText(p.getName() + " " + balanceText );
 
         return tp;
+
+    }
+
+    public static void onPersonOptionsSchema(IPerson payer, IPerson receiver, int balance, ActionEvent e) {
+
+        new SettleUpView(viewModel).Show(payer, receiver, balance);
 
     }
 

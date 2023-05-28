@@ -5,8 +5,6 @@ import com.ogr.splithappens.views.InvalidNamePopupView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ogr.splithappens.views.InvalidNamePopupView.*;
-
 public class PersonsManager implements IPersonsManager {
     // TODO: implement PersonsManager
     IExpenseManager expenseManager;
@@ -23,18 +21,24 @@ public class PersonsManager implements IPersonsManager {
     @Override
     public void addPerson(String name) {
         if(name.equals("")){
-            new InvalidNamePopupView().Pop("Name cannot be empty!");
+            new InvalidNamePopupView().Show("Name cannot be empty!");
             return;
         }
         for(IPerson p: persons){
             if(p.getName().equals(name)) {
-                new InvalidNamePopupView().Pop("This person already exists!");
+                new InvalidNamePopupView().Show("This person already exists!");
                 return;
             }
         }
 
         IPerson temp = new Person(name, this);
         persons.add(temp);
+    }
+
+    public IPerson getPersonByName(String name){
+        for(IPerson ip : persons)
+            if(ip.getName().equals(name)) return ip;
+        throw new RuntimeException("There is no person with name " + name);
     }
 
 
