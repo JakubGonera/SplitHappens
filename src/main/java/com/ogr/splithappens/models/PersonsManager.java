@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonsManager implements IPersonsManager, Serializable {
-    // TODO: implement PersonsManager
     IExpenseManager expenseManager;
     List<IPerson>persons;
     int globalID = 0;
