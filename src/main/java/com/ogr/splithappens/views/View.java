@@ -119,9 +119,11 @@ public class View {
         List<IPerson> personList = viewModel.getPersonsList().getValue();
         //List<IPerson> personList = dummyPersonList;
         for (IExpense expense : iExpenses) {
-            VBox child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()), viewModel);
-            expensesTable.getChildren().add(child);
-            child.prefWidthProperty().bind(expensesTable.prefWidthProperty());
+            if (expense.getAmount() > 0) {
+                VBox child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()), viewModel);
+                expensesTable.getChildren().add(child);
+                child.prefWidthProperty().bind(expensesTable.prefWidthProperty());
+            }
         }
     }
 
