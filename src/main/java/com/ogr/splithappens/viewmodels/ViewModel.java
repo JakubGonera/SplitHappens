@@ -1,5 +1,6 @@
 package com.ogr.splithappens.viewmodels;
 
+import com.ogr.splithappens.IOservice.IOService;
 import com.ogr.splithappens.models.IExpense;
 import com.ogr.splithappens.models.IExpenseManager;
 import com.ogr.splithappens.models.IPerson;
@@ -59,5 +60,10 @@ public class ViewModel implements IViewModel {
 
     public IPerson getPersonByName(String name){
         return personsManager.getPersonByName(name);
+    }
+
+    @Override
+    public void save() {
+        IOService.writeData(personsManager);
     }
 }

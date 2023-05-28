@@ -21,4 +21,5 @@ public interface IViewModel {
     void addPerson(String name);
 
     IPerson getPersonByName(String name);
+    void save();
 }

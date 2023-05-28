@@ -1,5 +1,6 @@
 package com.ogr.splithappens;
 
+import com.ogr.splithappens.IOservice.IOService;
 import com.ogr.splithappens.models.ExpenseManager;
 import com.ogr.splithappens.models.IExpenseManager;
 import com.ogr.splithappens.models.IPersonsManager;
@@ -20,12 +21,8 @@ import java.io.IOException;
 public class Program extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-
-
-
-        IExpenseManager expenseManager = new ExpenseManager();
-        IPersonsManager personsManager = new PersonsManager(expenseManager);
-        IViewModel viewModel = new ViewModel(personsManager, expenseManager);
+        IPersonsManager personsManager = IOService.readData();
+        IViewModel viewModel = new ViewModel(personsManager, personsManager.getExpenseManager());
 
         View view = new View(viewModel, stage);
 

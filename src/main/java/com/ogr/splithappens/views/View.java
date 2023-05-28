@@ -43,6 +43,8 @@ public class View {
     @FXML
     Button newExpense;
     @FXML
+    Button save;
+    @FXML
     VBox expensesTable;
 
     public View(IViewModel viewModel, Stage primaryStage){
@@ -69,11 +71,16 @@ public class View {
             }
 
         });
+        save.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                viewModel.save();
+            }
+        });
 
 
-        // recalculateExpensesTable(dummyExpenseList);
         recalculateExpensesTable(viewModel.getExpensesList().getValue());
-
+        updatePeople();
     }
 
     private void openNewExpense(){
