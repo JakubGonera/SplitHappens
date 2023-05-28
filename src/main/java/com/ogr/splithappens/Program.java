@@ -18,6 +18,9 @@ import java.io.IOException;
 public class Program extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+
+
+
         IExpenseManager expenseManager = new ExpenseManager();
         IPersonsManager personsManager = new PersonsManager(expenseManager);
         IViewModel viewModel = new ViewModel(personsManager, expenseManager);

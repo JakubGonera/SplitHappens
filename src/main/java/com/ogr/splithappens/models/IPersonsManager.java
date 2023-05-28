@@ -4,6 +4,9 @@ import java.util.List;
 
 public interface IPersonsManager {
     List<IPerson> getPersons();
+    IExpenseManager getExpenseManager();
+    int getGlobalID();
+    void incrementGlobalID();
 
 
     /**

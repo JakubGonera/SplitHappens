@@ -1,6 +1,5 @@
 package com.ogr.splithappens.views;
 
-import com.ogr.splithappens.Program;
 import com.ogr.splithappens.models.IExpense;
 import com.ogr.splithappens.models.IPerson;
 import com.ogr.splithappens.models.Pair;
@@ -12,7 +11,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -30,7 +28,6 @@ import javafx.util.converter.NumberStringConverter;
 
 import static com.ogr.splithappens.views.PersonBlockFactory.createPersonBlock;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -94,6 +91,43 @@ public class View {
             return getName();
         }
     }
+    static class ExpensePayload implements IExpense{
+        String title;
+        int value;
+        int payerID;
+        List<Pair<Integer, Integer>> borrowers;
+        public ExpensePayload(String title, int value, int payerID, List<Pair<Integer, Integer>> borrowers){
+            this.title = title;
+            this.value = value;
+            this.payerID = payerID;
+            this.borrowers = borrowers;
+        }
+        @Override
+        public String getTitle() {
+            return title;
+        }
+
+        @Override
+        public int getID() {
+            // As a payload this doesn't have an ID, it should be assigned by the model
+            return -1;
+        }
+
+        @Override
+        public int getAmount() {
+            return value;
+        }
+
+        @Override
+        public int getPayerID() {
+            return payerID;
+        }
+
+        @Override
+        public List<Pair<Integer, Integer>> getBorrowers() {
+            return borrowers;
+        }
+    }
     private final IViewModel viewModel;
     private final Stage primaryStage;
     @FXML
@@ -122,20 +156,17 @@ public class View {
             }
         });
 
+        //List<IExpense> dummyExpenseList = Stream.generate(DummyExpense::new).limit(3).collect(Collectors.toList());
+
+        // recalculateExpensesTable(dummyExpenseList);
         recalculateExpensesTable(viewModel.getExpensesList().getValue());
     }
 
     private void openNewExpense(){
-        // Method that opens pop-up for filling in details for a new expense
+        // Method that opens pop-up for filling in details for a new expense + bindings to viewmodel to add expense + simple validation
         final Stage expenseWindow = new Stage();
-        ExpenseController controller = new ExpenseController(viewModel, expenseWindow);
-
-        FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("addExpense.fxml"));
-        fxmlLoader.setController(controller);
-
         expenseWindow.initModality(Modality.APPLICATION_MODAL);
         expenseWindow.initOwner(primaryStage);
-        expenseWindow.setResizable(false);
 
         try {
             Scene dialogScene = new Scene(fxmlLoader.load(), 400, 450);
@@ -143,9 +174,60 @@ public class View {
             expenseWindow.show();
             controller.setBindings();
         }
-        catch(IOException ignored){
 
-        }
+//        for(IPerson person : dummyPersonList){
+//            payerPicker.getItems().add(person);
+//        }
+        form.add(payerPicker, 1, 3);
+
+        Button btn = new Button("Add");
+        final Text errorText = new Text();
+        errorText.setFill(Color.FIREBRICK);
+
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                // Validation of the data
+                if(Objects.equals(expenseTextField.getText(), "")){
+                    errorText.setText("Empty title!");
+                    return;
+                }
+                if(Objects.equals(valueTextField.getText(), "")){
+                    errorText.setText("Empty value!");
+                    return;
+                }
+                if(payerPicker.getSelectionModel().isEmpty()){
+                    errorText.setText("Payer not selected!");
+                    return;
+                }
+
+                float value = Float.parseFloat(valueTextField.getText());
+
+                List<Pair<Integer, Integer>> borrowers = new ArrayList<>();
+                List<IPerson> personList = viewModel.getPersonsList().getValue();
+                for(IPerson person : personList){
+                    borrowers.add(new Pair<>(person.getID(), (int)(value/personList.size() * 100)));
+
+                }
+
+                // Construct payload and send it to the viewmodel and close window
+                ExpensePayload expensePayload = new ExpensePayload(expenseTextField.getText(), 100*(int)value, payerPicker.getSelectionModel().getSelectedItem().getID(), borrowers);
+                viewModel.addExpense(expensePayload);
+
+                recalculateExpensesTable(viewModel.getExpensesList().getValue());
+                expenseWindow.close();
+            }
+        });
+        HBox hbBtn = new HBox(10);
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().add(btn);
+        form.add(hbBtn, 1, 5);
+
+        form.add(errorText, 1, 6);
+
+        Scene dialogScene = new Scene(dialogVbox, 300, 250);
+        expenseWindow.setScene(dialogScene);
+        expenseWindow.show();
     }
 
     private static IPerson getUniquePerson(Stream<IPerson> persons, int personID) {

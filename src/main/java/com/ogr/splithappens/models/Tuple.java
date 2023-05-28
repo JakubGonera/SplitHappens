@@ -1,6 +1,8 @@
 package com.ogr.splithappens.models;
 
-public class Tuple{
+import java.io.Serializable;
+
+public class Tuple implements Serializable {
     public String name;
     int id;
     int balance;

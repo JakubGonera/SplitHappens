@@ -1,18 +1,19 @@
 package com.ogr.splithappens.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class Person implements IPerson {
-    static int globalID;
+public class Person implements IPerson, Serializable {
     String name;
     int id;
     PersonsManager personsManager;
     Person(String name, PersonsManager personsManager){
         this.name = name;
         this.personsManager = personsManager;
-        id = globalID;
-        globalID++;
+        id = personsManager.getGlobalID();
+        personsManager.incrementGlobalID();
     }
     @Override
     public String getName() {
