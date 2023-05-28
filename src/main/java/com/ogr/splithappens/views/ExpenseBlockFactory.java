@@ -3,8 +3,6 @@ package com.ogr.splithappens.views;
 import com.ogr.splithappens.models.IExpense;
 import com.ogr.splithappens.models.IPerson;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -23,10 +21,22 @@ public class ExpenseBlockFactory {
         grid.getColumnConstraints().addAll(col1,col2);
 
         grid.add(new Text(expense.getTitle()), 0, 0);
-        grid.add(new Text(Integer.toString(expense.getAmount())), 1, 0);
+        grid.add(new Text(convertValue(expense.getAmount())), 1, 0);
         grid.add(new Text(person.getName()), 1, 1);
         out.getChildren().add(grid);
         grid.prefWidthProperty().bind(out.prefWidthProperty());
+        return out;
+    }
+
+    private static String convertValue(int value){
+        String out = Integer.toString(value);
+        if (out.length() > 2){
+            out = out.substring(0, out.length() - 2) + "." + out.substring(out.length() - 2);
+        } else if (out.length() == 2){
+            out = "0." + out;
+        } else {
+            out = "0.0" + out;
+        }
         return out;
     }
 }

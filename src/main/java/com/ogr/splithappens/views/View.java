@@ -168,36 +168,11 @@ public class View {
         expenseWindow.initModality(Modality.APPLICATION_MODAL);
         expenseWindow.initOwner(primaryStage);
 
-        VBox dialogVbox = new VBox(20);
-        GridPane form = new GridPane();
-        dialogVbox.getChildren().add(form);
-        form.setHgap(10);
-        form.setVgap(10);
-        form.setPadding(new Insets(25, 25, 25, 25));
-
-        Text title = new Text("Add a new expense");
-        title.setFont(Font.font("Montserrat", FontWeight.NORMAL, 20));
-        form.add(title, 0, 0, 2, 1);
-
-        Label expenseTitle = new Label("Expense title:");
-        form.add(expenseTitle, 0, 1);
-
-        TextField expenseTextField = new TextField();
-        form.add(expenseTextField, 1, 1);
-
-        Label value = new Label("Value:");
-        form.add(value, 0, 2);
-
-        TextField valueTextField = new TextField();
-        valueTextField.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
-        form.add(valueTextField, 1, 2);
-
-        Label payer = new Label("Payer:");
-        form.add(payer, 0, 3);
-
-        ChoiceBox<IPerson> payerPicker = new ChoiceBox<>();
-        for(IPerson person : viewModel.getPersonsList().getValue()){
-            payerPicker.getItems().add(person);
+        try {
+            Scene dialogScene = new Scene(fxmlLoader.load(), 400, 450);
+            expenseWindow.setScene(dialogScene);
+            expenseWindow.show();
+            controller.setBindings();
         }
 
 //        for(IPerson person : dummyPersonList){
