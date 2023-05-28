@@ -16,8 +16,8 @@
 <AnchorPane prefHeight="200" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"  >
   <children>
     <VBox alignment="CENTER">
-      <Label text="Confirm the transaction?"  prefWidth="150" prefHeight="20" fx:id="textLabel" alignment="TOP_CENTER"/>
-      <Label text="Confirm the transaction?" prefWidth="150" prefHeight="20" fx:id="detailLabel" alignment="TOP_CENTER"/>
+      <Label text="Confirm the transaction?"  prefWidth="170" prefHeight="20" fx:id="textLabel" alignment="TOP_CENTER"/>
+      <Label text="Confirm the transaction?" prefWidth="170" prefHeight="20" fx:id="detailLabel" alignment="TOP_CENTER"/>
       <HBox alignment="TOP_CENTER">
         <Label text= "Amount: "  prefWidth="70" prefHeight="20" fx:id="amountLabel"/>
         <TextField fx:id="amountField"  prefWidth="60"/>

@@ -72,11 +72,17 @@ public class PersonBlockFactory {
 
     }
 
+
     public static void onPersonOptionsSchema(IPerson payer, IPerson receiver, int balance, ActionEvent e) {
 
-        new SettleUpView(viewModel).Show(payer, receiver, balance);
+        if(balance<0){
+            new SettleUpView(viewModel).Show(receiver, payer, -balance);
+        }
+        else
+            new SettleUpView(viewModel).Show(payer, receiver, balance);
 
     }
+
 
 
 }
