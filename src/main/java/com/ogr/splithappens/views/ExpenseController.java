@@ -8,22 +8,36 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.util.*;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.TextAreaSkin;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.converter.NumberStringConverter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ExpenseController {
+
+    static final class SimpleStringConverter extends StringConverter<Number>{
+        @Override
+        public String toString(Number object) {
+            if(object == null)
+                return "0";
+            return String.format("%.2f", object.floatValue());
+        }
+
+        @Override
+        public Number fromString(String string) {
+            return Float.parseFloat(string);
+        }
+
+    }
     static class ExpensePayload implements IExpense {
         String title;
         int value;
@@ -85,12 +99,12 @@ public class ExpenseController {
 
     public void setBindings(){
         ObservableList<IPerson> personsList = viewModel.getPersonsList().getValue();
-        valueField.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
+        valueField.setTextFormatter(new TextFormatter<>(new SimpleStringConverter()));
         payerField.getItems().addAll(personsList);
 
         // Detailed split set up
         GridPane splitGrid = new GridPane();
-        splitGrid.prefWidthProperty().bind(splitPane.widthProperty());
+        splitGrid.prefWidthProperty().bind(splitPane.widthProperty().add(-10));
         valueField.disableProperty().bind(detailedCheck.selectedProperty());
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setMaxWidth(150);
@@ -109,17 +123,23 @@ public class ExpenseController {
             Text name = new Text(person.getName());
             name.setFont(Font.font("System", 14));
             splitGrid.add(name, 0, row);
+            GridPane.setMargin(name, new Insets(0, 0, 0, 10));
 
             TextField value = new TextField();
-            // TODO: change the formatter so that it replaces empty values with 0s
-            value.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
+            value.setTextFormatter(new TextFormatter<>(new SimpleStringConverter()));
             value.setText("0");
             splitGrid.add(value, 1, row);
             detailedFields.add(value);
+
+            Text currencyText = new Text("zł");
+            splitGrid.add(currencyText, 1, row);
+            GridPane.setHalignment(currencyText, HPos.RIGHT);
+            GridPane.setMargin(currencyText, new Insets(0, 10, 0, 0));
             row++;
         }
 
         splitPane.setContent(splitGrid);
+        splitGrid.setPadding(new Insets(10,0,0,0));
         // ------------------
 
         addButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -135,6 +155,10 @@ public class ExpenseController {
                     for(TextField f : detailedFields){
                         if(Objects.equals(f.getText(), "")){
                             errorText.setText("Detailed split not filled!");
+                            return;
+                        }
+                        if(Float.parseFloat(f.getText()) < 0){
+                            errorText.setText("Negative value!");
                             return;
                         }
                         if(Float.parseFloat(f.getText()) != 0){
@@ -153,6 +177,10 @@ public class ExpenseController {
                     }
                     if(Float.parseFloat(valueField.getText()) == 0){
                         errorText.setText("Zero value!");
+                        return;
+                    }
+                    if(Float.parseFloat(valueField.getText()) < 0){
+                        errorText.setText("Negative value!");
                         return;
                     }
                 }
@@ -175,7 +203,7 @@ public class ExpenseController {
                 }
                 else{
                     float value = Float.parseFloat(valueField.getText());
-                    sumValue += (int)(value/personsList.size() * 100);
+                    sumValue += (int)(value * 100);
                     for(IPerson person : personsList){
                         borrowers.add(new Pair<>(person.getID(), (int)(value/personsList.size() * 100)));
                     }

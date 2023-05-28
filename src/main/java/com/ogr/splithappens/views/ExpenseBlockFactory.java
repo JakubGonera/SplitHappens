@@ -10,6 +10,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 public class ExpenseBlockFactory {
     static VBox createExpenseBlock(IExpense expense, IPerson person, IViewModel viewModel){
         VBox out = new VBox();
@@ -45,6 +48,6 @@ public class ExpenseBlockFactory {
         } else {
             out = "0.0" + out;
         }
-        return out;
+        return out + "zł";
     }
 }
