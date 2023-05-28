@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.skin.TextAreaSkin;
 import javafx.scene.layout.ColumnConstraints;
@@ -87,8 +88,10 @@ public class ExpenseController {
         valueField.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
         payerField.getItems().addAll(personsList);
 
+        // Detailed split set up
         GridPane splitGrid = new GridPane();
         splitGrid.prefWidthProperty().bind(splitPane.widthProperty());
+        valueField.disableProperty().bind(detailedCheck.selectedProperty());
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setMaxWidth(150);
         col1.setPrefWidth(150);
@@ -101,18 +104,23 @@ public class ExpenseController {
 
         int row = 0;
 
+        List<TextField> detailedFields = new ArrayList<>();
         for(IPerson person : personsList){
             Text name = new Text(person.getName());
             name.setFont(Font.font("System", 14));
             splitGrid.add(name, 0, row);
 
             TextField value = new TextField();
+            // TODO: change the formatter so that it replaces empty values with 0s
             value.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
+            value.setText("0");
             splitGrid.add(value, 1, row);
+            detailedFields.add(value);
             row++;
         }
 
         splitPane.setContent(splitGrid);
+        // ------------------
 
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -122,25 +130,59 @@ public class ExpenseController {
                     errorText.setText("Empty title!");
                     return;
                 }
-                if(Objects.equals(valueField.getText(), "")){
-                    errorText.setText("Empty value!");
-                    return;
+                if(detailedCheck.isSelected()){
+                    boolean nonZero = false;
+                    for(TextField f : detailedFields){
+                        if(Objects.equals(f.getText(), "")){
+                            errorText.setText("Detailed split not filled!");
+                            return;
+                        }
+                        if(Float.parseFloat(f.getText()) != 0){
+                            nonZero = true;
+                        }
+                    }
+                    if(!nonZero){
+                        errorText.setText("Detailed split filled with zeros!");
+                        return;
+                    }
+                }
+                else{
+                    if(Objects.equals(valueField.getText(), "")){
+                        errorText.setText("Empty value!");
+                        return;
+                    }
+                    if(Float.parseFloat(valueField.getText()) == 0){
+                        errorText.setText("Zero value!");
+                        return;
+                    }
                 }
                 if(payerField.getSelectionModel().isEmpty()){
                     errorText.setText("Payer not selected!");
                     return;
                 }
 
-                float value = Float.parseFloat(valueField.getText());
-
                 List<Pair<Integer, Integer>> borrowers = new ArrayList<>();
-                List<IPerson> personList = viewModel.getPersonsList().getValue();
-                for(IPerson person : personList){
-                    borrowers.add(new Pair<>(person.getID(), (int)(value/personList.size() * 100)));
+
+                int sumValue = 0;
+                if(detailedCheck.isSelected()){
+                    for(int i = 0; i < detailedFields.size(); i++){
+                        float value = Float.parseFloat(detailedFields.get(i).getText());
+                        if(value != 0){
+                            sumValue += (int)(value * 100);
+                            borrowers.add(new Pair<>(personsList.get(i).getID(), (int)(value * 100)));
+                        }
+                    }
+                }
+                else{
+                    float value = Float.parseFloat(valueField.getText());
+                    sumValue += (int)(value/personsList.size() * 100);
+                    for(IPerson person : personsList){
+                        borrowers.add(new Pair<>(person.getID(), (int)(value/personsList.size() * 100)));
+                    }
                 }
 
                 // Construct payload and send it to the viewmodel and close window
-                ExpensePayload expensePayload = new ExpensePayload(titleField.getText(), 100 * (int)value, payerField.getSelectionModel().getSelectedItem().getID(), borrowers);
+                ExpensePayload expensePayload = new ExpensePayload(titleField.getText(), sumValue, payerField.getSelectionModel().getSelectedItem().getID(), borrowers);
                 viewModel.addExpense(expensePayload);
 
                 window.close();
