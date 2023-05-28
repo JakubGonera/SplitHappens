@@ -1,14 +1,17 @@
 package com.ogr.splithappens.views;
 
 import com.ogr.splithappens.models.IExpense;
+import com.ogr.splithappens.models.IExpenseManager;
 import com.ogr.splithappens.models.IPerson;
+import com.ogr.splithappens.viewmodels.IViewModel;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class ExpenseBlockFactory {
-    static VBox createExpenseBlock(IExpense expense, IPerson person){
+    static VBox createExpenseBlock(IExpense expense, IPerson person, IViewModel viewModel){
         VBox out = new VBox();
         out.setPadding(new Insets(10, 10, 10, 10));
         out.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, new Insets(5, 5, 5, 5))));
@@ -23,6 +26,11 @@ public class ExpenseBlockFactory {
         grid.add(new Text(expense.getTitle()), 0, 0);
         grid.add(new Text(convertValue(expense.getAmount())), 1, 0);
         grid.add(new Text(person.getName()), 1, 1);
+        Button removeButton = new Button("Remove");
+        removeButton.setOnAction(event -> {
+            viewModel.removeExpense(expense.getID());
+        });
+        grid.add(removeButton, 0, 1);
         out.getChildren().add(grid);
         grid.prefWidthProperty().bind(out.prefWidthProperty());
         return out;
