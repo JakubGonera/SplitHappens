@@ -4,8 +4,8 @@ import com.ogr.splithappens.models.IExpense;
 import com.ogr.splithappens.models.IPerson;
 import com.ogr.splithappens.models.Pair;
 import com.ogr.splithappens.viewmodels.IViewModel;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
+import javafx.beans.property.ReadOnlyListProperty;
+import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.util.converter.NumberStringConverter;
+
 
 import static com.ogr.splithappens.views.PersonBlockFactory.createPersonBlock;
 
@@ -54,6 +55,9 @@ public class View {
             @Override
             public void changed(ObservableValue<? extends List<IExpense>> observableValue, List<IExpense> iExpenses, List<IExpense> t1) {
                 recalculateExpensesTable(t1);
+                System.out.println("BINDING!");
+                updatePeople();
+
             }
         });
 
@@ -61,12 +65,15 @@ public class View {
             @Override
             public void handle(ActionEvent event) {
                 openNewExpense();
+
             }
+
         });
 
 
         // recalculateExpensesTable(dummyExpenseList);
         recalculateExpensesTable(viewModel.getExpensesList().getValue());
+
     }
 
     private void openNewExpense(){
@@ -110,42 +117,53 @@ public class View {
             child.prefWidthProperty().bind(expensesTable.prefWidthProperty());
         }
     }
+
+
+
+
+    //          PEOPLE
+
+
     @FXML
     TextField inputName;
 
     @FXML
     Accordion accordion;
+
+
+
+    @FXML
+    public void INP_OnButton(ActionEvent e){
+        System.out.println("Exit");
+    }
+
+    public void updatePeople(){
+        System.out.println("Updating people");
+        System.out.println("Number of expenses: " + viewModel.getExpensesList().getValue().size());
+
+        ReadOnlyListProperty<IPerson> people = viewModel.getPersonsList();
+        accordion.getPanes().remove(0, accordion.getPanes().size());
+        for(IPerson ip: people.getValue()){
+            TitledPane tp = createPersonBlock(ip);
+            accordion.getPanes().add(tp);
+        }
+    }
     @FXML
     public void onAddPerson(ActionEvent e) {
         String name = inputName.getText();
         inputName.setText("");
 
-        System.out.println(name);
-        IPerson p = viewModel.addPerson(name);
-
-        if(p!=null){
-            addPersonBlock(p);
-            return;
-        }
-
-        final Stage errorPopup = new Stage();
-        errorPopup.initModality(Modality.APPLICATION_MODAL);
-        errorPopup.initOwner(primaryStage);
+        viewModel.addPerson(name);
+        updatePeople();
 
 
-        VBox dialogVbox = new VBox(20);
-        Text form = new Text("Invalid name.");
-        dialogVbox.getChildren().add(form);
-
-
-        Scene dialogScene = new Scene(dialogVbox, 300, 200);
-        errorPopup.setScene(dialogScene);
-        errorPopup.show();
     }
 
-    public void addPersonBlock(IPerson p){
-        TitledPane tp = createPersonBlock(p);
-        accordion.getPanes().add(tp);
+//    @FXML
+    public void onPersonOptionesSchema(int idx, ActionEvent e) {
+        System.out.println("pressed button: "+ Integer.valueOf(idx).toString());
+
     }
+
 
 }

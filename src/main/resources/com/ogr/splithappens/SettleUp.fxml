@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<!--/fx:controller="com.ogr.splithappens.views.InvalidNamePopupView"-->
+<?import com.sun.javafx.scene.control.IntegerField?>
+<?import javafx.scene.layout.HBox?>
+<AnchorPane prefHeight="200" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"  >
+  <children>
+    <VBox alignment="CENTER">
+      <Label text="Confirm the transaction?"  prefWidth="150" prefHeight="20" fx:id="textLabel" alignment="TOP_CENTER"/>
+      <Label text="Confirm the transaction?" prefWidth="150" prefHeight="20" fx:id="detailLabel" alignment="TOP_CENTER"/>
+      <HBox alignment="TOP_CENTER">
+        <Label text= "Amount: "  prefWidth="70" prefHeight="20" fx:id="amountLabel"/>
+        <TextField fx:id="amountField"  prefWidth="60"/>
+      </HBox>
+    </VBox>
+    <Button layoutX="80.0" layoutY="150.0" mnemonicParsing="false" text="Cancel" fx:id="CancelButton" onAction="#onCancelButton" />
+    <Button layoutX="160.0" layoutY="150.0" mnemonicParsing="false" text="Confirm" fx:id="ConfirmButton"  defaultButton="true" viewOrder="100" onAction="#onConfirmButton" />
+  </children>
+</AnchorPane>

@@ -1,5 +1,7 @@
 package com.ogr.splithappens.models;
 
+import com.ogr.splithappens.views.InvalidNamePopupView;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +30,28 @@ public class PersonsManager implements IPersonsManager, Serializable {
     public List<IPerson> getPersons() {
         return persons;
     }
+
     @Override
-    public IPerson addPerson(String name) {
+    public void addPerson(String name) {
+        if(name.equals("")){
+            new InvalidNamePopupView().Show("Name cannot be empty!");
+            return;
+        }
+        for(IPerson p: persons){
+            if(p.getName().equals(name)) {
+                new InvalidNamePopupView().Show("This person already exists!");
+                return;
+            }
+        }
+
         IPerson temp = new Person(name, this);
         persons.add(temp);
-        return temp;
+    }
+
+    public IPerson getPersonByName(String name){
+        for(IPerson ip : persons)
+            if(ip.getName().equals(name)) return ip;
+        throw new RuntimeException("There is no person with name " + name);
     }
 
 

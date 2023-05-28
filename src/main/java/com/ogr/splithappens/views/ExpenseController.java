@@ -214,6 +214,7 @@ public class ExpenseController {
                 viewModel.addExpense(expensePayload);
 
                 window.close();
+
             }
         });
 

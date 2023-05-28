@@ -16,7 +16,9 @@ public interface IViewModel {
     /**
      * Attempts to add a person
      * @param name name of the person
-     * @return if successful returns the sreated person
+     * @return if successful returns the created person
      */
-    IPerson addPerson(String name);
+    void addPerson(String name);
+
+    IPerson getPersonByName(String name);
 }

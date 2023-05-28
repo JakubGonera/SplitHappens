@@ -14,12 +14,7 @@ public interface IPersonsManager {
      * @param name name of the person
      * @return if successful returns the sreated person
      */
-    IPerson addPerson(String name);
+    void addPerson(String name);
 
-//    public class InvalidInputException extends RuntimeException{
-//        public InvalidInputException(String errorMessage) {
-//            super(errorMessage);
-//        }
-//    }
-
+    IPerson getPersonByName(String name);
 }
