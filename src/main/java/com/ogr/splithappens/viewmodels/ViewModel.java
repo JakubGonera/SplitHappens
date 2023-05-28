@@ -44,6 +44,13 @@ public class ViewModel implements IViewModel {
         expensesList.setValue(FXCollections.observableList(expensesManager.getExpenses()));
     }
 
+    @Override
+    public boolean removeExpense(int expenseID) {
+        boolean removed = expensesManager.removeExpense(expenseID);
+        expensesList.setValue(FXCollections.observableList(expensesManager.getExpenses()));
+        return removed;
+    }
+
 
     public IPerson addPerson(String name){
         return personsManager.addPerson(name);

@@ -37,99 +37,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class View {
-    static class DummyExpense implements IExpense{
-        static int counter = 0;
-        int payerID = counter++;
-        @Override
-        public String getTitle() {
-            return "Expense" + Integer.toString(payerID);
-        }
-
-        @Override
-        public int getID() {
-            return 0;
-        }
-
-        @Override
-        public int getAmount() {
-            return 0;
-        }
-
-        @Override
-        public int getPayerID() {
-            return payerID;
-        }
-
-        @Override
-        public List<Pair<Integer, Integer>> getBorrowers() {
-            return null;
-        }
-    }
-    static class DummyPerson implements IPerson{
-        static int globalCounter = 0;
-        int id = globalCounter++;
-        @Override
-        public String getName() {
-            return "Person" + Integer.toString(id);
-        }
-
-        @Override
-        public int getID() {
-            return id;
-        }
-
-        @Override
-        public int getBalance() {
-            return 0;
-        }
-
-        @Override
-        public List<detailedBalance> getDetailedBalances() {
-            return null;
-        }
-
-        @Override
-        public String toString(){
-            return getName();
-        }
-    }
-    static class ExpensePayload implements IExpense{
-        String title;
-        int value;
-        int payerID;
-        List<Pair<Integer, Integer>> borrowers;
-        public ExpensePayload(String title, int value, int payerID, List<Pair<Integer, Integer>> borrowers){
-            this.title = title;
-            this.value = value;
-            this.payerID = payerID;
-            this.borrowers = borrowers;
-        }
-        @Override
-        public String getTitle() {
-            return title;
-        }
-
-        @Override
-        public int getID() {
-            // As a payload this doesn't have an ID, it should be assigned by the model
-            return -1;
-        }
-
-        @Override
-        public int getAmount() {
-            return value;
-        }
-
-        @Override
-        public int getPayerID() {
-            return payerID;
-        }
-
-        @Override
-        public List<Pair<Integer, Integer>> getBorrowers() {
-            return borrowers;
-        }
-    }
     private final IViewModel viewModel;
     private final Stage primaryStage;
     @FXML
@@ -137,7 +44,6 @@ public class View {
     @FXML
     VBox expensesTable;
 
-    List<IPerson> dummyPersonList = Stream.generate(DummyPerson::new).limit(3).collect(Collectors.toList());
     public View(IViewModel viewModel, Stage primaryStage){
         this.viewModel = viewModel;
         this.primaryStage = primaryStage;
@@ -147,7 +53,7 @@ public class View {
         viewModel.getExpensesList().addListener(new ChangeListener<List<IExpense>>() {
             @Override
             public void changed(ObservableValue<? extends List<IExpense>> observableValue, List<IExpense> iExpenses, List<IExpense> t1) {
-                recalculateExpensesTable(iExpenses);
+                recalculateExpensesTable(t1);
             }
         });
 
@@ -158,7 +64,6 @@ public class View {
             }
         });
 
-        //List<IExpense> dummyExpenseList = Stream.generate(DummyExpense::new).limit(3).collect(Collectors.toList());
 
         // recalculateExpensesTable(dummyExpenseList);
         recalculateExpensesTable(viewModel.getExpensesList().getValue());
@@ -200,7 +105,7 @@ public class View {
         List<IPerson> personList = viewModel.getPersonsList().getValue();
         //List<IPerson> personList = dummyPersonList;
         for (IExpense expense : iExpenses) {
-            VBox child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()));
+            VBox child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()), viewModel);
             expensesTable.getChildren().add(child);
             child.prefWidthProperty().bind(expensesTable.prefWidthProperty());
         }

@@ -11,6 +11,7 @@ public interface IViewModel {
     ReadOnlyListProperty<IPerson> getPersonsList();
     ReadOnlyListProperty<IExpense> getExpensesList();
     void addExpense(IExpense expense);
+    boolean removeExpense(int expenseID);
 
     /**
      * Attempts to add a person
