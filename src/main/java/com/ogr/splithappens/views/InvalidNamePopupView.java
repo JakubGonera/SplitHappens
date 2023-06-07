@@ -22,7 +22,7 @@ public class InvalidNamePopupView {
     public Label textLabel;
 
     @FXML
-    public void OnButton(ActionEvent a){
+    public void OnButton(ActionEvent a) {
         popup.close();
     }
 
@@ -30,11 +30,10 @@ public class InvalidNamePopupView {
     static Stage popup;
 
 
-     public void Show(String message){
+    public void Show(String message) {
 
         final Stage errorPopup = new Stage();
         errorPopup.setTitle("Invalid name");
-
 
         FXMLLoader fxmlLoader = new FXMLLoader(Program.class.getResource("InvalidNamePopup.fxml"));
         fxmlLoader.setController(this);
@@ -43,10 +42,9 @@ public class InvalidNamePopupView {
             Scene dialogScene = new Scene(fxmlLoader.load(), 300, 200);
             errorPopup.setScene(dialogScene);
             errorPopup.show();
-        } catch (Throwable t){
+        } catch (Throwable t) {
             System.out.println(t);
         }
-
 
         textLabel.setText("Invalid name: \n" + message);
         popup = errorPopup;

@@ -7,7 +7,7 @@ public class IOService {
         return ReadData.readData();
     }
 
-    public static void writeData(IPersonsManager personsManager){
+    public static void writeData(IPersonsManager personsManager) {
         WriteData.writeData(personsManager);
     }
 }

@@ -1,7 +1,6 @@
 package com.ogr.splithappens.views;
 
 import com.ogr.splithappens.models.IExpense;
-import com.ogr.splithappens.models.IExpenseManager;
 import com.ogr.splithappens.models.IPerson;
 import com.ogr.splithappens.viewmodels.IViewModel;
 import javafx.geometry.Insets;
@@ -10,11 +9,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 public class ExpenseBlockFactory {
-    static VBox createExpenseBlock(IExpense expense, IPerson person, IViewModel viewModel){
+    static VBox createExpenseBlock(IExpense expense, IPerson person, IViewModel viewModel) {
         VBox out = new VBox();
         out.setPadding(new Insets(10, 10, 10, 10));
         out.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, new Insets(5, 5, 5, 5))));
@@ -24,7 +21,7 @@ public class ExpenseBlockFactory {
         col1.setPercentWidth(50);
         ColumnConstraints col2 = new ColumnConstraints();
         col2.setPercentWidth(50);
-        grid.getColumnConstraints().addAll(col1,col2);
+        grid.getColumnConstraints().addAll(col1, col2);
 
         grid.add(new Text(expense.getTitle()), 0, 0);
         grid.add(new Text(convertValue(expense.getAmount())), 1, 0);
@@ -39,11 +36,11 @@ public class ExpenseBlockFactory {
         return out;
     }
 
-    private static String convertValue(int value){
+    private static String convertValue(int value) {
         String out = Integer.toString(value);
-        if (out.length() > 2){
+        if (out.length() > 2) {
             out = out.substring(0, out.length() - 2) + "." + out.substring(out.length() - 2);
-        } else if (out.length() == 2){
+        } else if (out.length() == 2) {
             out = "0." + out;
         } else {
             out = "0.0" + out;

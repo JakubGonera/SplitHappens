@@ -9,25 +9,29 @@ public class Expense implements IExpense, Serializable {
     int payerID;
     int amount;
     int ID;
-    List<Pair<Integer, Integer>>borrowers;
-    public Expense(String title, int payerID, int amount, List<Pair<Integer,Integer>>borrowers, int ID){
+    List<Pair<Integer, Integer>> borrowers;
+
+    public Expense(String title, int payerID, int amount, List<Pair<Integer, Integer>> borrowers, int ID) {
         this.ID = ID;
         this.title = title;
         this.payerID = payerID;
         this.amount = amount;
         this.borrowers = borrowers;
     }
-    public Expense(String title, int payerID, int amount, List<Pair<Integer,Integer>>borrowers){
+
+    public Expense(String title, int payerID, int amount, List<Pair<Integer, Integer>> borrowers) {
         this.ID = -1;
         this.title = title;
         this.payerID = payerID;
         this.amount = amount;
         this.borrowers = borrowers;
     }
+
     @Override
     public String getTitle() {
         return title;
     }
+
     @Override
     public int getID() {
         return ID;
@@ -42,5 +46,8 @@ public class Expense implements IExpense, Serializable {
     public int getPayerID() {
         return payerID;
     }
-    public List<Pair<Integer, Integer>> getBorrowers(){return borrowers;}
+
+    public List<Pair<Integer, Integer>> getBorrowers() {
+        return borrowers;
+    }
 }

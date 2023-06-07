@@ -24,10 +24,10 @@ import java.util.Objects;
 
 public class ExpenseController {
 
-    static final class SimpleStringConverter extends StringConverter<Number>{
+    static final class SimpleStringConverter extends StringConverter<Number> {
         @Override
         public String toString(Number object) {
-            if(object == null)
+            if (object == null)
                 return "0";
             return String.format("%.2f", object.floatValue());
         }
@@ -38,17 +38,20 @@ public class ExpenseController {
         }
 
     }
+
     static class ExpensePayload implements IExpense {
         String title;
         int value;
         int payerID;
         List<Pair<Integer, Integer>> borrowers;
-        public ExpensePayload(String title, int value, int payerID, List<Pair<Integer, Integer>> borrowers){
+
+        public ExpensePayload(String title, int value, int payerID, List<Pair<Integer, Integer>> borrowers) {
             this.title = title;
             this.value = value;
             this.payerID = payerID;
             this.borrowers = borrowers;
         }
+
         @Override
         public String getTitle() {
             return title;
@@ -92,12 +95,13 @@ public class ExpenseController {
     CheckBox detailedCheck;
     @FXML
     ScrollPane splitPane;
-    public ExpenseController(IViewModel viewModel, Stage window){
+
+    public ExpenseController(IViewModel viewModel, Stage window) {
         this.viewModel = viewModel;
         this.window = window;
     }
 
-    public void setBindings(){
+    public void setBindings() {
         ObservableList<IPerson> personsList = viewModel.getPersonsList().getValue();
         valueField.setTextFormatter(new TextFormatter<>(new SimpleStringConverter()));
         payerField.getItems().addAll(personsList);
@@ -119,7 +123,7 @@ public class ExpenseController {
         int row = 0;
 
         List<TextField> detailedFields = new ArrayList<>();
-        for(IPerson person : personsList){
+        for (IPerson person : personsList) {
             Text name = new Text(person.getName());
             name.setFont(Font.font("System", 14));
             splitGrid.add(name, 0, row);
@@ -139,52 +143,51 @@ public class ExpenseController {
         }
 
         splitPane.setContent(splitGrid);
-        splitGrid.setPadding(new Insets(10,0,0,0));
+        splitGrid.setPadding(new Insets(10, 0, 0, 0));
         // ------------------
 
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 // Validation of the data
-                if(Objects.equals(titleField.getText(), "")){
+                if (Objects.equals(titleField.getText(), "")) {
                     errorText.setText("Empty title!");
                     return;
                 }
-                if(detailedCheck.isSelected()){
+                if (detailedCheck.isSelected()) {
                     boolean nonZero = false;
-                    for(TextField f : detailedFields){
-                        if(Objects.equals(f.getText(), "")){
+                    for (TextField f : detailedFields) {
+                        if (Objects.equals(f.getText(), "")) {
                             errorText.setText("Detailed split not filled!");
                             return;
                         }
-                        if(Float.parseFloat(f.getText()) < 0){
+                        if (Float.parseFloat(f.getText()) < 0) {
                             errorText.setText("Negative value!");
                             return;
                         }
-                        if(Float.parseFloat(f.getText()) != 0){
+                        if (Float.parseFloat(f.getText()) != 0) {
                             nonZero = true;
                         }
                     }
-                    if(!nonZero){
+                    if (!nonZero) {
                         errorText.setText("Detailed split filled with zeros!");
                         return;
                     }
-                }
-                else{
-                    if(Objects.equals(valueField.getText(), "")){
+                } else {
+                    if (Objects.equals(valueField.getText(), "")) {
                         errorText.setText("Empty value!");
                         return;
                     }
-                    if(Float.parseFloat(valueField.getText()) == 0){
+                    if (Float.parseFloat(valueField.getText()) == 0) {
                         errorText.setText("Zero value!");
                         return;
                     }
-                    if(Float.parseFloat(valueField.getText()) < 0){
+                    if (Float.parseFloat(valueField.getText()) < 0) {
                         errorText.setText("Negative value!");
                         return;
                     }
                 }
-                if(payerField.getSelectionModel().isEmpty()){
+                if (payerField.getSelectionModel().isEmpty()) {
                     errorText.setText("Payer not selected!");
                     return;
                 }
@@ -192,20 +195,19 @@ public class ExpenseController {
                 List<Pair<Integer, Integer>> borrowers = new ArrayList<>();
 
                 int sumValue = 0;
-                if(detailedCheck.isSelected()){
-                    for(int i = 0; i < detailedFields.size(); i++){
+                if (detailedCheck.isSelected()) {
+                    for (int i = 0; i < detailedFields.size(); i++) {
                         float value = Float.parseFloat(detailedFields.get(i).getText());
-                        if(value != 0){
-                            sumValue += (int)(value * 100);
-                            borrowers.add(new Pair<>(personsList.get(i).getID(), (int)(value * 100)));
+                        if (value != 0) {
+                            sumValue += (int) (value * 100);
+                            borrowers.add(new Pair<>(personsList.get(i).getID(), (int) (value * 100)));
                         }
                     }
-                }
-                else{
+                } else {
                     float value = Float.parseFloat(valueField.getText());
-                    sumValue += (int)(value * 100);
-                    for(IPerson person : personsList){
-                        borrowers.add(new Pair<>(person.getID(), (int)(value/personsList.size() * 100)));
+                    sumValue += (int) (value * 100);
+                    for (IPerson person : personsList) {
+                        borrowers.add(new Pair<>(person.getID(), (int) (value / personsList.size() * 100)));
                     }
                 }
 

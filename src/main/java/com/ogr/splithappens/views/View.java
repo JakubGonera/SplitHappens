@@ -2,39 +2,24 @@ package com.ogr.splithappens.views;
 
 import com.ogr.splithappens.models.IExpense;
 import com.ogr.splithappens.models.IPerson;
-import com.ogr.splithappens.models.Pair;
 import com.ogr.splithappens.viewmodels.IViewModel;
 import javafx.beans.property.ReadOnlyListProperty;
-import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
-import javafx.util.converter.NumberStringConverter;
-
 
 import static com.ogr.splithappens.views.PersonBlockFactory.createPersonBlock;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class View {
@@ -47,12 +32,12 @@ public class View {
     @FXML
     VBox expensesTable;
 
-    public View(IViewModel viewModel, Stage primaryStage){
+    public View(IViewModel viewModel, Stage primaryStage) {
         this.viewModel = viewModel;
         this.primaryStage = primaryStage;
     }
 
-    public void setBindings(){
+    public void setBindings() {
         viewModel.getExpensesList().addListener(new ChangeListener<List<IExpense>>() {
             @Override
             public void changed(ObservableValue<? extends List<IExpense>> observableValue, List<IExpense> iExpenses, List<IExpense> t1) {
@@ -83,7 +68,7 @@ public class View {
         updatePeople();
     }
 
-    private void openNewExpense(){
+    private void openNewExpense() {
         // Method that opens pop-up for filling in details for a new expense
         final Stage expenseWindow = new Stage();
         ExpenseController controller = new ExpenseController(viewModel, expenseWindow);
@@ -100,8 +85,7 @@ public class View {
             expenseWindow.setScene(dialogScene);
             expenseWindow.show();
             controller.setBindings();
-        }
-        catch(IOException ignored){
+        } catch (IOException ignored) {
 
         }
     }
@@ -114,7 +98,7 @@ public class View {
                 .orElseThrow(() -> new IllegalStateException("No person matches ID"));
     }
 
-    private void recalculateExpensesTable(List<IExpense> iExpenses){
+    private void recalculateExpensesTable(List<IExpense> iExpenses) {
         expensesTable.getChildren().clear();
         List<IPerson> personList = viewModel.getPersonsList().getValue();
         //List<IPerson> personList = dummyPersonList;
@@ -128,11 +112,6 @@ public class View {
     }
 
 
-
-
-    //          PEOPLE
-
-
     @FXML
     TextField inputName;
 
@@ -140,24 +119,24 @@ public class View {
     Accordion accordion;
 
 
-
     @FXML
-    public void INP_OnButton(ActionEvent e){
+    public void INP_OnButton(ActionEvent e) {
         System.out.println("Exit");
     }
 
-    public void updatePeople(){
+    public void updatePeople() {
         System.out.println("Updating people");
         System.out.println("Number of expenses: " + viewModel.getExpensesList().getValue().size());
 
         ReadOnlyListProperty<IPerson> people = viewModel.getPersonsList();
         accordion.getPanes().remove(0, accordion.getPanes().size());
-        for(IPerson ip: people.getValue()){
+        for (IPerson ip : people.getValue()) {
             TitledPane tp = createPersonBlock(ip);
             accordion.getPanes().add(tp);
         }
     }
-    @FXML
+
+    @FXML //there ARE usages
     public void onAddPerson(ActionEvent e) {
         String name = inputName.getText();
         inputName.setText("");
@@ -165,12 +144,6 @@ public class View {
         viewModel.addPerson(name);
         updatePeople();
 
-
-    }
-
-//    @FXML
-    public void onPersonOptionesSchema(int idx, ActionEvent e) {
-        System.out.println("pressed button: "+ Integer.valueOf(idx).toString());
 
     }
 

@@ -7,12 +7,7 @@ import com.ogr.splithappens.models.IPerson;
 import com.ogr.splithappens.models.IPersonsManager;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
 
-import java.util.List;
 
 public class ViewModel implements IViewModel {
     private final IPersonsManager personsManager;
@@ -22,7 +17,8 @@ public class ViewModel implements IViewModel {
     private final ListProperty<IPerson> personsList;
 
     private final ListProperty<IExpense> expensesList;
-    public ViewModel(IPersonsManager personsManager, IExpenseManager expensesManager){
+
+    public ViewModel(IPersonsManager personsManager, IExpenseManager expensesManager) {
         this.personsManager = personsManager;
         this.personsList = new SimpleListProperty<>(this, "personsList", FXCollections.observableList(personsManager.getPersons()));
         this.expensesManager = expensesManager;
@@ -53,12 +49,12 @@ public class ViewModel implements IViewModel {
     }
 
 
-    public void addPerson(String name){
-         personsManager.addPerson(name);
+    public void addPerson(String name) {
+        personsManager.addPerson(name);
     }
 
 
-    public IPerson getPersonByName(String name){
+    public IPerson getPersonByName(String name) {
         return personsManager.getPersonByName(name);
     }
 
