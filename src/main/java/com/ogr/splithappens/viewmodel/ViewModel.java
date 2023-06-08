@@ -51,6 +51,7 @@ public class ViewModel implements IViewModel {
 
     public void addPerson(String name) {
         personsManager.addPerson(name);
+        personsList.setValue(FXCollections.observableList(personsManager.getPersons()));
     }
 
 

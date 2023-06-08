@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 
-import static com.ogr.splithappens.view.PersonBlockFactory.createPersonBlock;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,6 +25,7 @@ public class View {
     final IViewModel viewModel;
     final Stage primaryStage;
     final MainViewExpenseHandler expenseHandler = new MainViewExpenseHandler(this);
+    final MainViewPersonHandler personHandler = new MainViewPersonHandler(this);
     @FXML
     Button newExpense;
     @FXML
@@ -44,8 +44,14 @@ public class View {
             public void changed(ObservableValue<? extends List<IExpense>> observableValue, List<IExpense> iExpenses, List<IExpense> t1) {
                 expenseHandler.recalculateExpensesTable(t1);
                 System.out.println("BINDING!");
-                updatePeople();
+                personHandler.updatePeople();
+            }
+        });
 
+        viewModel.getPersonsList().addListener(new ChangeListener<List<IPerson>>() {
+            @Override
+            public void changed(ObservableValue<? extends List<IPerson>> observableValue, List<IPerson> iPeople, List<IPerson> t1) {
+                personHandler.updatePeople();
             }
         });
 
@@ -63,7 +69,7 @@ public class View {
         });
 
         expenseHandler.recalculateExpensesTable(viewModel.getExpensesList().getValue());
-        updatePeople();
+        personHandler.updatePeople();
     }
 
     @FXML
@@ -78,24 +84,11 @@ public class View {
         System.out.println("Exit");
     }
 
-    public void updatePeople() {
-        System.out.println("Updating people");
-        System.out.println("Number of expenses: " + viewModel.getExpensesList().getValue().size());
-
-        ReadOnlyListProperty<IPerson> people = viewModel.getPersonsList();
-        accordion.getPanes().remove(0, accordion.getPanes().size());
-        for (IPerson ip : people.getValue()) {
-            TitledPane tp = createPersonBlock(ip);
-            accordion.getPanes().add(tp);
-        }
-    }
-
     @FXML //there ARE usages
     public void onAddPerson(ActionEvent e) {
         String name = inputName.getText();
         inputName.setText("");
 
         viewModel.addPerson(name);
-        updatePeople();
     }
 }
