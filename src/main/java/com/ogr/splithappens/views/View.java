@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -30,7 +31,7 @@ public class View {
     @FXML
     Button save;
     @FXML
-    VBox expensesTable;
+    Accordion expensesTable;
 
     public View(IViewModel viewModel, Stage primaryStage) {
         this.viewModel = viewModel;
@@ -99,13 +100,13 @@ public class View {
     }
 
     private void recalculateExpensesTable(List<IExpense> iExpenses) {
-        expensesTable.getChildren().clear();
+        expensesTable.getPanes().clear();
         List<IPerson> personList = viewModel.getPersonsList().getValue();
         //List<IPerson> personList = dummyPersonList;
         for (IExpense expense : iExpenses) {
             if (expense.getAmount() > 0) {
-                VBox child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()), viewModel);
-                expensesTable.getChildren().add(child);
+                TitledPane child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()), viewModel);
+                expensesTable.getPanes().add(child);
                 child.prefWidthProperty().bind(expensesTable.prefWidthProperty());
             }
         }
