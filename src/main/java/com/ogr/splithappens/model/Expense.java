@@ -14,7 +14,7 @@ public class Expense implements Serializable {
     String description;
     Date dateAdded;
     Category category;
-    Image image;
+    SerializableImage image;
     boolean isATransfer = false;
     int ID;
     List<Pair<Integer, Integer>> borrowers;
@@ -52,7 +52,7 @@ public class Expense implements Serializable {
         this.description = description;
         this.dateAdded = dateAdded;
         this.category = category;
-        this.image = image;
+        this.image = new SerializableImage(image);
         this.isATransfer = isATransfer;
     }
 
@@ -106,11 +106,16 @@ public class Expense implements Serializable {
     }
 
     public Image getImage() {
-        return image;
+        try {
+            return image.getImage();
+        } catch (Exception e) {
+            //return default image
+        }
+        return null;
     }
 
     public void setImage(Image image) {
-        this.image = image;
+        setImage(image);
     }
 
     public boolean isATransfer() {
