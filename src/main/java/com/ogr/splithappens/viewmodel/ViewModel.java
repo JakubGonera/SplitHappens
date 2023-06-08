@@ -1,24 +1,24 @@
-package com.ogr.splithappens.viewmodels;
+package com.ogr.splithappens.viewmodel;
 
 import com.ogr.splithappens.IOservice.IOService;
-import com.ogr.splithappens.models.IExpense;
-import com.ogr.splithappens.models.IExpenseManager;
-import com.ogr.splithappens.models.IPerson;
-import com.ogr.splithappens.models.IPersonsManager;
+import com.ogr.splithappens.model.Expense;
+import com.ogr.splithappens.model.ExpenseManager;
+import com.ogr.splithappens.model.Person;
+import com.ogr.splithappens.model.PersonsManager;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 
 
 public class ViewModel implements IViewModel {
-    private final IPersonsManager personsManager;
-    private final IExpenseManager expensesManager;
+    private final PersonsManager personsManager;
+    private final ExpenseManager expensesManager;
     // Remember to change personsList value whenever needed by personsList.setValue(personsManager.getPersons)
 
-    private final ListProperty<IPerson> personsList;
+    private final ListProperty<Person> personsList;
 
-    private final ListProperty<IExpense> expensesList;
+    private final ListProperty<Expense> expensesList;
 
-    public ViewModel(IPersonsManager personsManager, IExpenseManager expensesManager) {
+    public ViewModel(PersonsManager personsManager, ExpenseManager expensesManager) {
         this.personsManager = personsManager;
         this.personsList = new SimpleListProperty<>(this, "personsList", FXCollections.observableList(personsManager.getPersons()));
         this.expensesManager = expensesManager;
@@ -26,17 +26,17 @@ public class ViewModel implements IViewModel {
     }
 
     @Override
-    public ReadOnlyListProperty<IPerson> getPersonsList() {
+    public ReadOnlyListProperty<Person> getPersonsList() {
         return personsList;
     }
 
     @Override
-    public ReadOnlyListProperty<IExpense> getExpensesList() {
+    public ReadOnlyListProperty<Expense> getExpensesList() {
         return expensesList;
     }
 
     @Override
-    public void addExpense(IExpense expense) {
+    public void addExpense(Expense expense) {
         expensesManager.addExpense(expense);
         expensesList.setValue(FXCollections.observableList(expensesManager.getExpenses()));
     }
@@ -51,10 +51,11 @@ public class ViewModel implements IViewModel {
 
     public void addPerson(String name) {
         personsManager.addPerson(name);
+        personsList.setValue(FXCollections.observableList(personsManager.getPersons()));
     }
 
 
-    public IPerson getPersonByName(String name) {
+    public Person getPersonByName(String name) {
         return personsManager.getPersonByName(name);
     }
 
@@ -63,7 +64,7 @@ public class ViewModel implements IViewModel {
         IOService.writeData(personsManager);
     }
     @Override
-    public void deletePerson(IPerson person){
+    public void deletePerson(Person person){
         person.setInactive();
         personsList.setValue(FXCollections.observableList(personsManager.getPersons()));
     }

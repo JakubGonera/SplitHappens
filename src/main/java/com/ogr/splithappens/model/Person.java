@@ -1,11 +1,11 @@
-package com.ogr.splithappens.models;
+package com.ogr.splithappens.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class Person implements IPerson, Serializable {
+public class Person implements Serializable {
+    public record detailedBalance(String name, int id, int balance) { }
     String name;
     int id;
     boolean isActive = true;
@@ -17,17 +17,14 @@ public class Person implements IPerson, Serializable {
         personsManager.incrementGlobalID();
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public int getID() {
         return id;
     }
 
-    @Override
     public int getBalance() {
         int balance = 0;
         for (var detailedBalance : getDetailedBalances()) {
@@ -36,7 +33,6 @@ public class Person implements IPerson, Serializable {
         return balance;
     }
 
-    @Override
     public List<detailedBalance> getDetailedBalances() {
         List<detailedBalance> result = new ArrayList<>();
         if (!personsManager.expenseManager.getDetailedBalances().containsKey(id))
@@ -56,17 +52,14 @@ public class Person implements IPerson, Serializable {
         return result;
     }
 
-    @Override
     public String toString() {
         return getName();
     }
 
-    @Override
     public boolean canBeSetInactive() {
         return getBalance() == 0;
     }
 
-    @Override
     public boolean setInactive() {
         if (getBalance() != 0) {
             return false;
@@ -76,7 +69,6 @@ public class Person implements IPerson, Serializable {
         return true;
     }
 
-    @Override
     public boolean isActive() {
         return isActive;
     }

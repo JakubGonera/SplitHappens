@@ -1,10 +1,10 @@
-package com.ogr.splithappens.views;
+package com.ogr.splithappens.view;
 
 import com.ogr.splithappens.Program;
-import com.ogr.splithappens.models.Expense;
-import com.ogr.splithappens.models.IPerson;
-import com.ogr.splithappens.models.Pair;
-import com.ogr.splithappens.viewmodels.IViewModel;
+import com.ogr.splithappens.model.Expense;
+import com.ogr.splithappens.model.Person;
+import com.ogr.splithappens.model.Pair;
+import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,8 +25,8 @@ public class SettleUpView {
     IViewModel viewModel;
     Stage window;
 
-    IPerson payer;
-    IPerson receiver;
+    Person payer;
+    Person receiver;
     int amount;
 
     SettleUpView(IViewModel vm) {
@@ -54,7 +54,7 @@ public class SettleUpView {
         amountField.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
     }
 
-    public void Show(IPerson payer, IPerson receiver, int amount) {
+    public void Show(Person payer, Person receiver, int amount) {
 
         this.payer = payer;
         this.receiver = receiver;

@@ -1,8 +1,8 @@
-package com.ogr.splithappens.views;
+package com.ogr.splithappens.view;
 
-import com.ogr.splithappens.models.IExpense;
-import com.ogr.splithappens.models.IPerson;
-import com.ogr.splithappens.viewmodels.IViewModel;
+import com.ogr.splithappens.model.Expense;
+import com.ogr.splithappens.model.Person;
+import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 
 
 public class ExpenseBlockFactory {
-    static VBox createExpenseBlock(IExpense expense, IPerson person, IViewModel viewModel) {
+    static VBox createExpenseBlock(Expense expense, Person person, IViewModel viewModel) {
         VBox out = new VBox();
         out.setPadding(new Insets(10, 10, 10, 10));
         out.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, new Insets(5, 5, 5, 5))));
