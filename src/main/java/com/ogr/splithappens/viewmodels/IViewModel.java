@@ -20,4 +20,6 @@ public interface IViewModel {
     IPerson getPersonByName(String name);
 
     void save();
+
+    void deletePerson(IPerson person);
 }

@@ -131,7 +131,7 @@ public class View {
         ReadOnlyListProperty<IPerson> people = viewModel.getPersonsList();
         accordion.getPanes().remove(0, accordion.getPanes().size());
         for (IPerson ip : people.getValue()) {
-            TitledPane tp = createPersonBlock(ip);
+            TitledPane tp = createPersonBlock(ip, this);
             accordion.getPanes().add(tp);
         }
     }
