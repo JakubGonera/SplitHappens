@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-// I am not too convinced whether we need this interface, if it will be easier, maybe delete this and keep just Person class
 public class Expense implements Serializable {
     String title;
     int payerID;
@@ -43,6 +42,7 @@ public class Expense implements Serializable {
         category = Category.Other;
         image = null;
     }
+
     public Expense(String title, int payerID, int amount, List<Pair<Integer, Integer>> borrowers, String description, Date dateAdded, Category category, Image image, boolean isATransfer) {
         this.ID = -1;
         this.title = title;
@@ -64,6 +64,7 @@ public class Expense implements Serializable {
     public int getID() {
         return ID;
     }
+
     public void setID(int ID) {
         this.ID = ID;
     }
@@ -76,32 +77,42 @@ public class Expense implements Serializable {
         return amount;
     }
 
-    public int getPayerID() { return payerID; }
+    public int getPayerID() {
+        return payerID;
+    }
 
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
     public Date getDateAdded() {
         return dateAdded;
     }
+
     public void setDateAdded(Date dateAdded) {
         this.dateAdded = dateAdded;
     }
+
     public Category getCategory() {
         return category;
     }
+
     public void setCategory(Category category) {
         this.category = category;
     }
+
     public Image getImage() {
         return image;
     }
+
     public void setImage(Image image) {
         this.image = image;
     }
+
     public boolean isATransfer() {
         return isATransfer;
     }
