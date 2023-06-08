@@ -2,23 +2,23 @@ package com.ogr.splithappens.viewmodel;
 
 import com.ogr.splithappens.IOservice.IOService;
 import com.ogr.splithappens.model.Expense;
-import com.ogr.splithappens.model.IExpenseManager;
+import com.ogr.splithappens.model.ExpenseManager;
 import com.ogr.splithappens.model.Person;
-import com.ogr.splithappens.model.IPersonsManager;
+import com.ogr.splithappens.model.PersonsManager;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 
 
 public class ViewModel implements IViewModel {
-    private final IPersonsManager personsManager;
-    private final IExpenseManager expensesManager;
+    private final PersonsManager personsManager;
+    private final ExpenseManager expensesManager;
     // Remember to change personsList value whenever needed by personsList.setValue(personsManager.getPersons)
 
     private final ListProperty<Person> personsList;
 
     private final ListProperty<Expense> expensesList;
 
-    public ViewModel(IPersonsManager personsManager, IExpenseManager expensesManager) {
+    public ViewModel(PersonsManager personsManager, ExpenseManager expensesManager) {
         this.personsManager = personsManager;
         this.personsList = new SimpleListProperty<>(this, "personsList", FXCollections.observableList(personsManager.getPersons()));
         this.expensesManager = expensesManager;

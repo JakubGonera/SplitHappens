@@ -6,36 +6,32 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonsManager implements IPersonsManager, Serializable {
-    IExpenseManager expenseManager;
+public class PersonsManager implements Serializable {
+    ExpenseManager expenseManager;
     List<Person> persons;
     int globalID = 0;
 
-    public IExpenseManager getExpenseManager() {
+    public ExpenseManager getExpenseManager() {
         return expenseManager;
     }
 
-    @Override
     public void incrementGlobalID() {
         globalID++;
     }
 
-    @Override
     public int getGlobalID() {
         return globalID;
     }
 
-    public PersonsManager(IExpenseManager expenseManager) {
+    public PersonsManager(ExpenseManager expenseManager) {
         this.expenseManager = expenseManager;
         persons = new ArrayList<>();
     }
 
-    @Override
     public List<Person> getPersons() {
         return persons;
     }
 
-    @Override
     public void addPerson(String name) {
         if (name.equals("")) {
             new InvalidNamePopupView().Show("Name cannot be empty!");

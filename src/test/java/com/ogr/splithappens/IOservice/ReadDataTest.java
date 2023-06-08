@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReadDataTest {
     @Test
     public void test1(){
-        IExpenseManager em = new ExpenseManager();
-        IPersonsManager pm = new PersonsManager(em);
+        ExpenseManager em = new ExpenseManager();
+        PersonsManager pm = new PersonsManager(em);
         pm.addPerson("a");
         pm.addPerson("b");
         pm.addPerson("c");
@@ -51,14 +51,14 @@ class ReadDataTest {
         }
         assertEquals(lbefore.size(), lafter2.size());
         assertNotEquals(lafter2.size(), 0);
-        IExpenseManager expm = new ExpenseManager();
-        IPersonsManager perm = new PersonsManager(expm);
+        ExpenseManager expm = new ExpenseManager();
+        PersonsManager perm = new PersonsManager(expm);
         perm.addPerson("a");
         perm.addPerson("b");
         perm.addPerson("c");
         perm.addPerson("d");
         WriteData.writeData(perm);
-        IPersonsManager newperm = ReadData.readData();
+        PersonsManager newperm = ReadData.readData();
         assertEquals(4, newperm.getPersons().size());
         int counter = 0;
         for(var person : newperm.getPersons()){

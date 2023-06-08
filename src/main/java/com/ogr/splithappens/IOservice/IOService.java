@@ -1,13 +1,13 @@
 package com.ogr.splithappens.IOservice;
 
-import com.ogr.splithappens.model.IPersonsManager;
+import com.ogr.splithappens.model.PersonsManager;
 
 public class IOService {
-    public static IPersonsManager readData() {
+    public static PersonsManager readData() {
         return ReadData.readData();
     }
 
-    public static void writeData(IPersonsManager personsManager) {
+    public static void writeData(PersonsManager personsManager) {
         WriteData.writeData(personsManager);
     }
 }
