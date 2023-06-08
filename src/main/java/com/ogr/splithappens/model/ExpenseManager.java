@@ -22,8 +22,9 @@ public class ExpenseManager implements Serializable {
     }
 
     public void addExpense(Expense expense) {
-        expenses.add(new Expense(expense.getTitle(), expense.getPayerID(), expense.getAmount(), expense.getBorrowers(), getGlobalID()));
+        expense.setID(getGlobalID());
         incrementGlobalID();
+        expenses.add(expense);
     }
 
     public Map<Integer, Integer> getBalances() {
