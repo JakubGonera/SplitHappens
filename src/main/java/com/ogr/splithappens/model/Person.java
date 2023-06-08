@@ -8,6 +8,7 @@ public class Person implements Serializable {
     public record detailedBalance(String name, int id, int balance) { }
     String name;
     int id;
+    boolean isActive = true;
     PersonsManager personsManager;
     Person(String name, PersonsManager personsManager) {
         this.name = name;
@@ -51,8 +52,24 @@ public class Person implements Serializable {
         return result;
     }
 
-    @Override
     public String toString() {
         return getName();
+    }
+
+    public boolean canBeSetInactive() {
+        return getBalance() == 0;
+    }
+
+    public boolean setInactive() {
+        if (getBalance() != 0) {
+            return false;
+        }
+        isActive = false;
+        personsManager.refreshActivePersons();
+        return true;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 }

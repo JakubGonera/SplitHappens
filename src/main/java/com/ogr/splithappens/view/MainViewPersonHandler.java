@@ -19,7 +19,7 @@ public class MainViewPersonHandler {
         ReadOnlyListProperty<Person> people = view.viewModel.getPersonsList();
         view.accordion.getPanes().remove(0, view.accordion.getPanes().size());
         for (Person ip : people.getValue()) {
-            TitledPane tp = createPersonBlock(ip);
+            TitledPane tp = createPersonBlock(ip, view);
             view.accordion.getPanes().add(tp);
         }
     }

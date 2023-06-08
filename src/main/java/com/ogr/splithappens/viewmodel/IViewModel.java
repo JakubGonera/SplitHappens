@@ -14,10 +14,9 @@ public interface IViewModel {
 
     boolean removeExpense(int expenseID);
 
-
     void addPerson(String name);
 
     Person getPersonByName(String name);
-
     void save();
+    void deletePerson(Person person);
 }

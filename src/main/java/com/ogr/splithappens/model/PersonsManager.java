@@ -9,7 +9,17 @@ import java.util.List;
 public class PersonsManager implements Serializable {
     ExpenseManager expenseManager;
     List<Person> persons;
+    List<Person> ActivePersons;
     int globalID = 0;
+
+    public void refreshActivePersons(){
+        ActivePersons.clear();
+        for (Person p : persons) {
+            if (p.isActive()) {
+                ActivePersons.add(p);
+            }
+        }
+    }
 
     public ExpenseManager getExpenseManager() {
         return expenseManager;
@@ -26,10 +36,12 @@ public class PersonsManager implements Serializable {
     public PersonsManager(ExpenseManager expenseManager) {
         this.expenseManager = expenseManager;
         persons = new ArrayList<>();
+        ActivePersons = new ArrayList<>();
     }
 
     public List<Person> getPersons() {
-        return persons;
+        refreshActivePersons();
+        return ActivePersons;
     }
 
     public void addPerson(String name) {
@@ -38,7 +50,7 @@ public class PersonsManager implements Serializable {
             return;
         }
         for (Person p : persons) {
-            if (p.getName().equals(name)) {
+            if (p.getName().equals(name) && p.isActive()) {
                 new InvalidNamePopupView().Show("This person already exists!");
                 return;
             }
@@ -46,6 +58,7 @@ public class PersonsManager implements Serializable {
 
         Person temp = new Person(name, this);
         persons.add(temp);
+        refreshActivePersons();
     }
 
     public Person getPersonByName(String name) {

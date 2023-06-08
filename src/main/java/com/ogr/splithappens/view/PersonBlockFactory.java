@@ -15,13 +15,23 @@ public class PersonBlockFactory {
     private static final String currency = "zł";
     public static IViewModel viewModel;
 
-    static TitledPane createPersonBlock(Person p) {
+    static TitledPane createPersonBlock(Person p, View view) {
 
         VBox vb = new VBox();
         HBox head = new HBox();
 
         Button settings = new Button("Settings");
         Button remove = new Button("Remove");
+        remove.addEventHandler(ActionEvent.ACTION, (e) -> {
+            if(!p.canBeSetInactive()){
+                NotSettledPopup popup = new NotSettledPopup();
+                popup.show();
+            }
+            else {
+                ConfirmDeletionPopup popup = new ConfirmDeletionPopup();
+                popup.show(p, view, viewModel);
+            }
+        });
         head.getChildren().add(settings);
         head.getChildren().add(remove);
         vb.getChildren().add(head);
