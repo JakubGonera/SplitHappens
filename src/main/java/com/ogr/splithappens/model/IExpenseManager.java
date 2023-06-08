@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface IExpenseManager {
-    List<IExpense> getExpenses();
+    List<Expense> getExpenses();
 
-    void addExpense(IExpense expense);
+    void addExpense(Expense expense);
 
     boolean removeExpense(int id);
 

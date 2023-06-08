@@ -1,6 +1,6 @@
 package com.ogr.splithappens.viewmodel;
 
-import com.ogr.splithappens.model.IExpense;
+import com.ogr.splithappens.model.Expense;
 import com.ogr.splithappens.model.Person;
 import javafx.beans.property.ReadOnlyListProperty;
 
@@ -8,9 +8,9 @@ import javafx.beans.property.ReadOnlyListProperty;
 public interface IViewModel {
     ReadOnlyListProperty<Person> getPersonsList();
 
-    ReadOnlyListProperty<IExpense> getExpensesList();
+    ReadOnlyListProperty<Expense> getExpensesList();
 
-    void addExpense(IExpense expense);
+    void addExpense(Expense expense);
 
     boolean removeExpense(int expenseID);
 

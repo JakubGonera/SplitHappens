@@ -1,6 +1,6 @@
 package com.ogr.splithappens.view;
 
-import com.ogr.splithappens.model.IExpense;
+import com.ogr.splithappens.model.Expense;
 import com.ogr.splithappens.model.Person;
 import com.ogr.splithappens.model.Pair;
 import com.ogr.splithappens.viewmodel.IViewModel;
@@ -39,45 +39,7 @@ public class ExpenseView {
 
     }
 
-    static class ExpensePayload implements IExpense {
-        String title;
-        int value;
-        int payerID;
-        List<Pair<Integer, Integer>> borrowers;
 
-        public ExpensePayload(String title, int value, int payerID, List<Pair<Integer, Integer>> borrowers) {
-            this.title = title;
-            this.value = value;
-            this.payerID = payerID;
-            this.borrowers = borrowers;
-        }
-
-        @Override
-        public String getTitle() {
-            return title;
-        }
-
-        @Override
-        public int getID() {
-            // As a payload this doesn't have an ID, it should be assigned by the model
-            return -1;
-        }
-
-        @Override
-        public int getAmount() {
-            return value;
-        }
-
-        @Override
-        public int getPayerID() {
-            return payerID;
-        }
-
-        @Override
-        public List<Pair<Integer, Integer>> getBorrowers() {
-            return borrowers;
-        }
-    }
 
     private final IViewModel viewModel;
     private final Stage window;
@@ -212,7 +174,7 @@ public class ExpenseView {
                 }
 
                 // Construct payload and send it to the viewmodel and close window
-                ExpensePayload expensePayload = new ExpensePayload(titleField.getText(), sumValue, payerField.getSelectionModel().getSelectedItem().getID(), borrowers);
+                Expense expensePayload = new Expense(titleField.getText(), payerField.getSelectionModel().getSelectedItem().getID(), sumValue, borrowers);
                 viewModel.addExpense(expensePayload);
 
                 window.close();

@@ -1,7 +1,7 @@
 package com.ogr.splithappens.viewmodel;
 
 import com.ogr.splithappens.IOservice.IOService;
-import com.ogr.splithappens.model.IExpense;
+import com.ogr.splithappens.model.Expense;
 import com.ogr.splithappens.model.IExpenseManager;
 import com.ogr.splithappens.model.Person;
 import com.ogr.splithappens.model.IPersonsManager;
@@ -16,7 +16,7 @@ public class ViewModel implements IViewModel {
 
     private final ListProperty<Person> personsList;
 
-    private final ListProperty<IExpense> expensesList;
+    private final ListProperty<Expense> expensesList;
 
     public ViewModel(IPersonsManager personsManager, IExpenseManager expensesManager) {
         this.personsManager = personsManager;
@@ -31,12 +31,12 @@ public class ViewModel implements IViewModel {
     }
 
     @Override
-    public ReadOnlyListProperty<IExpense> getExpensesList() {
+    public ReadOnlyListProperty<Expense> getExpensesList() {
         return expensesList;
     }
 
     @Override
-    public void addExpense(IExpense expense) {
+    public void addExpense(Expense expense) {
         expensesManager.addExpense(expense);
         expensesList.setValue(FXCollections.observableList(expensesManager.getExpenses()));
     }

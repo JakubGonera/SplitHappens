@@ -1,6 +1,6 @@
 package com.ogr.splithappens.view;
 
-import com.ogr.splithappens.model.IExpense;
+import com.ogr.splithappens.model.Expense;
 import com.ogr.splithappens.model.Person;
 import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.beans.value.ChangeListener;
@@ -33,9 +33,9 @@ public class View {
     }
 
     public void setBindings() {
-        viewModel.getExpensesList().addListener(new ChangeListener<List<IExpense>>() {
+        viewModel.getExpensesList().addListener(new ChangeListener<List<Expense>>() {
             @Override
-            public void changed(ObservableValue<? extends List<IExpense>> observableValue, List<IExpense> iExpenses, List<IExpense> t1) {
+            public void changed(ObservableValue<? extends List<Expense>> observableValue, List<Expense> iExpenses, List<Expense> t1) {
                 expenseHandler.recalculateExpensesTable(t1);
                 System.out.println("BINDING!");
                 personHandler.updatePeople();

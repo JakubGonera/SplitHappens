@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 
-import com.ogr.splithappens.model.IExpense;
+import com.ogr.splithappens.model.Expense;
 import com.ogr.splithappens.model.Person;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -48,11 +48,11 @@ public class MainViewExpenseHandler {
                 .orElseThrow(() -> new IllegalStateException("No person matches ID"));
     }
 
-    void recalculateExpensesTable(List<IExpense> iExpenses) {
+    void recalculateExpensesTable(List<Expense> iExpenses) {
         view.expensesTable.getChildren().clear();
         List<Person> personList = view.viewModel.getPersonsList().getValue();
         //List<IPerson> personList = dummyPersonList;
-        for (IExpense expense : iExpenses) {
+        for (Expense expense : iExpenses) {
             if (expense.getAmount() > 0) {
                 VBox child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()), view.viewModel);
                 view.expensesTable.getChildren().add(child);
