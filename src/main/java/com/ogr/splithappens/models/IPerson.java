@@ -17,4 +17,7 @@ public interface IPerson {
     int getBalance();
 
     List<detailedBalance> getDetailedBalances();
+    boolean canBeSetInactive();
+    boolean setInactive();
+    boolean isActive();
 }

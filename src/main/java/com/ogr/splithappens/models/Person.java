@@ -8,8 +8,8 @@ import java.util.Random;
 public class Person implements IPerson, Serializable {
     String name;
     int id;
+    boolean isActive = true;
     PersonsManager personsManager;
-
     Person(String name, PersonsManager personsManager) {
         this.name = name;
         this.personsManager = personsManager;
@@ -59,5 +59,25 @@ public class Person implements IPerson, Serializable {
     @Override
     public String toString() {
         return getName();
+    }
+
+    @Override
+    public boolean canBeSetInactive() {
+        return getBalance() == 0;
+    }
+
+    @Override
+    public boolean setInactive() {
+        if (getBalance() != 0) {
+            return false;
+        }
+        isActive = false;
+        personsManager.refreshActivePersons();
+        return true;
+    }
+
+    @Override
+    public boolean isActive() {
+        return isActive;
     }
 }

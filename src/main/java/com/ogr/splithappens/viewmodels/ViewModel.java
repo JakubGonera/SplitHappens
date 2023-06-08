@@ -62,4 +62,9 @@ public class ViewModel implements IViewModel {
     public void save() {
         IOService.writeData(personsManager);
     }
+    @Override
+    public void deletePerson(IPerson person){
+        person.setInactive();
+        personsList.setValue(FXCollections.observableList(personsManager.getPersons()));
+    }
 }
