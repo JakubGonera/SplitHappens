@@ -1,8 +1,8 @@
-package com.ogr.splithappens.views;
+package com.ogr.splithappens.view;
 
-import com.ogr.splithappens.models.IExpense;
-import com.ogr.splithappens.models.IPerson;
-import com.ogr.splithappens.viewmodels.IViewModel;
+import com.ogr.splithappens.model.IExpense;
+import com.ogr.splithappens.model.IPerson;
+import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,15 +16,16 @@ import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 
-import static com.ogr.splithappens.views.PersonBlockFactory.createPersonBlock;
+import static com.ogr.splithappens.view.PersonBlockFactory.createPersonBlock;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class View {
-    private final IViewModel viewModel;
-    private final Stage primaryStage;
+    final IViewModel viewModel;
+    final Stage primaryStage;
+    final MainViewExpenseHandler expenseHandler = new MainViewExpenseHandler(this);
     @FXML
     Button newExpense;
     @FXML
@@ -41,7 +42,7 @@ public class View {
         viewModel.getExpensesList().addListener(new ChangeListener<List<IExpense>>() {
             @Override
             public void changed(ObservableValue<? extends List<IExpense>> observableValue, List<IExpense> iExpenses, List<IExpense> t1) {
-                recalculateExpensesTable(t1);
+                expenseHandler.recalculateExpensesTable(t1);
                 System.out.println("BINDING!");
                 updatePeople();
 
@@ -51,10 +52,8 @@ public class View {
         newExpense.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                openNewExpense();
-
+                expenseHandler.openNewExpense();
             }
-
         });
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -63,54 +62,9 @@ public class View {
             }
         });
 
-
-        recalculateExpensesTable(viewModel.getExpensesList().getValue());
+        expenseHandler.recalculateExpensesTable(viewModel.getExpensesList().getValue());
         updatePeople();
     }
-
-    private void openNewExpense() {
-        // Method that opens pop-up for filling in details for a new expense
-        final Stage expenseWindow = new Stage();
-        ExpenseController controller = new ExpenseController(viewModel, expenseWindow);
-
-        FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("addExpense.fxml"));
-        fxmlLoader.setController(controller);
-
-        expenseWindow.initModality(Modality.APPLICATION_MODAL);
-        expenseWindow.initOwner(primaryStage);
-        expenseWindow.setResizable(false);
-
-        try {
-            Scene dialogScene = new Scene(fxmlLoader.load(), 400, 450);
-            expenseWindow.setScene(dialogScene);
-            expenseWindow.show();
-            controller.setBindings();
-        } catch (IOException ignored) {
-
-        }
-    }
-
-    private static IPerson getUniquePerson(Stream<IPerson> persons, int personID) {
-        return persons.filter(p -> p.getID() == personID)
-                .reduce((a, b) -> {
-                    throw new IllegalStateException("Multiple persons with same ID");
-                })
-                .orElseThrow(() -> new IllegalStateException("No person matches ID"));
-    }
-
-    private void recalculateExpensesTable(List<IExpense> iExpenses) {
-        expensesTable.getChildren().clear();
-        List<IPerson> personList = viewModel.getPersonsList().getValue();
-        //List<IPerson> personList = dummyPersonList;
-        for (IExpense expense : iExpenses) {
-            if (expense.getAmount() > 0) {
-                VBox child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()), viewModel);
-                expensesTable.getChildren().add(child);
-                child.prefWidthProperty().bind(expensesTable.prefWidthProperty());
-            }
-        }
-    }
-
 
     @FXML
     TextField inputName;
@@ -143,9 +97,5 @@ public class View {
 
         viewModel.addPerson(name);
         updatePeople();
-
-
     }
-
-
 }

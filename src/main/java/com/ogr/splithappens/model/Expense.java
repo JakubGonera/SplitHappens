@@ -1,4 +1,4 @@
-package com.ogr.splithappens.models;
+package com.ogr.splithappens.model;
 
 import java.io.Serializable;
 import java.util.List;

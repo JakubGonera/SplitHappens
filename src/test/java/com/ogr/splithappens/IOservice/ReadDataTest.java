@@ -1,6 +1,6 @@
 package com.ogr.splithappens.IOservice;
 
-import com.ogr.splithappens.models.*;
+import com.ogr.splithappens.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

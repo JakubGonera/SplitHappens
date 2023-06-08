@@ -1,11 +1,11 @@
 package com.ogr.splithappens;
 
 import com.ogr.splithappens.IOservice.IOService;
-import com.ogr.splithappens.models.IPersonsManager;
-import com.ogr.splithappens.viewmodels.IViewModel;
-import com.ogr.splithappens.viewmodels.ViewModel;
-import com.ogr.splithappens.views.PersonBlockFactory;
-import com.ogr.splithappens.views.View;
+import com.ogr.splithappens.model.IPersonsManager;
+import com.ogr.splithappens.viewmodel.IViewModel;
+import com.ogr.splithappens.viewmodel.ViewModel;
+import com.ogr.splithappens.view.PersonBlockFactory;
+import com.ogr.splithappens.view.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

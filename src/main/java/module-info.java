@@ -4,7 +4,7 @@ module com.ogr.splithappens {
 
 
     opens com.ogr.splithappens to javafx.fxml;
-    opens com.ogr.splithappens.views to javafx.fxml;
+    opens com.ogr.splithappens.view to javafx.fxml;
 //    opens com.ogr.splithappens.views.InvalidNamePopupView to javafx.fxml;
     exports com.ogr.splithappens;
 

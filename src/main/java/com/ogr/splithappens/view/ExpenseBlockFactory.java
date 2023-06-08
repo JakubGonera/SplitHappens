@@ -1,8 +1,8 @@
-package com.ogr.splithappens.views;
+package com.ogr.splithappens.view;
 
-import com.ogr.splithappens.models.IExpense;
-import com.ogr.splithappens.models.IPerson;
-import com.ogr.splithappens.viewmodels.IViewModel;
+import com.ogr.splithappens.model.IExpense;
+import com.ogr.splithappens.model.IPerson;
+import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;

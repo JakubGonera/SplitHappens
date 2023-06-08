@@ -1,4 +1,4 @@
-package com.ogr.splithappens.models;
+package com.ogr.splithappens.model;
 
 import java.util.List;
 import java.util.Map;

@@ -1,10 +1,10 @@
-package com.ogr.splithappens.views;
+package com.ogr.splithappens.view;
 
 import com.ogr.splithappens.Program;
-import com.ogr.splithappens.models.Expense;
-import com.ogr.splithappens.models.IPerson;
-import com.ogr.splithappens.models.Pair;
-import com.ogr.splithappens.viewmodels.IViewModel;
+import com.ogr.splithappens.model.Expense;
+import com.ogr.splithappens.model.IPerson;
+import com.ogr.splithappens.model.Pair;
+import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

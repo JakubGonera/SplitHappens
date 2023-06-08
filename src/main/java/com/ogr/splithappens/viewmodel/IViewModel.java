@@ -1,7 +1,7 @@
-package com.ogr.splithappens.viewmodels;
+package com.ogr.splithappens.viewmodel;
 
-import com.ogr.splithappens.models.IExpense;
-import com.ogr.splithappens.models.IPerson;
+import com.ogr.splithappens.model.IExpense;
+import com.ogr.splithappens.model.IPerson;
 import javafx.beans.property.ReadOnlyListProperty;
 
 

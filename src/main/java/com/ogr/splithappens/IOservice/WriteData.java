@@ -1,6 +1,6 @@
 package com.ogr.splithappens.IOservice;
 
-import com.ogr.splithappens.models.IPersonsManager;
+import com.ogr.splithappens.model.IPersonsManager;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;

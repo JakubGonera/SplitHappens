@@ -1,9 +1,9 @@
-package com.ogr.splithappens.views;
+package com.ogr.splithappens.view;
 
-import com.ogr.splithappens.models.IExpense;
-import com.ogr.splithappens.models.IPerson;
-import com.ogr.splithappens.models.Pair;
-import com.ogr.splithappens.viewmodels.IViewModel;
+import com.ogr.splithappens.model.IExpense;
+import com.ogr.splithappens.model.IPerson;
+import com.ogr.splithappens.model.Pair;
+import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ExpenseController {
+public class ExpenseView {
 
     static final class SimpleStringConverter extends StringConverter<Number> {
         @Override
@@ -96,7 +96,7 @@ public class ExpenseController {
     @FXML
     ScrollPane splitPane;
 
-    public ExpenseController(IViewModel viewModel, Stage window) {
+    public ExpenseView(IViewModel viewModel, Stage window) {
         this.viewModel = viewModel;
         this.window = window;
     }

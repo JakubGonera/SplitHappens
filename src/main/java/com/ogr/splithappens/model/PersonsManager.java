@@ -1,6 +1,6 @@
-package com.ogr.splithappens.models;
+package com.ogr.splithappens.model;
 
-import com.ogr.splithappens.views.InvalidNamePopupView;
+import com.ogr.splithappens.view.InvalidNamePopupView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
