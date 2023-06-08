@@ -20,7 +20,7 @@ class ReadDataTest {
         em.addExpense(new Expense("0",0, 30, l0));
         List<Pair<Integer,Integer>> l1 = List.of(new Pair<>(1, 30), new Pair<>(2,0));
         em.addExpense(new Expense("1", 0, 30, l1));
-        List<IPerson.detailedBalance>lbefore = new ArrayList<>();
+        List<Person.detailedBalance>lbefore = new ArrayList<>();
         for(var person : pm.getPersons()){
             for(var expense : person.getDetailedBalances()){
                 lbefore.add(expense);
@@ -31,7 +31,7 @@ class ReadDataTest {
         pm = new PersonsManager(em);
         pm = ReadData.readData();
         em = pm.getExpenseManager();
-        List<IPerson.detailedBalance>lafter = new ArrayList<>();
+        List<Person.detailedBalance>lafter = new ArrayList<>();
         for(var person : pm.getPersons()){
             for(var expense : person.getDetailedBalances()){
                 lafter.add(expense);
@@ -43,7 +43,7 @@ class ReadDataTest {
         em.addExpense(new Expense("2", 0, 30, List.of(new Pair<>(1, 30), new Pair<>(2,0))));
         pm = ReadData.readData();
         em = pm.getExpenseManager();
-        List<IPerson.detailedBalance>lafter2 = new ArrayList<>();
+        List<Person.detailedBalance>lafter2 = new ArrayList<>();
         for(var person : pm.getPersons()){
             for(var expense : person.getDetailedBalances()){
                 lafter2.add(expense);

@@ -5,12 +5,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.ogr.splithappens.model.IExpense;
-import com.ogr.splithappens.model.IPerson;
-import com.ogr.splithappens.viewmodel.IViewModel;
-import javafx.fxml.FXML;
+import com.ogr.splithappens.model.Person;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -43,7 +40,7 @@ public class MainViewExpenseHandler {
         }
     }
 
-    static IPerson getUniquePerson(Stream<IPerson> persons, int personID) {
+    static Person getUniquePerson(Stream<Person> persons, int personID) {
         return persons.filter(p -> p.getID() == personID)
                 .reduce((a, b) -> {
                     throw new IllegalStateException("Multiple persons with same ID");
@@ -53,7 +50,7 @@ public class MainViewExpenseHandler {
 
     void recalculateExpensesTable(List<IExpense> iExpenses) {
         view.expensesTable.getChildren().clear();
-        List<IPerson> personList = view.viewModel.getPersonsList().getValue();
+        List<Person> personList = view.viewModel.getPersonsList().getValue();
         //List<IPerson> personList = dummyPersonList;
         for (IExpense expense : iExpenses) {
             if (expense.getAmount() > 0) {

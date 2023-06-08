@@ -1,7 +1,7 @@
 package com.ogr.splithappens.view;
 
 import com.ogr.splithappens.model.IExpense;
-import com.ogr.splithappens.model.IPerson;
+import com.ogr.splithappens.model.Person;
 import com.ogr.splithappens.model.Pair;
 import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.collections.ObservableList;
@@ -86,7 +86,7 @@ public class ExpenseView {
     @FXML
     TextField valueField;
     @FXML
-    ChoiceBox<IPerson> payerField;
+    ChoiceBox<Person> payerField;
     @FXML
     Text errorText;
     @FXML
@@ -102,7 +102,7 @@ public class ExpenseView {
     }
 
     public void setBindings() {
-        ObservableList<IPerson> personsList = viewModel.getPersonsList().getValue();
+        ObservableList<Person> personsList = viewModel.getPersonsList().getValue();
         valueField.setTextFormatter(new TextFormatter<>(new SimpleStringConverter()));
         payerField.getItems().addAll(personsList);
 
@@ -123,7 +123,7 @@ public class ExpenseView {
         int row = 0;
 
         List<TextField> detailedFields = new ArrayList<>();
-        for (IPerson person : personsList) {
+        for (Person person : personsList) {
             Text name = new Text(person.getName());
             name.setFont(Font.font("System", 14));
             splitGrid.add(name, 0, row);
@@ -206,7 +206,7 @@ public class ExpenseView {
                 } else {
                     float value = Float.parseFloat(valueField.getText());
                     sumValue += (int) (value * 100);
-                    for (IPerson person : personsList) {
+                    for (Person person : personsList) {
                         borrowers.add(new Pair<>(person.getID(), (int) (value / personsList.size() * 100)));
                     }
                 }

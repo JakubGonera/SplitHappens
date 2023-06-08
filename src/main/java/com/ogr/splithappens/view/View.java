@@ -1,25 +1,19 @@
 package com.ogr.splithappens.view;
 
 import com.ogr.splithappens.model.IExpense;
-import com.ogr.splithappens.model.IPerson;
+import com.ogr.splithappens.model.Person;
 import com.ogr.splithappens.viewmodel.IViewModel;
-import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 
 
-import java.io.IOException;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class View {
     final IViewModel viewModel;
@@ -48,9 +42,9 @@ public class View {
             }
         });
 
-        viewModel.getPersonsList().addListener(new ChangeListener<List<IPerson>>() {
+        viewModel.getPersonsList().addListener(new ChangeListener<List<Person>>() {
             @Override
-            public void changed(ObservableValue<? extends List<IPerson>> observableValue, List<IPerson> iPeople, List<IPerson> t1) {
+            public void changed(ObservableValue<? extends List<Person>> observableValue, List<Person> iPeople, List<Person> t1) {
                 personHandler.updatePeople();
             }
         });

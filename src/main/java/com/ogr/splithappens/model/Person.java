@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements IPerson, Serializable {
+public class Person implements Serializable {
+    public record detailedBalance(String name, int id, int balance) { }
     String name;
     int id;
     PersonsManager personsManager;
-
     Person(String name, PersonsManager personsManager) {
         this.name = name;
         this.personsManager = personsManager;
@@ -16,17 +16,14 @@ public class Person implements IPerson, Serializable {
         personsManager.incrementGlobalID();
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public int getID() {
         return id;
     }
 
-    @Override
     public int getBalance() {
         int balance = 0;
         for (var detailedBalance : getDetailedBalances()) {
@@ -35,7 +32,6 @@ public class Person implements IPerson, Serializable {
         return balance;
     }
 
-    @Override
     public List<detailedBalance> getDetailedBalances() {
         List<detailedBalance> result = new ArrayList<>();
         if (!personsManager.expenseManager.getDetailedBalances().containsKey(id))

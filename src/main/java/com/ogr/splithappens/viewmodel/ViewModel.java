@@ -3,7 +3,7 @@ package com.ogr.splithappens.viewmodel;
 import com.ogr.splithappens.IOservice.IOService;
 import com.ogr.splithappens.model.IExpense;
 import com.ogr.splithappens.model.IExpenseManager;
-import com.ogr.splithappens.model.IPerson;
+import com.ogr.splithappens.model.Person;
 import com.ogr.splithappens.model.IPersonsManager;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -14,7 +14,7 @@ public class ViewModel implements IViewModel {
     private final IExpenseManager expensesManager;
     // Remember to change personsList value whenever needed by personsList.setValue(personsManager.getPersons)
 
-    private final ListProperty<IPerson> personsList;
+    private final ListProperty<Person> personsList;
 
     private final ListProperty<IExpense> expensesList;
 
@@ -26,7 +26,7 @@ public class ViewModel implements IViewModel {
     }
 
     @Override
-    public ReadOnlyListProperty<IPerson> getPersonsList() {
+    public ReadOnlyListProperty<Person> getPersonsList() {
         return personsList;
     }
 
@@ -55,7 +55,7 @@ public class ViewModel implements IViewModel {
     }
 
 
-    public IPerson getPersonByName(String name) {
+    public Person getPersonByName(String name) {
         return personsManager.getPersonByName(name);
     }
 

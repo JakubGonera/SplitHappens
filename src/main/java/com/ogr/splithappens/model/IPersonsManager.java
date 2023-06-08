@@ -3,7 +3,7 @@ package com.ogr.splithappens.model;
 import java.util.List;
 
 public interface IPersonsManager {
-    List<IPerson> getPersons();
+    List<Person> getPersons();
 
     IExpenseManager getExpenseManager();
 
@@ -13,5 +13,5 @@ public interface IPersonsManager {
 
     void addPerson(String name);
 
-    IPerson getPersonByName(String name);
+    Person getPersonByName(String name);
 }

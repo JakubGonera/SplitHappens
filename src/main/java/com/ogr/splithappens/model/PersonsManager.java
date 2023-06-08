@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PersonsManager implements IPersonsManager, Serializable {
     IExpenseManager expenseManager;
-    List<IPerson> persons;
+    List<Person> persons;
     int globalID = 0;
 
     public IExpenseManager getExpenseManager() {
@@ -31,7 +31,7 @@ public class PersonsManager implements IPersonsManager, Serializable {
     }
 
     @Override
-    public List<IPerson> getPersons() {
+    public List<Person> getPersons() {
         return persons;
     }
 
@@ -41,19 +41,19 @@ public class PersonsManager implements IPersonsManager, Serializable {
             new InvalidNamePopupView().Show("Name cannot be empty!");
             return;
         }
-        for (IPerson p : persons) {
+        for (Person p : persons) {
             if (p.getName().equals(name)) {
                 new InvalidNamePopupView().Show("This person already exists!");
                 return;
             }
         }
 
-        IPerson temp = new Person(name, this);
+        Person temp = new Person(name, this);
         persons.add(temp);
     }
 
-    public IPerson getPersonByName(String name) {
-        for (IPerson ip : persons)
+    public Person getPersonByName(String name) {
+        for (Person ip : persons)
             if (ip.getName().equals(name)) return ip;
         throw new RuntimeException("There is no person with name " + name);
     }

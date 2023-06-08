@@ -1,6 +1,6 @@
 package com.ogr.splithappens.view;
 
-import com.ogr.splithappens.model.IPerson;
+import com.ogr.splithappens.model.Person;
 
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.scene.control.TitledPane;
@@ -16,9 +16,9 @@ public class MainViewPersonHandler {
         System.out.println("Updating people");
         System.out.println("Number of expenses: " + view.viewModel.getExpensesList().getValue().size());
 
-        ReadOnlyListProperty<IPerson> people = view.viewModel.getPersonsList();
+        ReadOnlyListProperty<Person> people = view.viewModel.getPersonsList();
         view.accordion.getPanes().remove(0, view.accordion.getPanes().size());
-        for (IPerson ip : people.getValue()) {
+        for (Person ip : people.getValue()) {
             TitledPane tp = createPersonBlock(ip);
             view.accordion.getPanes().add(tp);
         }
