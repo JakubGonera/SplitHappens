@@ -4,6 +4,7 @@ import com.ogr.splithappens.model.ExpenseManager;
 import com.ogr.splithappens.model.PersonsManager;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 
 public class ReadData {
@@ -15,12 +16,21 @@ public class ReadData {
             FileInputStream inputStream = new FileInputStream(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
             personsManager = (PersonsManager) objectInputStream.readObject();
-        } catch (Exception e) {
-            System.out.println("Error reading from file: " + e.getMessage());
+            return personsManager;
+        }
+        catch (FileNotFoundException e) {
+            // file not yet created - correct behaviour
+            System.out.println("1");
             ExpenseManager em = new ExpenseManager();
             personsManager = new PersonsManager(em);
             return personsManager;
         }
-        return personsManager;
+        catch (Exception e) {
+            // unknown error
+            e.printStackTrace();
+            ExpenseManager em = new ExpenseManager();
+            personsManager = new PersonsManager(em);
+            return personsManager;
+        }
     }
 }

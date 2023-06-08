@@ -17,8 +17,9 @@ public class WriteData {
             FileOutputStream outputStream = new FileOutputStream(fileName);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
             objectOutputStream.writeObject(personsManager);
-        } catch (Exception e) {
-            System.out.println("Error writing to file: " + e.getMessage());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
