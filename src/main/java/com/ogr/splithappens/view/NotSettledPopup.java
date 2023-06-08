@@ -1,4 +1,4 @@
-package com.ogr.splithappens.views;
+package com.ogr.splithappens.view;
 
 import com.ogr.splithappens.Program;
 import javafx.fxml.FXML;

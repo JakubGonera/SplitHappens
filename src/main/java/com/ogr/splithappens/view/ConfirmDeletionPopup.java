@@ -1,9 +1,8 @@
-package com.ogr.splithappens.views;
+package com.ogr.splithappens.view;
 
 import com.ogr.splithappens.Program;
-import com.ogr.splithappens.models.IPerson;
-import com.ogr.splithappens.viewmodels.IViewModel;
-import com.ogr.splithappens.viewmodels.ViewModel;
+import com.ogr.splithappens.model.Person;
+import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,17 +14,16 @@ public class ConfirmDeletionPopup {
     Stage window;
     IViewModel vm;
     View view;
-    IPerson person;
+    Person person;
     @FXML
     Text TextField;
     @FXML
     public void onClickDelete() {
         //person.setInactive();
         vm.deletePerson(person);
-        view.updatePeople();
         window.close();
     }
-    public void show(IPerson p, View view, IViewModel vm) {
+    public void show(Person p, View view, IViewModel vm) {
         this.person = p;
         this.view = view;
         this.vm = vm;

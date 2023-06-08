@@ -1,38 +1,34 @@
-package com.ogr.splithappens.models;
+package com.ogr.splithappens.model;
 
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ExpenseManager implements IExpenseManager, Serializable {
+public class ExpenseManager implements Serializable {
 
-    List<IExpense> expenses = new ArrayList<>();
+    List<Expense> expenses = new ArrayList<>();
     int globalID = 0;
 
-    @Override
     public int getGlobalID() {
         return globalID;
     }
 
-    @Override
     public void incrementGlobalID() {
         globalID++;
     }
 
-    @Override
-    public List<IExpense> getExpenses() {
+    public List<Expense> getExpenses() {
         return expenses;
     }
 
-    @Override
-    public void addExpense(IExpense expense) {
+    public void addExpense(Expense expense) {
         expenses.add(new Expense(expense.getTitle(), expense.getPayerID(), expense.getAmount(), expense.getBorrowers(), getGlobalID()));
         incrementGlobalID();
     }
 
     public Map<Integer, Integer> getBalances() {
         Map<Integer, Integer> balances = new HashMap<>();
-        for (IExpense expense : getExpenses()) {
+        for (Expense expense : getExpenses()) {
             balances.putIfAbsent(expense.getPayerID(), 0);
             balances.put(expense.getPayerID(), balances.get(expense.getPayerID()) + expense.getAmount());
             for (Pair<Integer, Integer> borrower : expense.getBorrowers()) {
@@ -43,7 +39,7 @@ public class ExpenseManager implements IExpenseManager, Serializable {
         return balances;
     }
 
-    public Map<Integer, List<Pair<Integer, Integer>>> getDetailedBalances() {
+    Map<Integer, List<Pair<Integer, Integer>>> getDetailedBalances() {
         List<Pair<Integer, Integer>> positive = new ArrayList<>();
         List<Pair<Integer, Integer>> negative = new ArrayList<>();
         Map<Integer, List<Pair<Integer, Integer>>> result = new HashMap<>();
@@ -78,10 +74,9 @@ public class ExpenseManager implements IExpenseManager, Serializable {
         return result;
     }
 
-    @Override
     public boolean removeExpense(int id) {
         int sizeBefore = expenses.size();
-        expenses = expenses.stream().filter(((IExpense a) -> a.getID() != id)).collect(Collectors.toList());
+        expenses = expenses.stream().filter(((Expense a) -> a.getID() != id)).collect(Collectors.toList());
         return sizeBefore != expenses.size(); // true if deleted something;
     }
 }

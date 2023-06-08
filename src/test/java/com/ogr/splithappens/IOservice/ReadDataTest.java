@@ -1,6 +1,6 @@
 package com.ogr.splithappens.IOservice;
 
-import com.ogr.splithappens.models.*;
+import com.ogr.splithappens.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReadDataTest {
     @Test
     public void test1(){
-        IExpenseManager em = new ExpenseManager();
-        IPersonsManager pm = new PersonsManager(em);
+        ExpenseManager em = new ExpenseManager();
+        PersonsManager pm = new PersonsManager(em);
         pm.addPerson("a");
         pm.addPerson("b");
         pm.addPerson("c");
@@ -20,7 +20,7 @@ class ReadDataTest {
         em.addExpense(new Expense("0",0, 30, l0));
         List<Pair<Integer,Integer>> l1 = List.of(new Pair<>(1, 30), new Pair<>(2,0));
         em.addExpense(new Expense("1", 0, 30, l1));
-        List<IPerson.detailedBalance>lbefore = new ArrayList<>();
+        List<Person.detailedBalance>lbefore = new ArrayList<>();
         for(var person : pm.getPersons()){
             for(var expense : person.getDetailedBalances()){
                 lbefore.add(expense);
@@ -31,7 +31,7 @@ class ReadDataTest {
         pm = new PersonsManager(em);
         pm = ReadData.readData();
         em = pm.getExpenseManager();
-        List<IPerson.detailedBalance>lafter = new ArrayList<>();
+        List<Person.detailedBalance>lafter = new ArrayList<>();
         for(var person : pm.getPersons()){
             for(var expense : person.getDetailedBalances()){
                 lafter.add(expense);
@@ -43,7 +43,7 @@ class ReadDataTest {
         em.addExpense(new Expense("2", 0, 30, List.of(new Pair<>(1, 30), new Pair<>(2,0))));
         pm = ReadData.readData();
         em = pm.getExpenseManager();
-        List<IPerson.detailedBalance>lafter2 = new ArrayList<>();
+        List<Person.detailedBalance>lafter2 = new ArrayList<>();
         for(var person : pm.getPersons()){
             for(var expense : person.getDetailedBalances()){
                 lafter2.add(expense);
@@ -51,14 +51,14 @@ class ReadDataTest {
         }
         assertEquals(lbefore.size(), lafter2.size());
         assertNotEquals(lafter2.size(), 0);
-        IExpenseManager expm = new ExpenseManager();
-        IPersonsManager perm = new PersonsManager(expm);
+        ExpenseManager expm = new ExpenseManager();
+        PersonsManager perm = new PersonsManager(expm);
         perm.addPerson("a");
         perm.addPerson("b");
         perm.addPerson("c");
         perm.addPerson("d");
         WriteData.writeData(perm);
-        IPersonsManager newperm = ReadData.readData();
+        PersonsManager newperm = ReadData.readData();
         assertEquals(4, newperm.getPersons().size());
         int counter = 0;
         for(var person : newperm.getPersons()){

@@ -1,70 +1,68 @@
-package com.ogr.splithappens.models;
+package com.ogr.splithappens.model;
 
-import com.ogr.splithappens.views.InvalidNamePopupView;
+import com.ogr.splithappens.view.InvalidNamePopupView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonsManager implements IPersonsManager, Serializable {
-    IExpenseManager expenseManager;
-    List<IPerson> persons;
-    List<IPerson> ActivePersons;
+public class PersonsManager implements Serializable {
+    ExpenseManager expenseManager;
+    List<Person> persons;
+    List<Person> ActivePersons;
     int globalID = 0;
+
     public void refreshActivePersons(){
         ActivePersons.clear();
-        for (IPerson p : persons) {
+        for (Person p : persons) {
             if (p.isActive()) {
                 ActivePersons.add(p);
             }
         }
     }
-    public IExpenseManager getExpenseManager() {
+
+    public ExpenseManager getExpenseManager() {
         return expenseManager;
     }
 
-    @Override
     public void incrementGlobalID() {
         globalID++;
     }
 
-    @Override
     public int getGlobalID() {
         return globalID;
     }
 
-    public PersonsManager(IExpenseManager expenseManager) {
+    public PersonsManager(ExpenseManager expenseManager) {
         this.expenseManager = expenseManager;
         persons = new ArrayList<>();
         ActivePersons = new ArrayList<>();
     }
 
-    @Override
-    public List<IPerson> getPersons() {
+    public List<Person> getPersons() {
         refreshActivePersons();
         return ActivePersons;
     }
 
-    @Override
     public void addPerson(String name) {
         if (name.equals("")) {
             new InvalidNamePopupView().Show("Name cannot be empty!");
             return;
         }
-        for (IPerson p : persons) {
+        for (Person p : persons) {
             if (p.getName().equals(name) && p.isActive()) {
                 new InvalidNamePopupView().Show("This person already exists!");
                 return;
             }
         }
 
-        IPerson temp = new Person(name, this);
+        Person temp = new Person(name, this);
         persons.add(temp);
         refreshActivePersons();
     }
 
-    public IPerson getPersonByName(String name) {
-        for (IPerson ip : persons)
+    public Person getPersonByName(String name) {
+        for (Person ip : persons)
             if (ip.getName().equals(name)) return ip;
         throw new RuntimeException("There is no person with name " + name);
     }

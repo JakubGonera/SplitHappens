@@ -1,10 +1,10 @@
-package com.ogr.splithappens.models;
+package com.ogr.splithappens.model;
 
 import java.io.Serializable;
 import java.util.List;
 
 // I am not too convinced whether we need this interface, if it will be easier, maybe delete this and keep just Person class
-public class Expense implements IExpense, Serializable {
+public class Expense implements Serializable {
     String title;
     int payerID;
     int amount;
@@ -27,22 +27,18 @@ public class Expense implements IExpense, Serializable {
         this.borrowers = borrowers;
     }
 
-    @Override
     public String getTitle() {
         return title;
     }
 
-    @Override
     public int getID() {
         return ID;
     }
 
-    @Override
     public int getAmount() {
         return amount;
     }
 
-    @Override
     public int getPayerID() {
         return payerID;
     }

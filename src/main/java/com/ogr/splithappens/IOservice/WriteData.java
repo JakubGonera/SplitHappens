@@ -1,6 +1,6 @@
 package com.ogr.splithappens.IOservice;
 
-import com.ogr.splithappens.models.IPersonsManager;
+import com.ogr.splithappens.model.PersonsManager;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
@@ -12,7 +12,7 @@ public class WriteData {
         return fileName;
     }
 
-    public static void writeData(IPersonsManager personsManager) {
+    public static void writeData(PersonsManager personsManager) {
         try {
             FileOutputStream outputStream = new FileOutputStream(fileName);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
