@@ -40,7 +40,7 @@ public class PersonsManager implements Serializable {
     }
 
     public List<Person> getPersons() {
-        refreshActivePersons();
+        //refreshActivePersons();
         return ActivePersons;
     }
 
