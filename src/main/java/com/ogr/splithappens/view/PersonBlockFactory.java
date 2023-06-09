@@ -1,7 +1,7 @@
-package com.ogr.splithappens.views;
+package com.ogr.splithappens.view;
 
-import com.ogr.splithappens.models.IPerson;
-import com.ogr.splithappens.viewmodels.IViewModel;
+import com.ogr.splithappens.model.Person;
+import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,9 +14,8 @@ import javafx.scene.layout.VBox;
 public class PersonBlockFactory {
 
     private static final String currency = "zł";
-    public static IViewModel viewModel;
 
-    static TitledPane createPersonBlock(IPerson p) {
+    static TitledPane createPersonBlock(Person p, View view) {
 
         VBox vb = new VBox();
         HBox head = new HBox();
@@ -40,7 +39,7 @@ public class PersonBlockFactory {
 
             Button b = new Button("...");
             b.setScaleY(0.7);
-            b.setOnAction(x -> onPersonOptionsSchema(p, viewModel.getPersonByName(exp.name()), exp.balance(), x));
+            b.setOnAction(x -> onPersonOptionsSchema(p, view.viewModel.getPersonByName(exp.name()), exp.balance(), x, view));
 
             HBox hb = new HBox();
             hb.getChildren().add(l);
@@ -72,6 +71,16 @@ public class PersonBlockFactory {
         BorderPane borderPane = new BorderPane();
         Label titleOfTitledPane = new Label(p.getName() + " " + balanceText);
         Button buttonClose = new Button("X");
+        buttonClose.addEventHandler(ActionEvent.ACTION, (e) -> {
+            if(!p.canBeSetInactive()){
+                NotSettledPopup popup = new NotSettledPopup();
+                popup.show();
+            }
+            else {
+                ConfirmDeletionPopup popup = new ConfirmDeletionPopup();
+                popup.show(p, view, view.viewModel);
+            }
+        });
         borderPane.setCenter(titleOfTitledPane);
         borderPane.setRight(buttonClose);
         borderPane.prefWidthProperty().bind(tp.widthProperty().subtract(40));
@@ -82,11 +91,11 @@ public class PersonBlockFactory {
     }
 
 
-    public static void onPersonOptionsSchema(IPerson payer, IPerson receiver, int balance, ActionEvent e) {
+    public static void onPersonOptionsSchema(Person payer, Person receiver, int balance, ActionEvent e, View view) {
         if (balance < 0)
-            new SettleUpView(viewModel).Show(receiver, payer, -balance);
+            new SettleUpView(view.viewModel).Show(receiver, payer, -balance);
         else
-            new SettleUpView(viewModel).Show(payer, receiver, balance);
+            new SettleUpView(view.viewModel).Show(payer, receiver, balance);
     }
 
 

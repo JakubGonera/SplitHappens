@@ -1,11 +1,10 @@
 package com.ogr.splithappens;
 
 import com.ogr.splithappens.IOservice.IOService;
-import com.ogr.splithappens.models.IPersonsManager;
-import com.ogr.splithappens.viewmodels.IViewModel;
-import com.ogr.splithappens.viewmodels.ViewModel;
-import com.ogr.splithappens.views.PersonBlockFactory;
-import com.ogr.splithappens.views.View;
+import com.ogr.splithappens.model.PersonsManager;
+import com.ogr.splithappens.viewmodel.IViewModel;
+import com.ogr.splithappens.viewmodel.ViewModel;
+import com.ogr.splithappens.view.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,7 +15,7 @@ import java.io.IOException;
 public class Program extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        IPersonsManager personsManager = IOService.readData();
+        PersonsManager personsManager = IOService.readData();
         IViewModel viewModel = new ViewModel(personsManager, personsManager.getExpenseManager());
 
         View view = new View(viewModel, stage);
@@ -31,8 +30,6 @@ public class Program extends Application {
         stage.show();
 
         view.setBindings();
-
-        PersonBlockFactory.viewModel = viewModel;
     }
 
     public static void main(String[] args) {

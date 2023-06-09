@@ -1,9 +1,9 @@
-package com.ogr.splithappens.views;
+package com.ogr.splithappens.view;
 
-import com.ogr.splithappens.models.IExpense;
-import com.ogr.splithappens.models.IPerson;
-import com.ogr.splithappens.models.Pair;
-import com.ogr.splithappens.viewmodels.IViewModel;
+import com.ogr.splithappens.model.Expense;
+import com.ogr.splithappens.model.Person;
+import com.ogr.splithappens.model.Pair;
+import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ExpenseController {
+public class ExpenseView {
 
     static final class SimpleStringConverter extends StringConverter<Number> {
         @Override
@@ -39,45 +39,7 @@ public class ExpenseController {
 
     }
 
-    static class ExpensePayload implements IExpense {
-        String title;
-        int value;
-        int payerID;
-        List<Pair<Integer, Integer>> borrowers;
 
-        public ExpensePayload(String title, int value, int payerID, List<Pair<Integer, Integer>> borrowers) {
-            this.title = title;
-            this.value = value;
-            this.payerID = payerID;
-            this.borrowers = borrowers;
-        }
-
-        @Override
-        public String getTitle() {
-            return title;
-        }
-
-        @Override
-        public int getID() {
-            // As a payload this doesn't have an ID, it should be assigned by the model
-            return -1;
-        }
-
-        @Override
-        public int getAmount() {
-            return value;
-        }
-
-        @Override
-        public int getPayerID() {
-            return payerID;
-        }
-
-        @Override
-        public List<Pair<Integer, Integer>> getBorrowers() {
-            return borrowers;
-        }
-    }
 
     private final IViewModel viewModel;
     private final Stage window;
@@ -86,7 +48,7 @@ public class ExpenseController {
     @FXML
     TextField valueField;
     @FXML
-    ChoiceBox<IPerson> payerField;
+    ChoiceBox<Person> payerField;
     @FXML
     Text errorText;
     @FXML
@@ -99,13 +61,13 @@ public class ExpenseController {
     @FXML
     GridPane splitGrid;
 
-    public ExpenseController(IViewModel viewModel, Stage window) {
+    public ExpenseView(IViewModel viewModel, Stage window) {
         this.viewModel = viewModel;
         this.window = window;
     }
 
     public void setBindings() {
-        ObservableList<IPerson> personsList = viewModel.getPersonsList().getValue();
+        ObservableList<Person> personsList = viewModel.getPersonsList().getValue();
         valueField.setTextFormatter(new TextFormatter<>(new SimpleStringConverter()));
         payerField.getItems().addAll(personsList);
 
@@ -126,7 +88,7 @@ public class ExpenseController {
         int row = 0;
 
         List<TextField> detailedFields = new ArrayList<>();
-        for (IPerson person : personsList) {
+        for (Person person : personsList) {
             Label name = new Label(person.getName());
             name.setFont(Font.font("System", 14));
             splitGrid.add(name, 0, row);
@@ -212,13 +174,13 @@ public class ExpenseController {
 //                    float value = Float.parseFloat(valueField.getText());
                     float value = 100;
                     sumValue += (int) (value * 100);
-                    for (IPerson person : personsList) {
+                    for (Person person : personsList) {
                         borrowers.add(new Pair<>(person.getID(), (int) (value / personsList.size() * 100)));
                     }
                 }
 
                 // Construct payload and send it to the viewmodel and close window
-                ExpensePayload expensePayload = new ExpensePayload(titleField.getText(), sumValue, payerField.getSelectionModel().getSelectedItem().getID(), borrowers);
+                Expense expensePayload = new Expense(titleField.getText(), payerField.getSelectionModel().getSelectedItem().getID(), sumValue, borrowers);
                 viewModel.addExpense(expensePayload);
 
                 window.close();
