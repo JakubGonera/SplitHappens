@@ -58,6 +58,9 @@ public class ExpenseView {
     @FXML
     ScrollPane splitPane;
 
+    @FXML
+    GridPane splitGrid;
+
     public ExpenseView(IViewModel viewModel, Stage window) {
         this.viewModel = viewModel;
         this.window = window;
@@ -69,7 +72,7 @@ public class ExpenseView {
         payerField.getItems().addAll(personsList);
 
         // Detailed split set up
-        GridPane splitGrid = new GridPane();
+//        GridPane splitGrid = new GridPane();
         splitGrid.prefWidthProperty().bind(splitPane.widthProperty().add(-10));
         valueField.disableProperty().bind(detailedCheck.selectedProperty());
         ColumnConstraints col1 = new ColumnConstraints();
@@ -86,7 +89,7 @@ public class ExpenseView {
 
         List<TextField> detailedFields = new ArrayList<>();
         for (Person person : personsList) {
-            Text name = new Text(person.getName());
+            Label name = new Label(person.getName());
             name.setFont(Font.font("System", 14));
             splitGrid.add(name, 0, row);
             GridPane.setMargin(name, new Insets(0, 0, 0, 10));
@@ -97,7 +100,7 @@ public class ExpenseView {
             splitGrid.add(value, 1, row);
             detailedFields.add(value);
 
-            Text currencyText = new Text("zł");
+            Label currencyText = new Label("zł");
             splitGrid.add(currencyText, 1, row);
             GridPane.setHalignment(currencyText, HPos.RIGHT);
             GridPane.setMargin(currencyText, new Insets(0, 10, 0, 0));
@@ -111,6 +114,7 @@ public class ExpenseView {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
                 // Validation of the data
                 if (Objects.equals(titleField.getText(), "")) {
                     errorText.setText("Empty title!");
@@ -136,18 +140,19 @@ public class ExpenseView {
                         return;
                     }
                 } else {
-                    if (Objects.equals(valueField.getText(), "")) {
-                        errorText.setText("Empty value!");
-                        return;
-                    }
-                    if (Float.parseFloat(valueField.getText()) == 0) {
-                        errorText.setText("Zero value!");
-                        return;
-                    }
-                    if (Float.parseFloat(valueField.getText()) < 0) {
-                        errorText.setText("Negative value!");
-                        return;
-                    }
+
+//                    if (Objects.equals(valueField.getText(), "")) {
+//                        errorText.setText("Empty value!");
+//                        return;
+//                    }
+//                    if (Float.parseFloat(valueField.getText()) == 0) {
+//                        errorText.setText("Zero value!");
+//                        return;
+//                    }
+//                    if (Float.parseFloat(valueField.getText()) < 0) {
+//                        errorText.setText("Negative value!");
+//                        return;
+//                    }
                 }
                 if (payerField.getSelectionModel().isEmpty()) {
                     errorText.setText("Payer not selected!");
@@ -166,7 +171,8 @@ public class ExpenseView {
                         }
                     }
                 } else {
-                    float value = Float.parseFloat(valueField.getText());
+//                    float value = Float.parseFloat(valueField.getText());
+                    float value = 100;
                     sumValue += (int) (value * 100);
                     for (Person person : personsList) {
                         borrowers.add(new Pair<>(person.getID(), (int) (value / personsList.size() * 100)));

@@ -4,39 +4,151 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="482.0" prefWidth="600.0" snapToPixel="false" styleClass="background-color-1" stylesheets="@Style/panes.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane dividerPositions="0.38469251336898386" layoutX="100.0" layoutY="14.0" prefHeight="385.0" prefWidth="499.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="279.0">
+      <VBox alignment="TOP_CENTER" layoutX="1.0" prefHeight="554.0" prefWidth="600.0" styleClass="transparent-eleent" stylesheets="@Style/panes.css" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="80.0" prefWidth="600.0" styleClass="transparent-eleent" stylesheets="@Style/panes.css">
                <children>
-                 <Button fx:id="add" layoutX="161.0" layoutY="13.0" mnemonicParsing="false" onAction="#onAddPerson" text="Add person" />
-                 <TextField fx:id="inputName" layoutX="14.0" layoutY="13.0" prefHeight="26.0" prefWidth="134.0" />
-                  <Accordion fx:id="accordion" layoutY="51.0" prefHeight="344.0" prefWidth="214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-
-                  </Accordion>
-
+                  <ImageView id="ppp" fitHeight="72.0" fitWidth="296.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@Images/logo3.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="save" mnemonicParsing="false" prefHeight="61.0" prefWidth="77.0" stylesheets="@Style/button.css" text="SAVE">
+                     <opaqueInsets>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+            </HBox>
+            <HBox prefHeight="1000.0" prefWidth="590.0" styleClass="transparent-eleent" stylesheets="@Style/panes.css">
                <children>
-                  <ButtonBar layoutX="68.0" prefHeight="40.0" prefWidth="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <buttons>
-                      <Button fx:id="newExpense" mnemonicParsing="false" text="New Expense" />
-                        <Button fx:id="save" mnemonicParsing="false" text="Save" />
-                    </buttons>
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="2000.0" prefWidth="1000.0" styleClass="background-color-2" stylesheets="@Style/button.css">
+                     <children>
+                       <Button fx:id="add" layoutX="123.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddPerson" stylesheets="@Style/button.css" text="ADD PERSON" textAlignment="CENTER" textFill="#00ff7e" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="7.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Button>
+                       <TextField fx:id="inputName" layoutX="14.0" layoutY="21.0" prefHeight="27.0" prefWidth="100.0" promptText="name..." AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="121.0" AnchorPane.topAnchor="7.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets></TextField>
+                        <Accordion fx:id="accordion" layoutX="10.0" layoutY="10.0" maxHeight="2000.0" prefHeight="2000.0" prefWidth="236.0" stylesheets="@Style/panes.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+                    <panes>
+                              <TitledPane animated="false" maxHeight="20.0" prefHeight="20.0" stylesheets="@Style/panes.css" text="untitled">
+                                <content>
+                                  <AnchorPane id="eee" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@Style/button.css" />
+                                </content>
+                                 <padding>
+                                    <Insets bottom="4.0" />
+                                 </padding>
+                              </TitledPane>
+                              <TitledPane animated="false" maxHeight="20.0" prefHeight="20.0" stylesheets="@Style/panes.css" text="untitled">
+                                 <content>
+                                    <AnchorPane id="eee" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@Style/button.css" />
+                                 </content>
+                                 <padding>
+                                    <Insets bottom="4.0" />
+                                 </padding>
+                              </TitledPane>
+                              <TitledPane animated="false" maxHeight="20.0" prefHeight="20.0" stylesheets="@Style/panes.css" text="untitled">
+                                 <content>
+                                    <AnchorPane id="eee" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@Style/button.css" />
+                                 </content>
+                                 <padding>
+                                    <Insets bottom="4.0" />
+                                 </padding>
+                              </TitledPane>
+                              <TitledPane animated="false" maxHeight="20.0" prefHeight="20.0" stylesheets="@Style/panes.css" text="untitled">
+                                 <content>
+                                    <AnchorPane id="eee" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@Style/button.css" />
+                                 </content>
+                                 <padding>
+                                    <Insets bottom="4.0" />
+                                 </padding>
+                              </TitledPane>
+                    </panes>
+                  </Accordion>
+      
+                       </children>
                      <padding>
-                        <Insets right="30.0" />
+                        <Insets bottom="5.0" left="5.0" right="4.0" top="5.0" />
                      </padding>
-                  </ButtonBar>
-                  <VBox fx:id="expensesTable" layoutX="40.0" layoutY="45.0" prefHeight="358.0" prefWidth="366.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-               </children></AnchorPane>
-        </items>
-      </SplitPane>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="439.0" prefWidth="1100.0" styleClass="background-color-2" stylesheets="@Style/button.css">
+                     <children>
+                        <ButtonBar layoutX="68.0" prefHeight="40.0" prefWidth="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="7.0">
+                          <buttons>
+                            <Button fx:id="newExpense" mnemonicParsing="false" prefHeight="32.0" prefWidth="102.0" text="ADD EXPENSE" />
+                          </buttons>
+                           <padding>
+                              <Insets right="30.0" />
+                           </padding>
+                        </ButtonBar>
+                        <Accordion fx:id="expensesTable" layoutX="3.0" layoutY="57.0" maxHeight="2000.0" prefHeight="280.0" prefWidth="331.0" stylesheets="@Style/panes.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+                           <panes>
+                              <TitledPane animated="false" maxHeight="190.0" prefHeight="190.0" prefWidth="348.0" stylesheets="@Style/panes.css" text="untitled">
+                                 <content>
+                                    <AnchorPane id="eee" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@Style/button.css" />
+                                 </content>
+                                 <padding>
+                                    <Insets bottom="4.0" />
+                                 </padding>
+                              </TitledPane>
+                              <TitledPane animated="false" maxHeight="20.0" prefHeight="20.0" stylesheets="@Style/panes.css" text="untitled">
+                                 <content>
+                                    <AnchorPane id="eee" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@Style/button.css" />
+                                 </content>
+                                 <padding>
+                                    <Insets bottom="4.0" />
+                                 </padding>
+                              </TitledPane>
+                              <TitledPane animated="false" maxHeight="20.0" prefHeight="20.0" stylesheets="@Style/panes.css" text="untitled">
+                                 <content>
+                                    <AnchorPane id="eee" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@Style/button.css" />
+                                 </content>
+                                 <padding>
+                                    <Insets bottom="4.0" />
+                                 </padding>
+                              </TitledPane>
+                              <TitledPane animated="false" maxHeight="20.0" prefHeight="20.0" stylesheets="@Style/panes.css" text="untitled">
+                                 <content>
+                                    <AnchorPane id="eee" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@Style/button.css" />
+                                 </content>
+                                 <padding>
+                                    <Insets bottom="4.0" />
+                                 </padding>
+                              </TitledPane>
+                           </panes>
+                        </Accordion>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

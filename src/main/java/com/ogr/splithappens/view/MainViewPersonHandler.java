@@ -7,6 +7,7 @@ import javafx.scene.control.TitledPane;
 
 import static com.ogr.splithappens.view.PersonBlockFactory.createPersonBlock;
 
+
 public class MainViewPersonHandler {
     private final View view;
     MainViewPersonHandler(View view) {
