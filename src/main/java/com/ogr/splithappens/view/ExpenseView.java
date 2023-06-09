@@ -23,24 +23,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class ExpenseView {
-
-    static final class SimpleStringConverter extends StringConverter<Number> {
-        @Override
-        public String toString(Number object) {
-            if (object == null)
-                return "0";
-            return String.format("%.2f", object.floatValue());
-        }
-
-        @Override
-        public Number fromString(String string) {
-            return Float.parseFloat(string);
-        }
-
-    }
-
-
-
     private final IViewModel viewModel;
     private final Stage window;
     @FXML
@@ -68,7 +50,7 @@ public class ExpenseView {
 
     public void setBindings() {
         ObservableList<Person> personsList = viewModel.getPersonsList().getValue();
-        valueField.setTextFormatter(new TextFormatter<>(new SimpleStringConverter()));
+        valueField.setTextFormatter(new TextFormatter<>(new Common.SimpleStringConverter()));
         payerField.getItems().addAll(personsList);
 
         // Detailed split set up
@@ -95,7 +77,7 @@ public class ExpenseView {
             GridPane.setMargin(name, new Insets(0, 0, 0, 10));
 
             TextField value = new TextField();
-            value.setTextFormatter(new TextFormatter<>(new SimpleStringConverter()));
+            value.setTextFormatter(new TextFormatter<>(new Common.SimpleStringConverter()));
             value.setText("0");
             splitGrid.add(value, 1, row);
             detailedFields.add(value);
@@ -164,18 +146,17 @@ public class ExpenseView {
                 int sumValue = 0;
                 if (detailedCheck.isSelected()) {
                     for (int i = 0; i < detailedFields.size(); i++) {
-                        float value = Float.parseFloat(detailedFields.get(i).getText());
+                        int value = Common.parseAmount(detailedFields.get(i).getText());
                         if (value != 0) {
-                            sumValue += (int) (value * 100);
+                            sumValue += value;
                             borrowers.add(new Pair<>(personsList.get(i).getID(), (int) (value * 100)));
                         }
                     }
                 } else {
-//                    float value = Float.parseFloat(valueField.getText());
-                    float value = 100;
-                    sumValue += (int) (value * 100);
+                    int value = Common.parseAmount(valueField.getText());
+                    sumValue += value;
                     for (Person person : personsList) {
-                        borrowers.add(new Pair<>(person.getID(), (int) (value / personsList.size() * 100)));
+                        borrowers.add(new Pair<>(person.getID(), (int) ((float)value / personsList.size() * 100)));
                     }
                 }
 

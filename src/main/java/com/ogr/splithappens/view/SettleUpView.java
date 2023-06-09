@@ -46,12 +46,12 @@ public class SettleUpView {
 
     @FXML
     public void onConfirmButton(ActionEvent e) {
-        DummyTransaction(payer.getID(), receiver.getID(), Integer.valueOf(amountField.getText()));
+        DummyTransaction(payer.getID(), receiver.getID(), Common.parseAmount(amountField.getText()));
         window.close();
     }
 
     void SetBindings() {
-        amountField.setTextFormatter(new TextFormatter<>(new NumberStringConverter()));
+        amountField.setTextFormatter(new TextFormatter<>(new Common.SimpleStringConverter()));
     }
 
     public void Show(Person payer, Person receiver, int amount) {
@@ -77,7 +77,7 @@ public class SettleUpView {
             System.out.println(t);
         }
         detailLabel.setText(payer.getName() + " -> " + receiver.getName());
-        amountField.setText(Integer.valueOf(amount).toString());
+        amountField.setText(Common.formatAmount(amount));
         window = transaction;
 
 
