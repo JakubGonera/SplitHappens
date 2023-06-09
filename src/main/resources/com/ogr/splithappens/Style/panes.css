@@ -1,0 +1,152 @@
+@import "colors.css";
+
+
+
+
+/* ------------------- TITLED PANE ------------------- */
+
+.titled-pane {
+    -fx-padding: 0 0 6 0;
+    -fx-animated: true;
+    -fx-text-fill: -col4;
+}
+
+.titled-pane > .title  {
+    -fx-font: bold 14px System;
+    -fx-background-color: -col3;
+}
+
+.titled-pane:expanded > .title {
+    -fx-background-radius: 10 10 0 0;
+}
+
+.titled-pane:collapsed > .title {
+    -fx-background-radius: 10 10 10 10;
+}
+
+.titled-pane:focused > .title > .arrow-button .arrow {
+    -fx-background-color: #606060;
+}
+
+.titled-pane > *.content {
+    -fx-background-color: transparent;
+    -fx-border-width:4;
+    -fx-border-color:-col3;
+    -fx-border-radius: 0 0 10 10;
+    -jfx-focus-color: transparent;
+    -jfx-unfocus-color: transparent;
+}
+
+
+
+
+
+/* ------------------- ACCORDION ------------------- */
+.accordion{
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+
+/* ------------------- ANCHOR PANE ------------------- */
+.anchor-pane{
+    -fx-background-color: -col2;
+    -fx-border-width:4;
+    -fx-border-color:-col3;
+    -fx-border-radius: 0 0 10 10;
+
+}
+
+
+/* ------------------- TRANSPARENT ELEMENT ------------------- */
+.transparent-eleent{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width:4;
+    -fx-border-radius: 0 0 10 10;
+    -jfx-focus-color: transparent;
+    -jfx-unfocus-color: transparent;
+}
+
+.transparent-eleent > *.content{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    /*-fx-background-radius: 0 0 20 20;*/
+    -fx-border-width:4;
+    -fx-border-radius: 0 0 10 10;
+    -jfx-focus-color: transparent;
+    -jfx-unfocus-color: transparent;
+}
+
+.grid-pane{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width:4;
+    -fx-border-radius: 0 0 10 10;
+    -jfx-focus-color: transparent;
+    -jfx-unfocus-color: transparent;
+}
+
+.grid-pane > *.content{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    /*-fx-background-radius: 0 0 20 20;*/
+    -fx-border-width:4;
+    -fx-border-radius: 0 0 10 10;
+    -jfx-focus-color: transparent;
+    -jfx-unfocus-color: transparent;
+}
+/* ------------------- BACKGROUND COLOR 1 ------------------- */
+
+.background-color-1{
+    -fx-background-color: -col1;
+    -fx-border-color: -col1;
+}
+
+.background-color-1 > *.content{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+
+/* ------------------- BACKGROUND COLOR 2 ------------------- */
+.background-color-2{
+    -fx-background-color: -col2;
+    -fx-background-radius: 10;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-border-color: -col1;
+}
+
+
+
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: -col3;
+    -fx-background-radius: 5em;
+}
+.scroll-pane > .corner {
+    -fx-background-color: -col1;
+}
+
+
+.scroll-pane{
+    -fx-background: -col2;
+}

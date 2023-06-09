@@ -4,7 +4,6 @@ import com.ogr.splithappens.IOservice.IOService;
 import com.ogr.splithappens.model.PersonsManager;
 import com.ogr.splithappens.viewmodel.IViewModel;
 import com.ogr.splithappens.viewmodel.ViewModel;
-import com.ogr.splithappens.view.PersonBlockFactory;
 import com.ogr.splithappens.view.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,8 +30,6 @@ public class Program extends Application {
         stage.show();
 
         view.setBindings();
-
-        PersonBlockFactory.viewModel = viewModel;
     }
 
     public static void main(String[] args) {

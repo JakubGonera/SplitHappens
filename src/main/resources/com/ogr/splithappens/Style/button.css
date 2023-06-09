@@ -1,0 +1,79 @@
+
+@import "colors.css";
+
+
+
+/* ------------------- BUTTON ------------------- */
+
+.button
+{
+    -fx-background-color: -col3;
+    -fx-background-radius: 10 10 10 10;
+    -fx-text-fill: -col4;
+
+}
+
+.button:hover
+{
+    -fx-background-color: #939c9c;
+    -fx-background-radius: 10 10 10 10;
+}
+
+
+/* ------------------- TEXT FIELD ------------------- */
+.text-field {
+    /*-fx-accent: -fx-primary-color;*/
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: -col4;
+    -fx-prompt-text-fill: -col3;
+    -fx-background-color: -col3, -col1;
+}
+.text-field:focused {
+    -fx-background-color: -col4, -col1;
+}
+
+/* ------------------- LABEL ------------------- */
+.label{
+    -fx-text-fill: -col4;
+    -fx-padding: 5 4 0 3;
+}
+
+.text{
+    -fx-text-fill: -col4;
+    -fx-padding: 5 4 0 3;
+}
+
+
+
+.choice-box{
+    -fx-background-color: -col3;
+    -fx-border-color: -col3;
+    -fx-text-fill: -col4;
+    -fx-animated: true;
+}
+
+.choice-box > *.combo-box{
+    -fx-background-color: -col2;
+}
+
+.choice-box > *{
+    -fx-background-color: -col2;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: -col2;
+    -fx-border-color: -col3;
+    -fx-border-width: 4;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: -col3;
+}
+
+
+
+.checkbox {
+    accent-color: #9b59b6;
+}
+

@@ -1,13 +1,21 @@
 package com.ogr.splithappens.model;
 
+import javafx.scene.image.Image;
+
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-// I am not too convinced whether we need this interface, if it will be easier, maybe delete this and keep just Person class
 public class Expense implements Serializable {
     String title;
     int payerID;
     int amount;
+
+    String description;
+    Date dateAdded;
+    Category category;
+    SerializableImage image;
+    boolean isATransfer = false;
     int ID;
     List<Pair<Integer, Integer>> borrowers;
 
@@ -17,6 +25,10 @@ public class Expense implements Serializable {
         this.payerID = payerID;
         this.amount = amount;
         this.borrowers = borrowers;
+        description = "";
+        dateAdded = new Date();
+        category = Category.Other;
+        image = null;
     }
 
     public Expense(String title, int payerID, int amount, List<Pair<Integer, Integer>> borrowers) {
@@ -25,7 +37,25 @@ public class Expense implements Serializable {
         this.payerID = payerID;
         this.amount = amount;
         this.borrowers = borrowers;
+        description = "";
+        dateAdded = new Date();
+        category = Category.Other;
+        image = null;
     }
+
+    public Expense(String title, int payerID, int amount, List<Pair<Integer, Integer>> borrowers, String description, Date dateAdded, Category category, Image image, boolean isATransfer) {
+        this.ID = -1;
+        this.title = title;
+        this.payerID = payerID;
+        this.amount = amount;
+        this.borrowers = borrowers;
+        this.description = description;
+        this.dateAdded = dateAdded;
+        this.category = category;
+        this.image = new SerializableImage(image);
+        this.isATransfer = isATransfer;
+    }
+
 
     public String getTitle() {
         return title;
@@ -33,6 +63,14 @@ public class Expense implements Serializable {
 
     public int getID() {
         return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public List<Pair<Integer, Integer>> getBorrowers() {
+        return borrowers;
     }
 
     public int getAmount() {
@@ -43,7 +81,44 @@ public class Expense implements Serializable {
         return payerID;
     }
 
-    public List<Pair<Integer, Integer>> getBorrowers() {
-        return borrowers;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Image getImage() {
+        try {
+            return image.getImage();
+        } catch (Exception e) {
+            //return default image
+        }
+        return null;
+    }
+
+    public void setImage(Image image) {
+        setImage(image);
+    }
+
+    public boolean isATransfer() {
+        return isATransfer;
     }
 }

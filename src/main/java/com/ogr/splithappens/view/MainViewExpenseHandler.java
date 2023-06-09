@@ -8,6 +8,7 @@ import com.ogr.splithappens.model.Expense;
 import com.ogr.splithappens.model.Person;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -49,13 +50,13 @@ public class MainViewExpenseHandler {
     }
 
     void recalculateExpensesTable(List<Expense> iExpenses) {
-        view.expensesTable.getChildren().clear();
+        view.expensesTable.getPanes().clear();
         List<Person> personList = view.viewModel.getPersonsList().getValue();
         //List<IPerson> personList = dummyPersonList;
         for (Expense expense : iExpenses) {
             if (expense.getAmount() > 0) {
-                VBox child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()), view.viewModel);
-                view.expensesTable.getChildren().add(child);
+                TitledPane child = ExpenseBlockFactory.createExpenseBlock(expense, getUniquePerson(personList.stream(), expense.getPayerID()), view.viewModel);
+                view.expensesTable.getPanes().add(child);
                 child.prefWidthProperty().bind(view.expensesTable.prefWidthProperty());
             }
         }
