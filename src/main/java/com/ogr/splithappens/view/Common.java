@@ -23,6 +23,21 @@ public class Common {
             return Float.parseFloat(string);
         }
     }
+
+    public static final class IntegerStringConverter extends StringConverter<Number>{
+        @Override
+        public String toString(Number object) {
+            if(object == null)
+                return "0";
+            return object.toString();
+        }
+
+        @Override
+        public Number fromString(String string) {
+            return Integer.parseInt(string);
+        }
+    }
+
     public static String formatAmountWithCurrency(int amount){
         return formatAmount(amount) + " zł";
     }

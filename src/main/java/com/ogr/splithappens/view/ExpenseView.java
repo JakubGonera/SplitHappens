@@ -36,10 +36,9 @@ public class ExpenseView {
     @FXML
     Button addButton;
     @FXML
-    CheckBox detailedCheck;
+    ChoiceBox<String> splitChoice;
     @FXML
     ScrollPane splitPane;
-
     @FXML
     GridPane splitGrid;
 
@@ -47,16 +46,26 @@ public class ExpenseView {
         this.viewModel = viewModel;
         this.window = window;
     }
-
+    
     public void setBindings() {
         ObservableList<Person> personsList = viewModel.getPersonsList().getValue();
         valueField.setTextFormatter(new TextFormatter<>(new Common.SimpleStringConverter()));
         payerField.getItems().addAll(personsList);
-
-        // Detailed split set up
-//        GridPane splitGrid = new GridPane();
+        
+        splitChoice.getItems().add("Even split");
+        splitChoice.getItems().add("Detailed split");
+        splitChoice.getItems().add("Percentage split");
+        splitChoice.getSelectionModel().selectFirst();
+        
         splitGrid.prefWidthProperty().bind(splitPane.widthProperty().add(-10));
-        valueField.disableProperty().bind(detailedCheck.selectedProperty());
+        valueField.disableProperty().bind(splitChoice.getSelectionModel().selectedItemProperty().isEqualTo("Detailed split"));
+        splitPane.disableProperty().bind(splitChoice.getSelectionModel().selectedItemProperty().isEqualTo("Even split"));
+        splitChoice.getSelectionModel().selectedItemProperty().addListener((observableValue, s, t1) -> {
+            changeSplitMethod(t1);
+        });
+
+
+        splitGrid.getColumnConstraints().clear();
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setMaxWidth(150);
         col1.setPrefWidth(150);
@@ -77,8 +86,8 @@ public class ExpenseView {
             GridPane.setMargin(name, new Insets(0, 0, 0, 10));
 
             TextField value = new TextField();
-            value.setTextFormatter(new TextFormatter<>(new Common.SimpleStringConverter()));
             value.setText("0");
+            value.setTextFormatter(new TextFormatter<>(new Common.SimpleStringConverter()));
             splitGrid.add(value, 1, row);
             detailedFields.add(value);
 
@@ -102,7 +111,7 @@ public class ExpenseView {
                     errorText.setText("Empty title!");
                     return;
                 }
-                if (detailedCheck.isSelected()) {
+                if (splitChoice.getSelectionModel().selectedItemProperty().isEqualTo("Detailed split").get()) {
                     boolean nonZero = false;
                     for (TextField f : detailedFields) {
                         if (Objects.equals(f.getText(), "")) {
@@ -121,21 +130,45 @@ public class ExpenseView {
                         errorText.setText("Detailed split filled with zeros!");
                         return;
                     }
-                } else {
+                } else if(splitChoice.getSelectionModel().selectedItemProperty().isEqualTo("Even split").get()){
 
-//                    if (Objects.equals(valueField.getText(), "")) {
-//                        errorText.setText("Empty value!");
-//                        return;
-//                    }
-//                    if (Float.parseFloat(valueField.getText()) == 0) {
-//                        errorText.setText("Zero value!");
-//                        return;
-//                    }
-//                    if (Float.parseFloat(valueField.getText()) < 0) {
-//                        errorText.setText("Negative value!");
-//                        return;
-//                    }
+                   if (Objects.equals(valueField.getText(), "")) {
+                       errorText.setText("Empty value!");
+                       return;
+                   }
+                   if (Float.parseFloat(valueField.getText()) == 0) {
+                       errorText.setText("Zero value!");
+                       return;
+                   }
+                   if (Float.parseFloat(valueField.getText()) < 0) {
+                       errorText.setText("Negative value!");
+                       return;
+                   }
                 }
+                else{
+                    int sum = 0;
+                    for (TextField f : detailedFields) {
+                        if (Objects.equals(f.getText(), "")) {
+                            errorText.setText("Percentage split not filled!");
+                            return;
+                        }
+                        if (Integer.parseInt(f.getText()) < 0) {
+                            errorText.setText("Negative value!");
+                            return;
+                        }
+                        if(Integer.parseInt(f.getText()) > 100){
+                            errorText.setText("Over 100 percent!");
+                            return;
+                        }
+                        sum += Integer.parseInt(f.getText());
+                    }
+                    if(sum != 100){
+                        errorText.setText("Percentages don't add up to 100!");
+                        return;
+                    }
+                }
+
+
                 if (payerField.getSelectionModel().isEmpty()) {
                     errorText.setText("Payer not selected!");
                     return;
@@ -144,7 +177,7 @@ public class ExpenseView {
                 List<Pair<Integer, Integer>> borrowers = new ArrayList<>();
 
                 int sumValue = 0;
-                if (detailedCheck.isSelected()) {
+                if (splitChoice.getSelectionModel().getSelectedItem().equals("Detailed split")) {
                     for (int i = 0; i < detailedFields.size(); i++) {
                         int value = Common.parseAmount(detailedFields.get(i).getText());
                         if (value != 0) {
@@ -152,11 +185,21 @@ public class ExpenseView {
                             borrowers.add(new Pair<>(personsList.get(i).getID(), (int) (value * 100)));
                         }
                     }
-                } else {
+                } else if(splitChoice.getSelectionModel().getSelectedItem().equals("Even split")){
                     int value = Common.parseAmount(valueField.getText());
                     sumValue += value;
                     for (Person person : personsList) {
                         borrowers.add(new Pair<>(person.getID(), (int) ((float)value / personsList.size() * 100)));
+                    }
+                }
+                else{
+                    int value = Common.parseAmount(valueField.getText());
+                    sumValue += value;
+                    for (int i = 0; i < detailedFields.size(); i++) {
+                        int percentage = Integer.parseInt(detailedFields.get(i).getText());
+                        if (percentage != 0) {
+                            borrowers.add(new Pair<>(personsList.get(i).getID(), (int) ((float)value / 100 * percentage)));
+                        }
                     }
                 }
 
@@ -169,6 +212,32 @@ public class ExpenseView {
             }
         });
 
-        splitPane.disableProperty().bind(detailedCheck.selectedProperty().not());
+    }
+
+    private void changeSplitMethod(String method) {
+        if(method.equals("Detailed split")){
+            for(int i = 0; i < splitGrid.getChildren().size(); i++){
+                if(splitGrid.getChildren().get(i) instanceof TextField TextField){
+                    TextField.setTextFormatter(new TextFormatter<>(new Common.SimpleStringConverter()));
+                }
+                if(splitGrid.getChildren().get(i) instanceof Label label){
+                    if(label.getText().equals("%")){
+                        label.setText("zł");
+                    }
+                }
+            }
+        }
+        else if(method.equals("Percentage split")){
+            for(int i = 0; i < splitGrid.getChildren().size(); i++){
+                if(splitGrid.getChildren().get(i) instanceof TextField TextField){
+                    TextField.setTextFormatter(new TextFormatter<>(new Common.IntegerStringConverter()));
+                }
+                if(splitGrid.getChildren().get(i) instanceof Label label){
+                    if(label.getText().equals("zł")){
+                        label.setText("%");
+                    }
+                }
+            }
+        }
     }
 }
