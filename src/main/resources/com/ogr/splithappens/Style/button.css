@@ -71,9 +71,55 @@
     -fx-background-color: -col3;
 }
 
-
-
 .checkbox {
     accent-color: #9b59b6;
+}
+
+/* ------------------- DATE PICKER ------------------- */
+.date-picker {
+    -fx-background-color: -col3, -col1;
+}
+.date-picker .arrow-button {
+	-fx-background-color: -col1;
+	-fx-background-radius: 0;
+}
+.date-picker .arrow-button:hover {
+	-fx-background-color: -col2;
+}
+.date-picker .arrow-button .arrow {
+	-fx-background-color: -col4;
+}
+.date-picker .cell {
+	-fx-background-color: white;
+}
+.date-picker .cell:hover {
+	-fx-background-color: -col3;
+}
+.date-picker .cell:focused {
+	-fx-background-color: -col3;
+}
+.date-picker .selected {
+	-fx-background-color: -col1;
+	-fx-text-fill: white;
+}
+.date-picker .selected:focused {
+	-fx-background-color: -col1;
+	-fx-text-fill: white;
+}
+.date-picker-popup  {
+	-fx-border-color: transparent;
+}
+.date-picker-popup .month-year-pane {
+	-fx-background-color: -col1;
+}
+.date-picker-popup .month-year-pane .label {
+	-fx-text-fill: white;
+}
+.date-picker-popup .week-number-cell {
+	-fx-text-fill: -col2;
+}
+.date-picker-popup .spinner .button .left-arrow,
+.date-picker-popup .spinner .button .right-arrow {
+	-fx-background-color: white;
 }
 

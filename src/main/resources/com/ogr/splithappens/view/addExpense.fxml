@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -15,10 +16,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="450.0" prefWidth="410.0" styleClass="background-color-1" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="570.0" prefWidth="410.0" styleClass="background-color-1" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutX="20.0" layoutY="63.0" prefHeight="115.0" prefWidth="365.0" styleClass="background-color-2" stylesheets="@../Style/panes.css" />
-      <GridPane layoutX="32.0" layoutY="72.0" prefHeight="156.0" prefWidth="344.0" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="71.0">
+      <Pane layoutX="20.0" layoutY="63.0" prefHeight="260.0" prefWidth="366.0" styleClass="background-color-2" stylesheets="@../Style/panes.css" />
+      <GridPane layoutX="37.0" layoutY="79.0" prefHeight="295.0" prefWidth="332.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="78.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.5999755859375" minWidth="10.0" prefWidth="130.20001220703125" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="219.79998779296875" minWidth="10.0" prefWidth="219.79998779296875" />
@@ -29,6 +30,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="60.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <TextField fx:id="titleField" prefHeight="25.0" prefWidth="179.0" GridPane.columnIndex="1" />
@@ -54,16 +58,41 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="splitChoice" prefWidth="150.0" GridPane.rowIndex="4" />
+            <ChoiceBox fx:id="splitChoice" prefWidth="150.0" GridPane.rowIndex="7" />
+            <Label text="Description:" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Category:" GridPane.rowIndex="4">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Date:" GridPane.rowIndex="5">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="dateField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ChoiceBox fx:id="categoryField" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Photo:" GridPane.rowIndex="6">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#onSelectPhoto" text="Select" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+            <Label fx:id="photoPath" prefHeight="22.0" prefWidth="159.0" text="No file selected" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
-      <Button fx:id="addButton" layoutX="341.0" layoutY="394.0" mnemonicParsing="false" text="ADD" />
-      <Text fx:id="errorText" fill="#ff5300" layoutX="29.0" layoutY="412.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Button fx:id="addButton" layoutX="347.0" layoutY="519.0" mnemonicParsing="false" text="ADD" />
+      <Text fx:id="errorText" fill="#ff5300" layoutX="32.0" layoutY="537.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="230.5999641418457">
          <font>
             <Font name="Comic Sans MS Bold" size="14.0" />
          </font>
       </Text>
-      <ScrollPane fx:id="splitPane" layoutX="105.0" layoutY="244.0" prefHeight="134.0" prefWidth="350.0" style="-fx-background-color: transparent;" styleClass="transparent-eleent" stylesheets="@../Style/panes.css" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+      <ScrollPane fx:id="splitPane" layoutX="31.0" layoutY="375.0" prefHeight="134.0" prefWidth="350.0" style="-fx-background-color: transparent;" styleClass="transparent-eleent" stylesheets="@../Style/panes.css" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="35.0">
          <content>
             <GridPane fx:id="splitGrid" prefHeight="134.0" prefWidth="345.0" styleClass="transparent-eleent" stylesheets="@../Style/panes.css">
               <columnConstraints>

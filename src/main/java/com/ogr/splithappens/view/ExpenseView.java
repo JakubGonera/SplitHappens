@@ -1,5 +1,6 @@
 package com.ogr.splithappens.view;
 
+import com.ogr.splithappens.model.Category;
 import com.ogr.splithappens.model.Expense;
 import com.ogr.splithappens.model.Person;
 import com.ogr.splithappens.model.Pair;
@@ -10,15 +11,18 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.util.*;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,15 +36,25 @@ public class ExpenseView {
     @FXML
     ChoiceBox<Person> payerField;
     @FXML
+    TextField descriptionField;
+    @FXML
+    ChoiceBox<Category> categoryField;
+    @FXML
+    DatePicker dateField;
+    @FXML
     Text errorText;
     @FXML
     Button addButton;
+    @FXML
+    Label photoPath;
     @FXML
     ChoiceBox<String> splitChoice;
     @FXML
     ScrollPane splitPane;
     @FXML
     GridPane splitGrid;
+
+    final FileChooser fileChooser = new FileChooser();
 
     public ExpenseView(IViewModel viewModel, Stage window) {
         this.viewModel = viewModel;
@@ -52,11 +66,17 @@ public class ExpenseView {
         valueField.setTextFormatter(new TextFormatter<>(new Common.SimpleStringConverter()));
         payerField.getItems().addAll(personsList);
         
+        // Fill split options
         splitChoice.getItems().add("Even split");
         splitChoice.getItems().add("Detailed split");
         splitChoice.getItems().add("Percentage split");
         splitChoice.getSelectionModel().selectFirst();
-        
+
+        // Fill category options
+        categoryField.getItems().addAll(Category.values());
+        categoryField.getSelectionModel().select(Category.Other);
+
+        // Bind what fields are enabled depending on the split method
         splitGrid.prefWidthProperty().bind(splitPane.widthProperty().add(-10));
         valueField.disableProperty().bind(splitChoice.getSelectionModel().selectedItemProperty().isEqualTo("Detailed split"));
         splitPane.disableProperty().bind(splitChoice.getSelectionModel().selectedItemProperty().isEqualTo("Even split"));
@@ -64,6 +84,7 @@ public class ExpenseView {
             changeSplitMethod(t1);
         });
 
+        configureFileChooser(fileChooser);
 
         splitGrid.getColumnConstraints().clear();
         ColumnConstraints col1 = new ColumnConstraints();
@@ -179,32 +200,53 @@ public class ExpenseView {
                 int sumValue = 0;
                 if (splitChoice.getSelectionModel().getSelectedItem().equals("Detailed split")) {
                     for (int i = 0; i < detailedFields.size(); i++) {
-                        int value = Common.parseAmount(detailedFields.get(i).getText());
+                        int value = Common.parseAmountToGrosze(detailedFields.get(i).getText());
                         if (value != 0) {
                             sumValue += value;
-                            borrowers.add(new Pair<>(personsList.get(i).getID(), (int) (value * 100)));
+                            borrowers.add(new Pair<>(personsList.get(i).getID(), value));
                         }
                     }
                 } else if(splitChoice.getSelectionModel().getSelectedItem().equals("Even split")){
-                    int value = Common.parseAmount(valueField.getText());
+                    int value = Common.parseAmountToGrosze(valueField.getText());
                     sumValue += value;
                     for (Person person : personsList) {
-                        borrowers.add(new Pair<>(person.getID(), (int) ((float)value / personsList.size() * 100)));
+                        borrowers.add(new Pair<>(person.getID(), (int) ((float)value / personsList.size())));
                     }
                 }
                 else{
-                    int value = Common.parseAmount(valueField.getText());
+                    int value = Common.parseAmountToGrosze(valueField.getText());
                     sumValue += value;
                     for (int i = 0; i < detailedFields.size(); i++) {
                         int percentage = Integer.parseInt(detailedFields.get(i).getText());
                         if (percentage != 0) {
-                            borrowers.add(new Pair<>(personsList.get(i).getID(), (int) ((float)value / 100 * percentage)));
+                            borrowers.add(new Pair<>(personsList.get(i).getID(), (int) (value * (float)percentage / 100)));
                         }
                     }
                 }
 
+                // Get the date from the datepicker
+                Date date = new Date();
+                if(dateField.getValue() != null){
+                    date = Date.from(dateField.getValue().atStartOfDay().toInstant(java.time.ZoneOffset.UTC));
+                }
+
+                // Load photo
+                Image photo = null;
+                if(!Objects.equals(photoPath.getText(), "")){
+                    photo = new Image(photoPath.getText());
+                }
+                
                 // Construct payload and send it to the viewmodel and close window
-                Expense expensePayload = new Expense(titleField.getText(), payerField.getSelectionModel().getSelectedItem().getID(), sumValue, borrowers);
+                Expense expensePayload = new Expense(
+                    titleField.getText(), 
+                    payerField.getSelectionModel().getSelectedItem().getID(), 
+                    sumValue, 
+                    borrowers, 
+                    descriptionField.getText(),
+                    date,
+                    categoryField.getSelectionModel().getSelectedItem(),
+                    photo,
+                    false);
                 viewModel.addExpense(expensePayload);
 
                 window.close();
@@ -238,6 +280,21 @@ public class ExpenseView {
                     }
                 }
             }
+        }
+    }
+
+    private void configureFileChooser(FileChooser fileChooser) {
+        fileChooser.setTitle("Select photo");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home"), "Pictures"));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
+    }
+
+    @FXML
+    protected void onSelectPhoto(){
+        File file = fileChooser.showOpenDialog(window);
+        if(file != null){
+            photoPath.setText(file.getAbsolutePath());
         }
     }
 }

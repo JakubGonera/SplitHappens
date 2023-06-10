@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.converter.NumberStringConverter;
 
 import java.util.ArrayList;
 
@@ -46,7 +45,7 @@ public class SettleUpView {
 
     @FXML
     public void onConfirmButton(ActionEvent e) {
-        DummyTransaction(payer.getID(), receiver.getID(), Common.parseAmount(amountField.getText()));
+        DummyTransaction(payer.getID(), receiver.getID(), Common.parseAmountToGrosze(amountField.getText()));
         window.close();
     }
 

@@ -52,7 +52,10 @@ public class Expense implements Serializable {
         this.description = description;
         this.dateAdded = dateAdded;
         this.category = category;
-        this.image = new SerializableImage(image);
+        if(image != null)
+            this.image = new SerializableImage(image);
+        else
+            this.image = null;
         this.isATransfer = isATransfer;
     }
 

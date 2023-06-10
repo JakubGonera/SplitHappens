@@ -52,7 +52,7 @@ public class Common {
         return amountString;
     }
 
-    public static int parseAmount(String amountString){
+    public static int parseAmountToGrosze(String amountString){
         DecimalFormatSymbols decimalSymbols = DecimalFormatSymbols.getInstance();
         char separator = decimalSymbols.getDecimalSeparator();
         int digitsAfterSeparator = 0;
