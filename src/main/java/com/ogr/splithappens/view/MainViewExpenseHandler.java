@@ -32,7 +32,7 @@ public class MainViewExpenseHandler {
         expenseWindow.setResizable(false);
 
         try {
-            Scene dialogScene = new Scene(fxmlLoader.load(), 400, 450);
+            Scene dialogScene = new Scene(fxmlLoader.load(), 400, 570);
             expenseWindow.setScene(dialogScene);
             expenseWindow.show();
             controller.setBindings();

@@ -1,7 +1,6 @@
 package com.ogr.splithappens.view;
 
 import com.ogr.splithappens.model.Person;
-import com.ogr.splithappens.viewmodel.IViewModel;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -31,9 +30,9 @@ public class PersonBlockFactory {
             String text;
             if (exp.balance() == 0) continue;
             if (exp.balance() > 0)
-                text = " <- " + Double.valueOf(exp.balance() * 0.01).toString() + " " + currency + " from " + exp.name();
+                text = " <- " + Common.formatAmountWithCurrency(exp.balance()) + " from " + exp.name();
             else
-                text = " -> " + Double.valueOf(-exp.balance() * 0.01).toString() + " " + currency + " to " + exp.name();
+                text = " -> " + Common.formatAmountWithCurrency(-exp.balance()) + " to " + exp.name();
 
             Label l = new Label(text + " ");
 
@@ -64,7 +63,7 @@ public class PersonBlockFactory {
 
         String balanceText;
         if (p.getBalance() == 0) balanceText = "(Settled up)";
-        else balanceText = "(" + Double.valueOf(p.getBalance() * 0.01).toString() + " " + currency + ")";
+        else balanceText = "(" + Common.formatAmountWithCurrency(p.getBalance()) + ")";
 //        tp.setText(p.getName() + " " + balanceText);
 
 

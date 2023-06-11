@@ -8,8 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 
 public class ExpenseBlockFactory {
@@ -38,7 +36,7 @@ public class ExpenseBlockFactory {
 
 
         BorderPane borderPane = new BorderPane();
-        Label titleOfTitledPane = new Label(expense.getTitle() + "\n"+expense.getAmount() +" by "+person.getName());
+        Label titleOfTitledPane = new Label(expense.getTitle() + "\n"+ Common.formatAmountWithCurrency(expense.getAmount()) +" by "+person.getName());
         borderPane.setLeft(titleOfTitledPane);
         borderPane.setRight(removeButton);
         borderPane.prefWidthProperty().bind(out.widthProperty().subtract(40));
