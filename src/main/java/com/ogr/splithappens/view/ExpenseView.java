@@ -232,7 +232,7 @@ public class ExpenseView {
 
                 // Load photo
                 Image photo = null;
-                if(!Objects.equals(photoPath.getText(), "")){
+                if(!Objects.equals(photoPath.getText(), "") && !Objects.equals(photoPath.getText(), "No file selected")){
                     photo = new Image(photoPath.getText());
                 }
                 
@@ -287,7 +287,7 @@ public class ExpenseView {
         fileChooser.setTitle("Select photo");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home"), "Pictures"));
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
     }
 
     @FXML

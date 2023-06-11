@@ -3,8 +3,8 @@ package com.ogr.splithappens.model;
 import java.io.Serializable;
 
 public class Pair<T, U> implements Serializable {
-    T first;
-    U second;
+    public T first;
+    public U second;
 
     Pair() {
         first = null;
