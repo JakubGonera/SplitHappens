@@ -18,7 +18,13 @@ public class ExpenseBlockFactory {
         out.setPadding(new Insets(10, 10, 10, 10));
         Button removeButton = new Button("X");
         removeButton.setOnAction(event -> {
-            viewModel.removeExpense(expense.getID());
+            if(person.getPersonsManager().canDeleteExpense(expense)){
+                viewModel.removeExpense(expense.getID());
+            }
+            else{
+                ExpenseDeletionPopup popup = new ExpenseDeletionPopup();
+                popup.show(expense, person, viewModel);
+            }
         });
 
         BorderPane borderPane = new BorderPane();

@@ -68,8 +68,14 @@ public class Person implements Serializable {
         personsManager.refreshActivePersons();
         return true;
     }
-
+    public void setActive() {
+        isActive = true;
+        personsManager.refreshActivePersons();
+    }
     public boolean isActive() {
         return isActive;
+    }
+    public PersonsManager getPersonsManager() {
+        return personsManager;
     }
 }

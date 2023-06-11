@@ -71,5 +71,37 @@ public class PersonsManager implements Serializable {
         throw new RuntimeException("There is no person with name " + name);
     }
 
-
+    public boolean canDeleteExpense(Expense expense){
+        for(var x : expense.getBorrowers()){
+            int borrowerID = x.first;
+            for(Person person : persons){
+                if(person.getID() == borrowerID && (!person.isActive())){
+                    return false;
+                }
+            }
+        }
+        for(Person person : persons){
+            if(person.getID() == expense.getPayerID() && (!person.isActive())){
+                return false;
+            }
+        }
+        return true;
+    }
+    public void setPersonsActiveFromExpense(Expense expense){
+        for(var x : expense.getBorrowers()){
+            int borrowerID = x.first;
+            for(Person person : persons){
+                if(person.getID() == borrowerID){
+                    person.setActive();
+                    break;
+                }
+            }
+        }
+        for(Person person : persons){
+            if(person.getID() == expense.getPayerID()){
+                person.setActive();
+                break;
+            }
+        }
+    }
 }

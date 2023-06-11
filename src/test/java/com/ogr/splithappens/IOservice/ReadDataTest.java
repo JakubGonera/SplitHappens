@@ -1,6 +1,8 @@
 package com.ogr.splithappens.IOservice;
 
+import com.ogr.splithappens.Program;
 import com.ogr.splithappens.model.*;
+import javafx.scene.image.Image;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -40,9 +42,18 @@ class ReadDataTest {
         assertEquals(lbefore.size(), lafter.size());
         assertNotEquals(lafter.size(), 0);
         pm.addPerson("d");
-        em.addExpense(new Expense("2", 0, 30, List.of(new Pair<>(1, 30), new Pair<>(2,0))));
+        em.addExpense(new Expense("2", 0, 30, List.of(new Pair<>(1, 30), new Pair<>(2,0)), "desc", null, Category.Other, new Image(Program.class.getResourceAsStream("images/spn.jpg")), false));
+        WriteData.writeData(pm);
         pm = ReadData.readData();
         em = pm.getExpenseManager();
+        for(var exp : em.getExpenses()){
+            try{
+                System.out.println(exp.getImage().getHeight());
+            }
+            catch (Exception e){
+                System.out.println("null");
+            }
+        }
         List<Person.detailedBalance>lafter2 = new ArrayList<>();
         for(var person : pm.getPersons()){
             for(var expense : person.getDetailedBalances()){

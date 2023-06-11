@@ -76,4 +76,8 @@ public class ViewModel implements IViewModel {
         person.setInactive();
         personsList.setValue(FXCollections.observableList(personsManager.getPersons()));
     }
+    @Override
+    public void refreshPersons(){
+        personsList.setValue(FXCollections.observableList(personsManager.getPersons()));
+    }
 }

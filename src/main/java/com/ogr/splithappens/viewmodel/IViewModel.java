@@ -20,4 +20,5 @@ public interface IViewModel {
     Person getPersonByName(String name);
     void save();
     void deletePerson(Person person);
+    void refreshPersons();
 }
