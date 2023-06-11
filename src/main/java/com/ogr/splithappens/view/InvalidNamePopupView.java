@@ -47,7 +47,6 @@ public class InvalidNamePopupView {
             errorPopup.setScene(dialogScene);
             errorPopup.show();
         } catch (Throwable t) {
-            System.out.println(t);
         }
 
         textLabel.setText("Invalid name: \n" + message);

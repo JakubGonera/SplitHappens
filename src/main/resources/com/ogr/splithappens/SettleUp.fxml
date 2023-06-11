@@ -10,7 +10,7 @@
 
 <!--/fx:controller="com.ogr.splithappens.view.InvalidNamePopupView"-->
 
-<AnchorPane prefHeight="200" prefWidth="300.0" styleClass="background-color-1" stylesheets="@Style/panes.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="200" prefWidth="300.0" styleClass="background-color-1" stylesheets="@Style/panes.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <VBox alignment="CENTER" layoutX="44.0" layoutY="14.0" prefHeight="102.0" prefWidth="212.0" styleClass="background-color-2" stylesheets="@Style/panes.css">
       <Label fx:id="textLabel" alignment="TOP_CENTER" prefHeight="20" prefWidth="170" stylesheets="@Style/interactables.css" text="Confirm the transaction?" />

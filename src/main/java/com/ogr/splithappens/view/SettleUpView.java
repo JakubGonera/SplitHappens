@@ -77,7 +77,6 @@ public class SettleUpView {
             SetBindings();
 
         } catch (Throwable t) {
-            System.out.println(t);
         }
         detailLabel.setText(payer.getName() + " -> " + receiver.getName());
         amountField.setText(Common.formatAmount(amount));

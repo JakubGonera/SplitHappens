@@ -38,7 +38,6 @@ public class View {
             @Override
             public void changed(ObservableValue<? extends List<Expense>> observableValue, List<Expense> iExpenses, List<Expense> t1) {
                 expenseHandler.recalculateExpensesTable(t1);
-                System.out.println("BINDING!");
                 personHandler.updatePeople();
             }
         });
@@ -75,7 +74,6 @@ public class View {
 
     @FXML
     public void INP_OnButton(ActionEvent e) {
-        System.out.println("Exit");
     }
 
     @FXML //there ARE usages

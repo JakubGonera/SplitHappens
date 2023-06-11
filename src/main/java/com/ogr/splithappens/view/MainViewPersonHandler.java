@@ -14,8 +14,6 @@ public class MainViewPersonHandler {
         this.view = view;
     }
     public void updatePeople() {
-        System.out.println("Updating people");
-        System.out.println("Number of expenses: " + view.viewModel.getExpensesList().getValue().size());
 
         ReadOnlyListProperty<Person> people = view.viewModel.getPersonsList();
         view.accordion.getPanes().remove(0, view.accordion.getPanes().size());

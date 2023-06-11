@@ -7,7 +7,7 @@
 
 <!--/fx:controller="com.ogr.splithappens.view.InvalidNamePopupView"-->
 
-<AnchorPane prefHeight="200" prefWidth="300.0" styleClass="background-color-1" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="200" prefWidth="300.0" styleClass="background-color-1" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <Label fx:id="textLabel" layoutX="83.0" layoutY="40.0" prefHeight="47.0" prefWidth="202.0" text="Invalid name, try again" />
     <Button fx:id="OkButton" layoutX="94.0" layoutY="152.0" mnemonicParsing="false" onAction="#OnButton" text="Ok" />

@@ -17,7 +17,6 @@ public class ExpenseDeletionPopup {
     Person person;
     @FXML
     public void onContinue() {
-        System.out.println("Continue");
         vm.removeExpense(expense.getID());
         person.getPersonsManager().setPersonsActiveFromExpense(expense);
         vm.refreshPersons();
@@ -25,7 +24,6 @@ public class ExpenseDeletionPopup {
     }
     @FXML
     public void onCancel() {
-        System.out.println("Cancel");
         window.close();
     }
     public void show(Expense expense, Person person, IViewModel vm) {
