@@ -23,7 +23,7 @@ public class Program extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Program.class.getResource("view.fxml"));
         fxmlLoader.setController(view);
 
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        Scene scene = new Scene(fxmlLoader.load(), 720, 576);
 
         stage.setTitle("SplitHappens");
         stage.setScene(scene);

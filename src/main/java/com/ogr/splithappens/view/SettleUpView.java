@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -65,6 +66,9 @@ public class SettleUpView {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Program.class.getResource("SettleUp.fxml"));
         fxmlLoader.setController(this);
+
+        transaction.initModality(Modality.APPLICATION_MODAL);
+        transaction.setResizable(false);
 
         try {
             Scene dialogScene = new Scene(fxmlLoader.load(), 300, 200);

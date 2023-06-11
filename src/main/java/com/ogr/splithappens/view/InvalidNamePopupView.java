@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -37,6 +38,9 @@ public class InvalidNamePopupView {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Program.class.getResource("InvalidNamePopup.fxml"));
         fxmlLoader.setController(this);
+
+        errorPopup.initModality(Modality.APPLICATION_MODAL);
+        errorPopup.setResizable(false);
 
         try {
             Scene dialogScene = new Scene(fxmlLoader.load(), 300, 200);
