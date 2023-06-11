@@ -17,8 +17,6 @@ public class ConfirmDeletionPopup {
     View view;
     Person person;
     @FXML
-    Text TextField;
-    @FXML
     public void onClickDelete() {
         //person.setInactive();
         vm.deletePerson(person);
@@ -41,7 +39,6 @@ public class ConfirmDeletionPopup {
             dialog.setScene(new Scene(loader.load()));
             window = dialog;
             dialog.show();
-            TextField.setText("Are you sure you want to delete " + person.getName() + "?");
         } catch (Exception e) {
             e.printStackTrace();
         }

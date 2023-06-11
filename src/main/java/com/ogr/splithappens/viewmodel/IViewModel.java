@@ -7,6 +7,7 @@ import javafx.beans.property.ReadOnlyListProperty;
 
 public interface IViewModel {
     ReadOnlyListProperty<Person> getPersonsList();
+    ReadOnlyListProperty<Person> getAllPersonsList();
 
     ReadOnlyListProperty<Expense> getExpensesList();
 

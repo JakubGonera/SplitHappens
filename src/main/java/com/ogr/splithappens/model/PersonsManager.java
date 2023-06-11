@@ -43,6 +43,10 @@ public class PersonsManager implements Serializable {
         //refreshActivePersons();
         return ActivePersons;
     }
+    public List<Person> getAllPersons() {
+        //refreshActivePersons();
+        return persons;
+    }
 
     public void addPerson(String name) {
         if (name.equals("")) {

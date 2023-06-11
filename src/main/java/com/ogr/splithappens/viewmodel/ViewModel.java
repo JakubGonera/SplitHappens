@@ -15,6 +15,7 @@ public class ViewModel implements IViewModel {
     // Remember to change personsList value whenever needed by personsList.setValue(personsManager.getPersons)
 
     private final ListProperty<Person> personsList;
+    private final ListProperty<Person> allPersons;
 
     private final ListProperty<Expense> expensesList;
 
@@ -23,11 +24,17 @@ public class ViewModel implements IViewModel {
         this.personsList = new SimpleListProperty<>(this, "personsList", FXCollections.observableList(personsManager.getPersons()));
         this.expensesManager = expensesManager;
         this.expensesList = new SimpleListProperty<>(this, "expensesList", FXCollections.observableList(expensesManager.getExpenses()));
+        this.allPersons = new SimpleListProperty<>(this, "allPersons", FXCollections.observableList(personsManager.getAllPersons()));
     }
 
     @Override
     public ReadOnlyListProperty<Person> getPersonsList() {
         return personsList;
+    }
+
+    @Override
+    public ReadOnlyListProperty<Person> getAllPersonsList() {
+        return allPersons;
     }
 
     @Override
@@ -52,6 +59,7 @@ public class ViewModel implements IViewModel {
     public void addPerson(String name) {
         personsManager.addPerson(name);
         personsList.setValue(FXCollections.observableList(personsManager.getPersons()));
+        allPersons.setValue(FXCollections.observableList(personsManager.getAllPersons()));
     }
 
 

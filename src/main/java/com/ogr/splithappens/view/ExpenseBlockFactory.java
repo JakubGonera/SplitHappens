@@ -53,7 +53,7 @@ public class ExpenseBlockFactory {
 
         for(int i = 0; i < expense.getBorrowers().size(); i++) {
             final int index = i;
-            Person borrower = viewModel.getPersonsList().stream().filter(p -> p.getID() == expense.getBorrowers().get(index).first).findFirst().orElse(null);
+            Person borrower = viewModel.getAllPersonsList().stream().filter(p -> p.getID() == expense.getBorrowers().get(index).first).findFirst().orElse(null);
             Label borrowerLabel = new Label(borrower.getName());
             Label amountLabel = new Label(Common.formatAmountWithCurrency(expense.getBorrowers().get(index).second));
             gridPane.add(borrowerLabel, 0, i + 1);
