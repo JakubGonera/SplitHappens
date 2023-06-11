@@ -139,11 +139,11 @@ public class ExpenseView {
                             errorText.setText("Detailed split not filled!");
                             return;
                         }
-                        if (Float.parseFloat(f.getText()) < 0) {
+                        if (Common.parseAmountToGrosze(f.getText()) < 0) {
                             errorText.setText("Negative value!");
                             return;
                         }
-                        if (Float.parseFloat(f.getText()) != 0) {
+                        if (Common.parseAmountToGrosze(f.getText()) != 0) {
                             nonZero = true;
                         }
                     }
@@ -157,11 +157,11 @@ public class ExpenseView {
                        errorText.setText("Empty value!");
                        return;
                    }
-                   if (Float.parseFloat(valueField.getText()) == 0) {
+                   if (Common.parseAmountToGrosze(valueField.getText()) == 0) {
                        errorText.setText("Zero value!");
                        return;
                    }
-                   if (Float.parseFloat(valueField.getText()) < 0) {
+                   if (Common.parseAmountToGrosze(valueField.getText()) < 0) {
                        errorText.setText("Negative value!");
                        return;
                    }
