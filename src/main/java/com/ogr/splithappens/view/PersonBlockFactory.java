@@ -19,10 +19,7 @@ public class PersonBlockFactory {
         VBox vb = new VBox();
         HBox head = new HBox();
 
-//        Button settings = new Button("Settings");
-//        Button remove = new Button("Remove");
-//        head.getChildren().add(settings);
-//        head.getChildren().add(remove);
+
         vb.getChildren().add(head);
 
         for (var exp : p.getDetailedBalances()) {

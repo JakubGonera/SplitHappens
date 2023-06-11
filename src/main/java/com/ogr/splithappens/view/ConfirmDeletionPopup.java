@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ConfirmDeletionPopup {
@@ -32,6 +33,9 @@ public class ConfirmDeletionPopup {
 
         FXMLLoader loader = new FXMLLoader(Program.class.getResource("ConfirmDeletionPopup.fxml"));
         loader.setController(this);
+
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setResizable(false);
 
         try {
             dialog.setScene(new Scene(loader.load()));
