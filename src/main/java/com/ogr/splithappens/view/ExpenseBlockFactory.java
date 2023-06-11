@@ -30,7 +30,8 @@ public class ExpenseBlockFactory {
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
+//        scrollPane.setFitToHeight(true);
+        scrollPane.setMinHeight(200);
 
         // Set up the grid to display borrowers, date, category, description, and photo
         GridPane gridPane = new GridPane();
