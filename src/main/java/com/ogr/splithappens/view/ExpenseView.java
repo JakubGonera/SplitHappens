@@ -139,11 +139,11 @@ public class ExpenseView {
                             errorText.setText("Detailed split not filled!");
                             return;
                         }
-                        if (Float.parseFloat(f.getText()) < 0) {
+                        if (Common.parseAmountToGrosze(f.getText()) < 0) {
                             errorText.setText("Negative value!");
                             return;
                         }
-                        if (Float.parseFloat(f.getText()) != 0) {
+                        if (Common.parseAmountToGrosze(f.getText()) != 0) {
                             nonZero = true;
                         }
                     }
@@ -157,11 +157,11 @@ public class ExpenseView {
                        errorText.setText("Empty value!");
                        return;
                    }
-                   if (Float.parseFloat(valueField.getText()) == 0) {
+                   if (Common.parseAmountToGrosze(valueField.getText()) == 0) {
                        errorText.setText("Zero value!");
                        return;
                    }
-                   if (Float.parseFloat(valueField.getText()) < 0) {
+                   if (Common.parseAmountToGrosze(valueField.getText()) < 0) {
                        errorText.setText("Negative value!");
                        return;
                    }
@@ -232,7 +232,7 @@ public class ExpenseView {
 
                 // Load photo
                 Image photo = null;
-                if(!Objects.equals(photoPath.getText(), "")){
+                if(!Objects.equals(photoPath.getText(), "") && !Objects.equals(photoPath.getText(), "No file selected")){
                     photo = new Image(photoPath.getText());
                 }
                 
@@ -287,7 +287,7 @@ public class ExpenseView {
         fileChooser.setTitle("Select photo");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home"), "Pictures"));
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
     }
 
     @FXML
