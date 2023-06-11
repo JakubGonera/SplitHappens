@@ -51,7 +51,7 @@ public class MainViewExpenseHandler {
 
     void recalculateExpensesTable(List<Expense> iExpenses) {
         view.expensesTable.getPanes().clear();
-        List<Person> personList = view.viewModel.getPersonsList().getValue();
+        List<Person> personList = view.viewModel.getAllPersonsList().getValue();
         //List<IPerson> personList = dummyPersonList;
         for (Expense expense : iExpenses) {
             if (expense.getAmount() > 0) {
